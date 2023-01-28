@@ -11,4 +11,5 @@ mv ../../myAnalysis.py PhysicsTools/NanoAODTools/python/postprocessing/modules/
 mv ../../myCutflow.py PhysicsTools/NanoAODTools/python/postprocessing/modules/
 mv ../../postprocessor.py PhysicsTools/NanoAODTools/python/postprocessing/framework/
 scram b
+cd ../..
 ```
