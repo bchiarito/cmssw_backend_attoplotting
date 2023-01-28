@@ -26,6 +26,11 @@ class MyAnalysis(Module):
         self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 200, 0, 2000)
         self.addObject(self.photon_pt)
 
+        self.hthat_lhe = ROOT.TH1F('hthat_lhe', 'hthat_lhe', 100, 0, 1000)
+        self.addObject(self.hthat_lhe)
+        self.hthat_genPart = ROOT.TH1F('hthat_genPart', 'hthat_genPart', 100, 0, 1000)
+        self.addObject(self.hthat_genPart)
+
     def analyze(self, event):
         if self.dict_xs and self.dict_ngen:
           dataset_id = event.dataset_id
@@ -45,5 +50,11 @@ class MyAnalysis(Module):
           self.recophi_dr.Fill(photon.DeltaR(twoprong), weight)
           self.m_g2.Fill(recophi.mass, weight)
           self.photon_pt.Fill(recophi.photonLeg_pt, weight)
+
+        try:
+          self.hthat_lhe.Fill(event.htHat_lhe, weight)
+          self.hthat_genPart.Fill(event.htHat_genPart, weight)
+        except RuntimeError:
+          pass
 
         return True
