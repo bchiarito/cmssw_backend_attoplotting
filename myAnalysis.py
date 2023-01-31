@@ -26,9 +26,9 @@ class MyAnalysis(Module):
         self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 200, 0, 2000)
         self.addObject(self.photon_pt)
 
-        self.hthat_lhe = ROOT.TH1F('hthat_lhe', 'hthat_lhe', 100, 0, 1000)
+        self.hthat_lhe = ROOT.TH1F('MC_hthat_lhe', 'hthat_lhe', 100, 0, 1000)
         self.addObject(self.hthat_lhe)
-        self.hthat_genPart = ROOT.TH1F('hthat_genPart', 'hthat_genPart', 100, 0, 1000)
+        self.hthat_genPart = ROOT.TH1F('MC_hthat_genPart', 'hthat_genPart', 100, 0, 1000)
         self.addObject(self.hthat_genPart)
 
     def analyze(self, event):

@@ -27,14 +27,12 @@ datamc_options.add_argument("--mc", action="store_true", default=False, help="ru
 datamc_options.add_argument("--sigRes", action="store_true", default=False, help="running on resonant signal mc")
 datamc_options.add_argument("--sigNonRes", action="store_true", default=False, help="running on nonresonant signal mc")
 parser.add_argument("--out", default='analysis_out.root', help='name of root output file with histos (include .root)')
-parser.add_argument("--xs", action='store_true', default=False, help='generate mc xs plots')
 parser.add_argument("--fast", action='store_true', default=False, help='test run')
 parser.add_argument("--lumi", default=1.0, help='')
 args = parser.parse_args()
 
 # import modules
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
-from PhysicsTools.NanoAODTools.fmk_plotting.hthatAnalysis import HthatAnalysis
 from PhysicsTools.NanoAODTools.fmk_plotting.myCutflow import MyCutflow
 
 
@@ -105,13 +103,9 @@ if args.data:
   lookup_xs = None
   lookup_ngen = None
 
-if args.xs:
-  modules = []
-  modules += [HthatAnalysis(args.lumi, lookup_xs, lookup_ngen)]
-else:
-  modules = []
-  modules += [MyAnalysis(args.lumi, lookup_xs, lookup_ngen)]
-  modules += [MyCutflow(args.out[:-5]+"_cutflow.txt")]
+modules = []
+modules += [MyAnalysis(float(args.lumi), lookup_xs, lookup_ngen)]
+modules += [MyCutflow(args.out[:-5]+"_cutflow.txt")]
 
 if args.fast: n = 1
 else: n = None
