@@ -31,6 +31,9 @@ class MyAnalysis(Module):
         self.hthat_genPart = ROOT.TH1F('MC_hthat_genPart', 'hthat_genPart', 100, 0, 1000)
         self.addObject(self.hthat_genPart)
 
+        self.cutflow_ = ROOT.TH1F('cutflow', 'cutflow', 100, 0, 100)
+        self.addObject(self.cutflow)
+
     def analyze(self, event):
         if self.dict_xs and self.dict_ngen:
           dataset_id = event.dataset_id
@@ -42,7 +45,10 @@ class MyAnalysis(Module):
 
         recophi = Object(event, "RecoPhi")
 
+        self.cutflow.Fill(0)
+
         if event.RecoPhi_pass and recophi.photonLeg_pt>200:
+          self.cutflow.Fill(1)
           photon = ROOT.TLorentzVector()
           twoprong = ROOT.TLorentzVector()
           photon.SetPtEtaPhiM(recophi.photonLeg_pt, recophi.photonLeg_eta, recophi.photonLeg_phi, recophi.photonLeg_mass)
