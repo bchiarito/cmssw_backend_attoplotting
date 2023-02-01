@@ -31,7 +31,7 @@ class MyAnalysis(Module):
         self.hthat_genPart = ROOT.TH1F('MC_hthat_genPart', 'hthat_genPart', 100, 0, 1000)
         self.addObject(self.hthat_genPart)
 
-        self.cutflow_ = ROOT.TH1F('cutflow', 'cutflow', 100, 0, 100)
+        self.cutflow = ROOT.TH1F('cutflow', 'cutflow', 100, 0, 100)
         self.addObject(self.cutflow)
 
     def analyze(self, event):
