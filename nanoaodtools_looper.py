@@ -33,8 +33,6 @@ args = parser.parse_args()
 
 # import modules
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
-from PhysicsTools.NanoAODTools.fmk_plotting.myCutflow import MyCutflow
-
 
 files = []
 metadata_chain = ROOT.TChain('Metadata')
@@ -105,7 +103,6 @@ if args.data:
 
 modules = []
 modules += [MyAnalysis(float(args.lumi), lookup_xs, lookup_ngen)]
-modules += [MyCutflow(args.out[:-5]+"_cutflow.txt")]
 
 if args.fast: n = 1
 else: n = None
