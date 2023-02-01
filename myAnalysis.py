@@ -100,7 +100,7 @@ class MyAnalysis(Module):
           self.twoprong_phi.Fill(recophi.twoprongLeg_phi, weight)
 
           self.nphoton.Fill(event.nHighPtIdPhoton, weight)
-          self.nphoton.Fill(event.nTwoProng, weight)
+          self.ntwoprong.Fill(event.nTwoProng, weight)
 
           self.njets.Fill(event.NJets, weight)
           self.ht.Fill(event.HT, weight)
