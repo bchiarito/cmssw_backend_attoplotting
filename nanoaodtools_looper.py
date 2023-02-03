@@ -44,6 +44,7 @@ if args.input == 'local':
 else:
   if '.root' in args.input:
     files = [args.input]
+    metadata_chain.Add(args.input)
   elif '/store/' in args.input:
     list_of_files = (subprocess.check_output("xrdfs root://cmseos.fnal.gov ls " + args.input, shell=True)).split('\n')
     list_of_files = [x for x in list_of_files if x]
