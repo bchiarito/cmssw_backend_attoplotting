@@ -77,6 +77,7 @@ class MyAnalysis(Module):
           weight = 1.0
 
         recophi = Object(event, "RecoPhi")
+        twoprongs = Collection(event, "TwoProng")
 
         self.cutflow.Fill(0)
         if event.RecoPhi_pass:
@@ -100,7 +101,10 @@ class MyAnalysis(Module):
           self.twoprong_phi.Fill(recophi.twoprongLeg_phi, weight)
 
           self.nphoton.Fill(event.nHighPtIdPhoton, weight)
-          self.ntwoprong.Fill(event.nTwoProng, weight)
+          ntwoprong = 0
+          for twoprong in twoprongs:
+            if twoprong.isTight: ntwoprong += 1
+          self.ntwoprong.Fill(ntwoprong, weight)
 
           self.njets.Fill(event.NJets, weight)
           self.ht.Fill(event.HT, weight)
