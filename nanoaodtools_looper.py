@@ -8,6 +8,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 import argparse
 import glob
 import subprocess
+import plotting_util
 
 def filename_num(s):
   s = s[:-5]
@@ -27,6 +28,7 @@ datamc_options.add_argument("--mc", action="store_true", default=False, help="ru
 datamc_options.add_argument("--sigRes", action="store_true", default=False, help="running on resonant signal mc")
 datamc_options.add_argument("--sigNonRes", action="store_true", default=False, help="running on nonresonant signal mc")
 parser.add_argument("--out", default='analysis_out.root', help='name of root output file with histos (include .root)')
+parser.add_argument("--loc", help='original location of atto for metadata')
 parser.add_argument("--fast", action='store_true', default=False, help='test run')
 parser.add_argument("--lumi", default=1.0, help='')
 args = parser.parse_args()
@@ -35,23 +37,23 @@ args = parser.parse_args()
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
 
 files = []
-metadata_chain = ROOT.TChain('Metadata')
+if not args.loc: metadata_chain = ROOT.TChain('Metadata')
 if args.input == 'local':
   for fi in os.listdir("."):
     if fi.endswith(".root"):
       files.append(fi)
-      metadata_chain.Add(fi)
+      if not args.loc: metadata_chain.Add(fi)
 else:
   if '.root' in args.input:
     files = [args.input]
-    metadata_chain.Add(args.input)
+    if not args.loc: metadata_chain.Add(args.input)
   elif '/store/' in args.input:
     list_of_files = (subprocess.check_output("xrdfs root://cmseos.fnal.gov ls " + args.input, shell=True)).split('\n')
     list_of_files = [x for x in list_of_files if x]
     list_of_files.sort(key=filename_num)
     for line in list_of_files:
         files.append('root://cmseos.fnal.gov/'+line)
-        metadata_chain.Add('root://cmseos.fnal.gov/'+line)
+        if not args.loc: metadata_chain.Add('root://cmseos.fnal.gov/'+line)
   else:
     with open(args.input) as fi:
       for line in fi:
@@ -72,11 +74,19 @@ else:
           for fi in list_of_files:
             print fi
             files.append('root://cmseos.fnal.gov/'+fi)
-            metadata_chain.Add('root://cmseos.fnal.gov/'+fi)
+            if not args.loc: metadata_chain.Add('root://cmseos.fnal.gov/'+fi)
 
-print(metadata_chain)
-
-if args.mc:
+if args.loc:
+  d = plotting_util.get_meta(args.loc, jobdir=False)
+  print(d)
+  lookup_xs = {}; lookup_xs[d['dataset_id']] = d['xs']
+  lookup_ngen = {}; lookup_ngen[d['dataset_id']] = d['evtProcessed']
+  for key in lookup_xs:
+    print(key, '->', lookup_xs[key])
+  for key in lookup_ngen:
+    print(key, '->', lookup_ngen[key])
+  
+if not args.loc:
   lookup_xs = {}
   lookup_ngen = {}
   for event in metadata_chain:
@@ -94,10 +104,9 @@ if args.mc:
       lookup_ngen[int(event.dataset_id)] += int(event.evtProcessed)
   for key in lookup_xs:
     print(key, '->', lookup_xs[key])
-  print(sys.getsizeof(lookup_xs))
   for key in lookup_ngen:
     print(key, '->', lookup_ngen[key])
-  print(sys.getsizeof(lookup_ngen))
+
 if args.data:
   lookup_xs = None
   lookup_ngen = None
