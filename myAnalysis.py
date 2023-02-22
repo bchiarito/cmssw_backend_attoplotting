@@ -8,6 +8,8 @@ import sys
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
+def get_vec(obj):
+  return ROOT.Math.PtEtaPhiMVector(obj.pt, obj.eta, obj.phi, obj.mass)
 
 class MyAnalysis(Module):
     def __init__(self, lumi=1.0, dict_xs=None, dict_ngen=None):
@@ -68,6 +70,10 @@ class MyAnalysis(Module):
         self.addObject(self.cutflow)
 
     def analyze(self, event):
+        recophi = Object(event, "RecoPhi")
+        twoprongs = Collection(event, "TwoProng")
+        photons = Collection(event, "HighPtIdPhoton")
+
         if self.dict_xs and self.dict_ngen:
           dataset_id = event.dataset_id
           xs = self.dict_xs[dataset_id]
@@ -76,46 +82,39 @@ class MyAnalysis(Module):
         else:
           weight = 1.0
 
-        recophi = Object(event, "RecoPhi")
-        twoprongs = Collection(event, "TwoProng")
-
-        self.cutflow.Fill(0)
-        if event.RecoPhi_pass:
-          self.cutflow.Fill(1)
-        if event.RecoPhi_pass and recophi.photonLeg_pt>200:
-          self.cutflow.Fill(2)
-          photon = ROOT.TLorentzVector()
-          twoprong = ROOT.TLorentzVector()
-          photon.SetPtEtaPhiM(recophi.photonLeg_pt, recophi.photonLeg_eta, recophi.photonLeg_phi, recophi.photonLeg_mass)
-          twoprong.SetPtEtaPhiM(recophi.twoprongLeg_pt, recophi.twoprongLeg_eta, recophi.twoprongLeg_phi, recophi.twoprongLeg_mass)
-          self.recophi_dr.Fill(photon.DeltaR(twoprong), weight)
-          self.recophi_m.Fill(recophi.mass, weight)
-          self.recophi_pt.Fill(recophi.pt, weight)
-          self.recophi_eta.Fill(recophi.eta, weight)
-          self.recophi_phi.Fill(recophi.phi, weight)
-          self.photon_pt.Fill(recophi.photonLeg_pt, weight)
-          self.photon_eta.Fill(recophi.photonLeg_eta, weight)
-          self.photon_phi.Fill(recophi.photonLeg_phi, weight)
-          self.twoprong_pt.Fill(recophi.twoprongLeg_pt, weight)
-          self.twoprong_eta.Fill(recophi.twoprongLeg_eta, weight)
-          self.twoprong_phi.Fill(recophi.twoprongLeg_phi, weight)
-
-          self.nphoton.Fill(event.nHighPtIdPhoton, weight)
-          ntwoprong = 0
-          for twoprong in twoprongs:
-            if twoprong.isTight: ntwoprong += 1
-          self.ntwoprong.Fill(ntwoprong, weight)
-
-          self.njets.Fill(event.NJets, weight)
-          self.ht.Fill(event.HT, weight)
-          self.met.Fill(event.MET_pt, weight)
-          self.met_phi.Fill(event.MET_phi, weight)
-          self.npv.Fill(event.PV_npvs, weight)
-
         try:
           self.hthat_lhe.Fill(event.htHat_lhe, weight)
           self.hthat_genPart.Fill(event.htHat_genPart, weight)
         except RuntimeError:
           pass
+
+        self.cutflow.Fill(0)
+        if event.Region == 1:
+          self.cutflow.Fill(1)
+          photon = get_vec(photons[recophi.photonLeg_index])
+          twoprong = get_vec(twoprongs[recophi.twoprongLeg_index])
+          if photon.pt > 200:
+            self.cutflow.Fill(2)
+            self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
+            self.recophi_m.Fill(recophi.mass, weight)
+            self.recophi_pt.Fill(recophi.pt, weight)
+            self.recophi_eta.Fill(recophi.eta, weight)
+            self.recophi_phi.Fill(recophi.phi, weight)
+            self.photon_pt.Fill(photon.Pt(), weight)
+            self.photon_eta.Fill(photon.Eta(), weight)
+            self.photon_phi.Fill(photon.Phi(), weight)
+            self.twoprong_pt.Fill(twoprong.Pt(), weight)
+            self.twoprong_eta.Fill(twoprong.Eta(), weight)
+            self.twoprong_phi.Fill(twoprong.Phi(), weight)
+            self.nphoton.Fill(event.nHighPtIdPhoton, weight)
+            ntwoprong = 0
+            for twoprong in twoprongs:
+              if twoprong.isTight: ntwoprong += 1
+            self.ntwoprong.Fill(ntwoprong, weight)
+            self.njets.Fill(event.NJets, weight)
+            self.ht.Fill(event.HT, weight)
+            self.met.Fill(event.MET_pt, weight)
+            self.met_phi.Fill(event.MET_phi, weight)
+            self.npv.Fill(event.PV_npvs, weight)
 
         return True
