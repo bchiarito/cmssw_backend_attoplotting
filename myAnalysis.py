@@ -91,9 +91,9 @@ class MyAnalysis(Module):
         self.cutflow.Fill(0)
         if event.Region == 1:
           self.cutflow.Fill(1)
-          photon = get_vec(photons[recophi.photonLeg_index])
-          twoprong = get_vec(twoprongs[recophi.twoprongLeg_index])
-          if photon.pt > 200:
+          photon = get_vec(photons[recophi.photonindex])
+          twoprong = get_vec(twoprongs[recophi.twoprongindex])
+          if photon.Pt() > 200:
             self.cutflow.Fill(2)
             self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
             self.recophi_m.Fill(recophi.mass, weight)
@@ -109,7 +109,11 @@ class MyAnalysis(Module):
             self.nphoton.Fill(event.nHighPtIdPhoton, weight)
             ntwoprong = 0
             for twoprong in twoprongs:
-              if twoprong.isTight: ntwoprong += 1
+              try:
+                tight = twoprong.isTight
+              except RuntimeError:
+                tight = True
+              if tight: ntwoprong += 1
             self.ntwoprong.Fill(ntwoprong, weight)
             self.njets.Fill(event.NJets, weight)
             self.ht.Fill(event.HT, weight)
