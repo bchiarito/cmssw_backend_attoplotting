@@ -8,7 +8,6 @@ import sys
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
-
 class MyAnalysis(Module):
     def __init__(self, lumi=1.0, dict_xs=None, dict_ngen=None):
         self.writeHistFile = True
@@ -21,18 +20,30 @@ class MyAnalysis(Module):
 
         self.njets = ROOT.TH1F('njets', 'njets', 20, 0, 20)
         self.addObject(self.njets)
-        self.ht = ROOT.TH1F('ht', 'ht', 200, 0, 2000)
+        self.ht = ROOT.TH1F('ht', 'ht', 250, 0, 5000)
         self.addObject(self.ht)
-        self.met = ROOT.TH1F('met', 'met', 200, 0, 2000)
+        self.met = ROOT.TH1F('met', 'met', 80, 0, 400)
         self.addObject(self.met)
         self.met_phi = ROOT.TH1F('met_phi', 'met_phi', 70, -3.5, 3.5)
         self.addObject(self.met_phi)
+        self.met_phi_cut = ROOT.TH1F('met_phi_cut', 'met_phi_cut', 70, -3.5, 3.5)
+        self.addObject(self.met_phi_cut)
         self.npv = ROOT.TH1F('npv', 'npv', 100, 0, 100)
         self.addObject(self.npv)
 
-        self.recophi_dr = ROOT.TH1F('recophi_dr', 'recophi_dr', 1000, 0, 10)
+        self.recophi_dphi = ROOT.TH1F('recophi_dphi', 'recophi_dphi', 35, 0, 3.5)
+        self.addObject(self.recophi_dphi)
+        self.recophi_deta = ROOT.TH1F('recophi_deta', 'recophi_deta', 70, 0, 7)
+        self.addObject(self.recophi_deta)
+        self.recophi_dr = ROOT.TH1F('recophi_dr', 'recophi_dr', 70, 0, 7)
         self.addObject(self.recophi_dr)
-        self.recophi_m = ROOT.TH1F('reophi_m', 'recophi_m', 100, 0, 1000)
+        self.recophi_dr_0jet = ROOT.TH1F('recophi_dr_0jet', 'recophi_dr_0jet', 70, 0, 7)
+        self.addObject(self.recophi_dr_0jet)
+        self.recophi_dr_1jet = ROOT.TH1F('recophi_dr_1jet', 'recophi_dr_1jet', 70, 0, 7)
+        self.addObject(self.recophi_dr_1jet)
+        self.recophi_dr_2jet = ROOT.TH1F('recophi_dr_2jet', 'recophi_dr_2jet', 70, 0, 7)
+        self.addObject(self.recophi_dr_2jet)
+        self.recophi_m = ROOT.TH1F('reophi_m', 'recophi_m', 300, 0, 6000)
         self.addObject(self.recophi_m)
         self.recophi_pt = ROOT.TH1F('reophi_pt', 'recophi_pt', 200, 0, 2000)
         self.addObject(self.recophi_m)
@@ -56,6 +67,12 @@ class MyAnalysis(Module):
         self.addObject(self.twoprong_eta)
         self.twoprong_phi = ROOT.TH1F('twoprong_phi', 'twoprong_phi', 70, -3.5, 3.5)
         self.addObject(self.twoprong_phi)
+        self.twoprong_mass = ROOT.TH1F('twoprong_mass', 'twoprong_mass', 120, 0, 12)
+        self.addObject(self.twoprong_mass)
+        self.twoprong_masspi0 = ROOT.TH1F('twoprong_masspi0', 'twoprong_masspi0', 120, 0, 12)
+        self.addObject(self.twoprong_masspi0)
+        self.twoprong_masseta = ROOT.TH1F('twoprong_masseta', 'twoprong_masseta', 120, 0, 12)
+        self.addObject(self.twoprong_masseta)
         self.ntwoprong = ROOT.TH1F('ntwoprong', 'ntwoprong', 10, 0, 10)
         self.addObject(self.ntwoprong)
 
@@ -89,6 +106,11 @@ class MyAnalysis(Module):
           photon.SetPtEtaPhiM(recophi.photonLeg_pt, recophi.photonLeg_eta, recophi.photonLeg_phi, recophi.photonLeg_mass)
           twoprong.SetPtEtaPhiM(recophi.twoprongLeg_pt, recophi.twoprongLeg_eta, recophi.twoprongLeg_phi, recophi.twoprongLeg_mass)
           self.recophi_dr.Fill(photon.DeltaR(twoprong), weight)
+          self.recophi_dphi.Fill(photon.DeltaPhi(twoprong), weight)
+          self.recophi_deta.Fill(abs(photon.Eta() - twoprong.Eta()), weight)
+          if event.NJets == 0: self.recophi_dr_0jet.Fill(photon.DeltaR(twoprong), weight)
+          if event.NJets == 1: self.recophi_dr_1jet.Fill(photon.DeltaR(twoprong), weight)
+          if event.NJets >= 2: self.recophi_dr_2jet.Fill(photon.DeltaR(twoprong), weight)
           self.recophi_m.Fill(recophi.mass, weight)
           self.recophi_pt.Fill(recophi.pt, weight)
           self.recophi_eta.Fill(recophi.eta, weight)
@@ -99,6 +121,12 @@ class MyAnalysis(Module):
           self.twoprong_pt.Fill(recophi.twoprongLeg_pt, weight)
           self.twoprong_eta.Fill(recophi.twoprongLeg_eta, weight)
           self.twoprong_phi.Fill(recophi.twoprongLeg_phi, weight)
+          for twoprong in twoprongs:
+            if twoprong.isTight:
+              self.twoprong_mass.Fill(twoprong.mass, weight)
+              self.twoprong_masspi0.Fill(twoprong.massPi0, weight)
+              self.twoprong_masseta.Fill(twoprong.massEta, weight)
+              break
 
           self.nphoton.Fill(event.nHighPtIdPhoton, weight)
           ntwoprong = 0
@@ -110,6 +138,7 @@ class MyAnalysis(Module):
           self.ht.Fill(event.HT, weight)
           self.met.Fill(event.MET_pt, weight)
           self.met_phi.Fill(event.MET_phi, weight)
+          if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
           self.npv.Fill(event.PV_npvs, weight)
 
         try:
