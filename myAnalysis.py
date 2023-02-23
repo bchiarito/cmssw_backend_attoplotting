@@ -113,17 +113,25 @@ class MyAnalysis(Module):
           twoprong = get_vec(twoprongs[recophi.twoprongindex])
           if photon.Pt() > 200:
             self.cutflow.Fill(2)
-            self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
-            self.recophi_m.Fill(recophi.mass, weight)
             self.recophi_pt.Fill(recophi.pt, weight)
             self.recophi_eta.Fill(recophi.eta, weight)
             self.recophi_phi.Fill(recophi.phi, weight)
+            self.recophi_m.Fill(recophi.mass, weight)
+            self.recophi_dphi.Fill(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong), weight)
+            self.recophi_deta.Fill(abs(photon.Eta() - twoprong.Eta()), weight)
+            self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
+            if event.NJets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong), weight)
+            if event.NJets == 1: self.recophi_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong), weight)
+            if event.NJets >= 2: self.recophi_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong), weight)
             self.photon_pt.Fill(photon.Pt(), weight)
             self.photon_eta.Fill(photon.Eta(), weight)
             self.photon_phi.Fill(photon.Phi(), weight)
             self.twoprong_pt.Fill(twoprong.Pt(), weight)
             self.twoprong_eta.Fill(twoprong.Eta(), weight)
             self.twoprong_phi.Fill(twoprong.Phi(), weight)
+            self.twoprong_mass.Fill(twoprongs[recophi.twoprongindex].mass, weight)
+            self.twoprong_masspi0.Fill(twoprongs[recophi.twoprongindex].massPi0, weight)
+            self.twoprong_masseta.Fill(twoprongs[recophi.twoprongindex].massEta, weight)
             self.nphoton.Fill(event.nHighPtIdPhoton, weight)
             ntwoprong = 0
             for twoprong in twoprongs:
@@ -137,6 +145,7 @@ class MyAnalysis(Module):
             self.ht.Fill(event.HT, weight)
             self.met.Fill(event.MET_pt, weight)
             self.met_phi.Fill(event.MET_phi, weight)
+            if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
             self.npv.Fill(event.PV_npvs, weight)
 
         return True
