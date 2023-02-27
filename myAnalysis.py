@@ -23,7 +23,7 @@ class MyAnalysis(Module):
 
         self.njets = ROOT.TH1F('njets', 'njets', 20, 0, 20)
         self.addObject(self.njets)
-        self.ht = ROOT.TH1F('ht', 'ht', 250, 0, 5000)
+        self.ht = ROOT.TH1F('ht', 'ht', 100, 0, 5000)
         self.addObject(self.ht)
         self.met = ROOT.TH1F('met', 'met', 80, 0, 400)
         self.addObject(self.met)
@@ -46,16 +46,16 @@ class MyAnalysis(Module):
         self.addObject(self.recophi_dr_1jet)
         self.recophi_dr_2jet = ROOT.TH1F('recophi_dr_2jet', 'recophi_dr_2jet', 70, 0, 7)
         self.addObject(self.recophi_dr_2jet)
-        self.recophi_m = ROOT.TH1F('reophi_m', 'recophi_m', 300, 0, 6000)
+        self.recophi_m = ROOT.TH1F('reophi_m', 'recophi_m', 171, 0, 5985)
         self.addObject(self.recophi_m)
         self.recophi_pt = ROOT.TH1F('reophi_pt', 'recophi_pt', 200, 0, 2000)
-        self.addObject(self.recophi_m)
+        self.addObject(self.recophi_pt)
         self.recophi_eta = ROOT.TH1F('reophi_eta', 'recophi_eta', 100, -5, 5)
-        self.addObject(self.recophi_m)
+        self.addObject(self.recophi_eta)
         self.recophi_phi = ROOT.TH1F('reophi_phi', 'recophi_phi', 70, -3.5, 3.5)
-        self.addObject(self.recophi_m)
+        self.addObject(self.recophi_phi)
 
-        self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 100, 0, 1000)
+        self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 150, 0, 1500)
         self.addObject(self.photon_pt)
         self.photon_eta = ROOT.TH1F('photon_eta', 'photon_eta', 100, -5, 5)
         self.addObject(self.photon_eta)
@@ -64,7 +64,7 @@ class MyAnalysis(Module):
         self.nphoton = ROOT.TH1F('nphoton', 'nphoton', 10, 0, 10)
         self.addObject(self.nphoton)
 
-        self.twoprong_pt = ROOT.TH1F('twoprong_pt', 'twoprong_pt', 100, 0, 1000)
+        self.twoprong_pt = ROOT.TH1F('twoprong_pt', 'twoprong_pt', 150, 0, 1500)
         self.addObject(self.twoprong_pt)
         self.twoprong_eta = ROOT.TH1F('twoprong_eta', 'twoprong_eta', 100, -5, 5)
         self.addObject(self.twoprong_eta)
@@ -79,10 +79,10 @@ class MyAnalysis(Module):
         self.ntwoprong = ROOT.TH1F('ntwoprong', 'ntwoprong', 10, 0, 10)
         self.addObject(self.ntwoprong)
 
-        self.hthat_lhe = ROOT.TH1F('MC_hthat_lhe', 'hthat_lhe', 100, 0, 1000)
-        self.addObject(self.hthat_lhe)
-        self.hthat_genPart = ROOT.TH1F('MC_hthat_genPart', 'hthat_genPart', 100, 0, 1000)
-        self.addObject(self.hthat_genPart)
+        self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 100, 0, 1000)
+        self.addObject(self.hthat_gjets)
+        self.hthat_qcd = ROOT.TH1F('QCD_hthat_lhe', 'hthat', 300, 0, 3000)
+        self.addObject(self.hthat_qcd)
 
         self.cutflow = ROOT.TH1F('cutflow', 'cutflow', 10, 0, 10)
         self.addObject(self.cutflow)
@@ -101,8 +101,8 @@ class MyAnalysis(Module):
           weight = 1.0
 
         try:
-          self.hthat_lhe.Fill(event.htHat_lhe, weight)
-          self.hthat_genPart.Fill(event.htHat_genPart, weight)
+          self.hthat_gjets.Fill(event.htHat_lhe, weight)
+          self.hthat_qcd.Fill(event.htHat_lhe, weight)
         except RuntimeError:
           pass
 
@@ -117,7 +117,7 @@ class MyAnalysis(Module):
             self.recophi_eta.Fill(recophi.eta, weight)
             self.recophi_phi.Fill(recophi.phi, weight)
             self.recophi_m.Fill(recophi.mass, weight)
-            self.recophi_dphi.Fill(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong), weight)
+            self.recophi_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong)), weight)
             self.recophi_deta.Fill(abs(photon.Eta() - twoprong.Eta()), weight)
             self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
             if event.NJets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
