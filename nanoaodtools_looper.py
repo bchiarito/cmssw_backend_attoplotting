@@ -36,6 +36,12 @@ args = parser.parse_args()
 # import modules
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
 
+if args.data: datamc = 'data'
+elif args.mc: datamc = 'mc'
+elif args.sigRes: datamc = 'sigRes'
+elif args.sigNonRes: datamc = 'sigNonRes'
+else: raise SystemExit('ERROR: Must specify one of --data / --mc / --sigRes / --sigNonRes !')
+
 files = []
 if not args.loc: metadata_chain = ROOT.TChain('Metadata')
 if args.input == 'local':
@@ -112,7 +118,7 @@ if args.data:
   lookup_ngen = None
 
 modules = []
-modules += [MyAnalysis(float(args.lumi), lookup_xs, lookup_ngen)]
+modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
 
 if args.fast: n = 1
 else: n = None
