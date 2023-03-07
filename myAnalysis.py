@@ -56,7 +56,7 @@ class MyAnalysis(Module):
         self.recophi_phi = ROOT.TH1F('reophi_phi', 'recophi_phi', 70, -3.5, 3.5)
         self.addObject(self.recophi_phi)
 
-        self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 150, 0, 1500)
+        self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 160, 0, 1600)
         self.addObject(self.photon_pt)
         self.photon_eta = ROOT.TH1F('photon_eta', 'photon_eta', 100, -5, 5)
         self.addObject(self.photon_eta)
@@ -80,7 +80,7 @@ class MyAnalysis(Module):
         self.ntwoprong = ROOT.TH1F('ntwoprong', 'ntwoprong', 10, 0, 10)
         self.addObject(self.ntwoprong)
 
-        self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 100, 0, 1000)
+        self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
         self.hthat_qcd = ROOT.TH1F('QCD_hthat_lhe', 'hthat', 300, 0, 3000)
         self.addObject(self.hthat_qcd)
@@ -112,6 +112,7 @@ class MyAnalysis(Module):
         if event.Region == 1:
           photon = get_vec(photons[recophi.photonindex])
           twoprong = get_vec(twoprongs[recophi.twoprongindex])
+          deta = abs(photon.Eta() - twoprong.Eta())
 
         if True:
           self.cutflow.Fill(0)
@@ -124,10 +125,12 @@ class MyAnalysis(Module):
         if event.Region == 1:
           self.cutflow.Fill(1)
 
-        if event.Region == 1 and photon.Pt() > 220:
+        #if event.Region == 1 and photon.Pt() > 220:
+        if event.Region == 1 and photon.Pt() > 220 and deta < 1.5:
           self.cutflow.Fill(2)
 
-        if event.Region == 1 and photon.Pt() > 220 and pass_trigger:
+        #if event.Region == 1 and photon.Pt() > 220 and pass_trigger:
+        if event.Region == 1 and photon.Pt() > 220 and deta < 1.5 and pass_trigger:
           self.cutflow.Fill(3)
           self.recophi_pt.Fill(recophi.pt, weight)
           self.recophi_eta.Fill(recophi.eta, weight)
