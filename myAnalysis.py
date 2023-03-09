@@ -125,12 +125,12 @@ class MyAnalysis(Module):
         if event.Region == 1:
           self.cutflow.Fill(1)
 
-        #if event.Region == 1 and photon.Pt() > 220:
-        if event.Region == 1 and photon.Pt() > 220 and deta < 1.5:
+        if event.Region == 1 and photon.Pt() > 220:
+        #if event.Region == 1 and photon.Pt() > 220 and deta < 1.5:
           self.cutflow.Fill(2)
 
-        #if event.Region == 1 and photon.Pt() > 220 and pass_trigger:
-        if event.Region == 1 and photon.Pt() > 220 and deta < 1.5 and pass_trigger:
+        if event.Region == 1 and photon.Pt() > 220 and pass_trigger:
+        #if event.Region == 1 and photon.Pt() > 220 and deta < 1.5 and pass_trigger:
           self.cutflow.Fill(3)
           self.recophi_pt.Fill(recophi.pt, weight)
           self.recophi_eta.Fill(recophi.eta, weight)
