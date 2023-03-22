@@ -79,6 +79,10 @@ class MyAnalysis(Module):
         self.addObject(self.twoprong_masseta)
         self.ntwoprong = ROOT.TH1F('ntwoprong', 'ntwoprong', 10, 0, 10)
         self.addObject(self.ntwoprong)
+        self.twoprong_eta_barrel = ROOT.TH1F('twoprong_eta_barrel', 'twoprong_eta_barrel', 100, -5, 5)
+        self.addObject(self.twoprong_eta_barrel)
+        self.twoprong_eta_endcap = ROOT.TH1F('twoprong_eta_endcap', 'twoprong_eta_endcap', 100, -5, 5)
+        self.addObject(self.twoprong_eta_endcap)
 
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
@@ -159,5 +163,7 @@ class MyAnalysis(Module):
           self.met_phi.Fill(event.MET_phi, weight)
           if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
           self.npv.Fill(event.PV_npvs, weight)
+          if photon.scEta(): self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
+          if photon.scEta(): self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
 
         return True
