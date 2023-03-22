@@ -171,8 +171,8 @@ class MyAnalysis(Module):
           self.met_phi.Fill(event.MET_phi, weight)
           if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
           self.npv.Fill(event.PV_npvs, weight)
-          if photon.scEta(): self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
-          if photon.scEta(): self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
+          if photons[recophi.photonindex].scEta(): self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
+          if photons[recophi.photonindex].scEta(): self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
 
         if event.CutBased_Region == 1:
           cb_photon = get_vec(cb_photons[cb_recophi.photonindex])
