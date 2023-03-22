@@ -177,7 +177,7 @@ class MyAnalysis(Module):
         if event.CutBased_Region == 1:
           cb_photon = get_vec(cb_photons[cb_recophi.photonindex])
           cb_twoprong = get_vec(twoprongs[cb_recophi.twoprongindex])
-          if cb.photon.Pt() > 220 and pass_trigger:
+          if cb_photon.Pt() > 220 and pass_trigger:
             self.cb_twoprong_masspi0.Fill(twoprongs[cb_recophi.twoprongindex].massPi0, weight)
             self.cb_twoprong_masseta.Fill(twoprongs[cb_recophi.twoprongindex].massEta, weight)
             self.cb_recophi_m.Fill(cb_recophi.mass, weight)
