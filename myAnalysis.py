@@ -89,6 +89,13 @@ class MyAnalysis(Module):
         self.hthat_qcd = ROOT.TH1F('QCD_hthat_lhe', 'hthat', 300, 0, 3000)
         self.addObject(self.hthat_qcd)
 
+        self.cb_twoprong_masspi0 = ROOT.TH1F('cb_twoprong_masspi0', 'cb_twoprong_masspi0', 300, 0, 15)
+        self.addObject(self.cb_twoprong_masspi0)
+        self.cb_twoprong_masseta = ROOT.TH1F('cb_twoprong_masseta', 'cb_twoprong_masseta', 300, 0, 15)
+        self.addObject(self.cb_twoprong_masseta)
+        self.cb_recophi_m = ROOT.TH1F('cb_reophi_m', 'cb_recophi_m', 200, 0, 6000)
+        self.addObject(self.cb_recophi_m)
+
         self.cutflow = ROOT.TH1F('cutflow', 'cutflow', 10, 0, 10)
         self.addObject(self.cutflow)
 
@@ -102,10 +109,11 @@ class MyAnalysis(Module):
           weight = 1.0
 
         recophi = Object(event, "RecoPhi")
+        cb_recophi = Object(event, "CutBased_RecoPhi")
         twoprongs = Collection(event, "TwoProng")
         photons = Collection(event, "HighPtIdPhoton")
+        cb_photons = Collection(event, "Photon")
         pass_trigger = event.HLT_Photon200
-        #if self.datamc == 'mc' or self.datamc == 'sigRes' or self.datamc == 'sigNonRes': pass_trigger = True
         ntwoprong = 0
         for twoprong in twoprongs:
           try:
@@ -166,4 +174,12 @@ class MyAnalysis(Module):
           if photon.scEta(): self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
           if photon.scEta(): self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
 
+        if event.CutBased_Region == 1:
+          cb_photon = get_vec(cb_photons[cb_recophi.photonindex])
+          cb_twoprong = get_vec(twoprongs[cb_recophi.twoprongindex])
+          if cb.photon.Pt() > 220 and pass_trigger:
+            self.cb_twoprong_masspi0.Fill(twoprongs[cb_recophi.twoprongindex].massPi0, weight)
+            self.cb_twoprong_masseta.Fill(twoprongs[cb_recophi.twoprongindex].massEta, weight)
+            self.cb_recophi_m.Fill(cb_recophi.mass, weight)
+            
         return True
