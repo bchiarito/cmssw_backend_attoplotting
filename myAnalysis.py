@@ -12,12 +12,14 @@ def get_vec(obj):
   return ROOT.Math.PtEtaPhiMVector(obj.pt, obj.eta, obj.phi, obj.mass)
 
 class MyAnalysis(Module):
-    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None):
+    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, deta=False, photon='HPID'):
         self.writeHistFile = True
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
         self.datamc = datamc
+        self.deta = deta
+        self.photon = photon
 
     def beginJob(self, histFile=None, histDirName=None):
         Module.beginJob(self, histFile, histDirName)
@@ -89,17 +91,12 @@ class MyAnalysis(Module):
         self.hthat_qcd = ROOT.TH1F('QCD_hthat_lhe', 'hthat', 300, 0, 3000)
         self.addObject(self.hthat_qcd)
 
-        self.cb_twoprong_masspi0 = ROOT.TH1F('cb_twoprong_masspi0', 'cb_twoprong_masspi0', 300, 0, 15)
-        self.addObject(self.cb_twoprong_masspi0)
-        self.cb_twoprong_masseta = ROOT.TH1F('cb_twoprong_masseta', 'cb_twoprong_masseta', 300, 0, 15)
-        self.addObject(self.cb_twoprong_masseta)
-        self.cb_recophi_m = ROOT.TH1F('cb_recophi_m', 'cb_recophi_m', 200, 0, 6000)
-        self.addObject(self.cb_recophi_m)
-
         self.cutflow = ROOT.TH1F('cutflow', 'cutflow', 10, 0, 10)
         self.addObject(self.cutflow)
 
     def analyze(self, event):
+        
+        # weight
         if self.dict_xs and self.dict_ngen:
           dataset_id = event.dataset_id
           xs = self.dict_xs[dataset_id]
@@ -108,11 +105,16 @@ class MyAnalysis(Module):
         else:
           weight = 1.0
 
-        recophi = Object(event, "RecoPhi")
-        cb_recophi = Object(event, "CutBased_RecoPhi")
+        # get collections
         twoprongs = Collection(event, "TwoProng")
-        photons = Collection(event, "HighPtIdPhoton")
-        cb_photons = Collection(event, "Photon")
+        if self.photon == 'HPID':
+          photons = Collection(event, "HighPtIdPhoton")
+          recophi = Object(event, "RecoPhi")
+          region = event.Region
+        elif self.photon == 'CBL':
+          photons = Collection(event, "Photon")
+          recophi = Object(event, "CutBased_RecoPhi")
+          region = event.CutBased_Region
         pass_trigger = event.HLT_Photon200
         ntwoprong = 0
         for twoprong in twoprongs:
@@ -121,28 +123,31 @@ class MyAnalysis(Module):
           except RuntimeError:
             tight = True
           if tight: ntwoprong += 1
-        if event.Region == 1:
+        if region == 1:
           photon = get_vec(photons[recophi.photonindex])
           twoprong = get_vec(twoprongs[recophi.twoprongindex])
           deta = abs(photon.Eta() - twoprong.Eta())
 
-        if True:
-          self.cutflow.Fill(0)
-          try:
+        # deta cut
+        if region == 1:
+          if self.deta: pass_deta = deta < 1.5
+          else: pass_deta = True
+        
+        self.cutflow.Fill(0)
+        try:
+          if len(photons)>1:
             self.hthat_gjets.Fill(event.htHat_lhe, weight)
             self.hthat_qcd.Fill(event.htHat_lhe, weight)
-          except RuntimeError:
-            pass
+        except RuntimeError:
+          pass
 
-        if event.Region == 1:
+        if region == 1:
           self.cutflow.Fill(1)
 
-        if event.Region == 1 and photon.Pt() > 220:
-        #if event.Region == 1 and photon.Pt() > 220 and deta < 1.5:
+        if region == 1 and photon.Pt() > 220 and pass_deta:
           self.cutflow.Fill(2)
 
-        if event.Region == 1 and photon.Pt() > 220 and pass_trigger:
-        #if event.Region == 1 and photon.Pt() > 220 and deta < 1.5 and pass_trigger:
+        if region == 1 and photon.Pt() > 220 and pass_trigger and pass_deta:
           self.cutflow.Fill(3)
           self.recophi_pt.Fill(recophi.pt, weight)
           self.recophi_eta.Fill(recophi.eta, weight)
@@ -171,15 +176,8 @@ class MyAnalysis(Module):
           self.met_phi.Fill(event.MET_phi, weight)
           if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
           self.npv.Fill(event.PV_npvs, weight)
-          if photons[recophi.photonindex].scEta: self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
-          if photons[recophi.photonindex].scEta: self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
+          if self.photon == 'HPID':
+            if photons[recophi.photonindex].scEta: self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
+            if photons[recophi.photonindex].scEta: self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
 
-        if event.CutBased_Region == 1:
-          cb_photon = get_vec(cb_photons[cb_recophi.photonindex])
-          cb_twoprong = get_vec(twoprongs[cb_recophi.twoprongindex])
-          if cb_photon.Pt() > 220 and pass_trigger:
-            self.cb_twoprong_masspi0.Fill(twoprongs[cb_recophi.twoprongindex].massPi0, weight)
-            self.cb_twoprong_masseta.Fill(twoprongs[cb_recophi.twoprongindex].massEta, weight)
-            self.cb_recophi_m.Fill(cb_recophi.mass, weight)
-            
         return True

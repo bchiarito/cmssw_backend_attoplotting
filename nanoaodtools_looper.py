@@ -31,6 +31,8 @@ parser.add_argument("--out", default='analysis_out.root', help='name of root out
 parser.add_argument("--loc", help='original location of atto for metadata')
 parser.add_argument("--fast", action='store_true', default=False, help='test run')
 parser.add_argument("--lumi", default=1.0, help='')
+parser.add_argument("--dEta", type=bool, default=False, help='')
+parser.add_argument("--photonchoice", default="HPID", help='')
 args = parser.parse_args()
 
 # import modules
@@ -118,7 +120,7 @@ if args.data:
   lookup_ngen = None
 
 modules = []
-modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
+modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.dEta, args.photonchoice)]
 
 if args.fast: n = 1
 else: n = None
