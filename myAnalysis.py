@@ -177,7 +177,10 @@ class MyAnalysis(Module):
           if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
           self.npv.Fill(event.PV_npvs, weight)
           if self.photon == 'HPID':
-            if photons[recophi.photonindex].scEta: self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
-            if photons[recophi.photonindex].scEta: self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
+            if photons[recophi.photonindex].scEta<1.4442: self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
+            if photons[recophi.photonindex].scEta>1.566 and photons[recophi.photonindex].scEta<2.5: self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
+          if self.photon == 'CBL':
+            if photons[recophi.photonindex].isScEtaEB: self.twoprong_eta_barrel.Fill(twoprong.Eta(), weight)
+            if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
 
         return True
