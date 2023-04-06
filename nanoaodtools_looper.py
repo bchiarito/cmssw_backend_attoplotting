@@ -31,7 +31,7 @@ parser.add_argument("--out", default='analysis_out.root', help='name of root out
 parser.add_argument("--loc", help='original location of atto for metadata')
 parser.add_argument("--fast", action='store_true', default=False, help='test run')
 parser.add_argument("--lumi", default=1.0, help='')
-parser.add_argument("--dEta", type=bool, default=False, help='')
+parser.add_argument("--dEta", type=str, default='False', help='')
 parser.add_argument("--photonchoice", default="HPID", help='')
 args = parser.parse_args()
 
@@ -118,6 +118,10 @@ if not args.loc:
 if args.data:
   lookup_xs = None
   lookup_ngen = None
+
+if args.dEta == 'False' : deta = False
+elif args.dEta == 'True': deta = True
+else: deta = False
 
 modules = []
 modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.dEta, args.photonchoice)]
