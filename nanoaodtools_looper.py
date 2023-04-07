@@ -124,7 +124,7 @@ elif args.dEta == 'True': deta = True
 else: deta = False
 
 modules = []
-modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.dEta, args.photonchoice)]
+modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, deta, args.photonchoice)]
 
 if args.fast: n = 1
 else: n = None

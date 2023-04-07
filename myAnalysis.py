@@ -130,7 +130,8 @@ class MyAnalysis(Module):
 
         # deta cut
         if region == 1:
-          if self.deta: pass_deta = deta < 1.5
+          if self.deta and deta < 1.5: pass_deta = True
+          elif self.deta and deta > 1.5: pass_deta = False
           else: pass_deta = True
         
         self.cutflow.Fill(0)
