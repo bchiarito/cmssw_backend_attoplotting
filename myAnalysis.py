@@ -71,6 +71,7 @@ class MyAnalysis(Module):
         self.addObject(self.twoprong_pt)
         self.twoprong_eta = ROOT.TH1F('twoprong_eta', 'twoprong_eta', 100, -5, 5)
         self.addObject(self.twoprong_eta)
+
         self.twoprong_phi = ROOT.TH1F('twoprong_phi', 'twoprong_phi', 70, -3.5, 3.5)
         self.addObject(self.twoprong_phi)
         self.twoprong_mass = ROOT.TH1F('twoprong_mass', 'twoprong_mass', 300, 0, 15)
@@ -107,6 +108,8 @@ class MyAnalysis(Module):
 
         # get collections
         twoprongs = Collection(event, "TwoProng")
+        # FIXME sorting should be done upstream
+        twoprongs = sorted(twoprongs, reverse=True, key=lambda obj : obj.pt)
         if self.photon == 'HPID':
           photons = Collection(event, "HighPtIdPhoton")
           recophi = Object(event, "RecoPhi")
