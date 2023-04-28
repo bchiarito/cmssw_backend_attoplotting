@@ -8,8 +8,18 @@ import sys
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
+
 def get_vec(obj):
   return ROOT.Math.PtEtaPhiMVector(obj.pt, obj.eta, obj.phi, obj.mass)
+
+
+def dR(eta1, eta2, phi1, phi2):
+    dEta = abs(eta1 - eta2)
+    dPhi = abs(phi1 - phi2)  # abs() is fine because delta_phi will be squared eventually 
+    # ensure that delta_phi is between 0 and pi (not -pi and pi due to abs())
+    if dPhi > ROOT.TMath.Pi(): dPhi -= ROOT.TMath.Pi()
+    return ROOT.TMath.Sqrt(dEta**2 + dPhi**2)
+
 
 class MyAnalysis(Module):
     def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None):
@@ -58,6 +68,17 @@ class MyAnalysis(Module):
 
         # TwoProng Pt Binning
         self.pt_bins = [0,50,100,150,200,250,300,350,400,600]
+        
+        masspi0_iso_sym_barrel_hists = []
+        masspi0_iso_sym_endcap_hists = []
+        masspi0_iso_asym_barrel_hists = []
+        masspi0_iso_asym_endcap_hists = []
+        masspi0_noniso_sym_barrel_hists = []
+        masspi0_noniso_sym_endcap_hists = []
+        masspi0_noniso_asym_barrel_hists = []
+        masspi0_noniso_asym_endcap_hists = []
+
+        
         bin0 = self.pt_bins[0] 
         bin1 = self.pt_bins[1] 
         bin2 = self.pt_bins[2] 
@@ -252,167 +273,195 @@ class MyAnalysis(Module):
 
     def analyze(self, event):
         if self.dict_xs and self.dict_ngen:
-          dataset_id = event.dataset_id
-          xs = self.dict_xs[dataset_id]
-          Ngen = self.dict_ngen[dataset_id]
-          weight = xs * self.lumi / Ngen
+            dataset_id = event.dataset_id
+            xs = self.dict_xs[dataset_id]
+            Ngen = self.dict_ngen[dataset_id]
+            weight = xs * self.lumi / Ngen
         else:
-          weight = 1.0
-
-        recophi = Object(event, "CutBased_RecoPhi")
+            weight = 1.0
+    
+        hthat = Object(event, "htHat")
         twoprongs = Collection(event, "TwoProng")
         photons = Collection(event, "Photon")
         pass_trigger = event.HLT_Photon200
+
+        # Immediately fill lhe histogram
+        if len(photons) > 0: self.hthat_gjets.Fill(hthat.lhe, weight)
         
-        # My analysis 
         bins = []
         for i in range(len(self.pt_bins)):
             bins.append(self.pt_bins[i])
-
-        sel_tp = twoprongs[recophi.twoprongindex]
-        sel_photon = photons[recophi.photonindex]
-
-        if sel_photon.pt > 220 and pass_trigger:
-            if event.Region == 1: # tight tight
-                self.twoprong_pt_iso_sym.Fill(sel_tp.pt, weight)
-                self.twoprong_eta_iso_sym.Fill(sel_tp.eta, weight)
-                self.ntwoprong_regions.Fill(1)
-                self.twoprong_masspi0_iso_sym.Fill(sel_tp.massPi0, weight)
-                if bins[0] < sel_tp.pt < bins[1]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-                elif bins[1] < sel_tp.pt < bins[2]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-                elif bins[2] < sel_tp.pt < bins[3]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-                elif bins[3] < sel_tp.pt < bins[4]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-                elif bins[4] < sel_tp.pt < bins[5]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-                elif bins[5] < sel_tp.pt < bins[6]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-                elif bins[6] < sel_tp.pt < bins[7]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-                elif bins[7] < sel_tp.pt < bins[8]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-                elif bins[8] < sel_tp.pt < bins[9]:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-                else:
-                    if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                    else: self.twoprong_masspi0_iso_sym_endcap_bin9.Fill(sel_tp.massPi0, weight)
-            elif event.Region == 2:
-                if sel_tp.passIso and not sel_tp.passSym:  # tight loose
-                    self.twoprong_masspi0_iso_asym.Fill(sel_tp.massPi0, weight)
-                    self.twoprong_pt_iso_asym.Fill(sel_tp.pt, weight)
-                    self.twoprong_eta_iso_asym.Fill(sel_tp.eta, weight)
-                    self.ntwoprong_regions.Fill(2)
-                    if bins[0] < sel_tp.pt < bins[1]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-                    elif bins[1] < sel_tp.pt < bins[2]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-                    elif bins[2] < sel_tp.pt < bins[3]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-                    elif bins[3] < sel_tp.pt < bins[4]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-                    elif bins[4] < sel_tp.pt < bins[5]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-                    elif bins[5] < sel_tp.pt < bins[6]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-                    elif bins[6] < sel_tp.pt < bins[7]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-                    elif bins[7] < sel_tp.pt < bins[8]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-                    elif bins[8] < sel_tp.pt < bins[9]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-                    else:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_iso_asym_endcap_bin9.Fill(sel_tp.massPi0, weight)
-                elif not sel_tp.passIso and sel_tp.passSym:  # loose tight
-                    self.twoprong_masspi0_noniso_sym.Fill(sel_tp.massPi0, weight)
-                    self.twoprong_pt_noniso_sym.Fill(sel_tp.pt, weight)
-                    self.twoprong_eta_noniso_sym.Fill(sel_tp.eta, weight)
-                    self.ntwoprong_regions.Fill(3)
-                    if bins[0] < sel_tp.pt < bins[1]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-                    elif bins[1] < sel_tp.pt < bins[2]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-                    elif bins[2] < sel_tp.pt < bins[3]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-                    elif bins[3] < sel_tp.pt < bins[4]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-                    elif bins[4] < sel_tp.pt < bins[5]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-                    elif bins[5] < sel_tp.pt < bins[6]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-                    elif bins[6] < sel_tp.pt < bins[7]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-                    elif bins[7] < sel_tp.pt < bins[8]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-                    elif bins[8] < sel_tp.pt < bins[9]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-                    else:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_sym_endcap_bin9.Fill(sel_tp.massPi0, weight)
-                elif not sel_tp.passIso and not sel_tp.passSym:  # loose loose
-                    self.twoprong_masspi0_noniso_asym.Fill(sel_tp.massPi0, weight)
-                    self.twoprong_pt_noniso_asym.Fill(sel_tp.pt, weight)
-                    self.twoprong_eta_noniso_asym.Fill(sel_tp.eta, weight)
-                    self.ntwoprong_regions.Fill(4)
-                    if bins[0] < sel_tp.pt < bins[1]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-                    elif bins[1] < sel_tp.pt < bins[2]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-                    elif bins[2] < sel_tp.pt < bins[3]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-                    elif bins[3] < sel_tp.pt < bins[4]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-                    elif bins[4] < sel_tp.pt < bins[5]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-                    elif bins[5] < sel_tp.pt < bins[6]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-                    elif bins[6] < sel_tp.pt < bins[7]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-                    elif bins[7] < sel_tp.pt < bins[8]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-                    elif bins[8] < sel_tp.pt < bins[9]:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-                    else:
-                        if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                        else: self.twoprong_masspi0_noniso_asym_endcap_bin9.Fill(sel_tp.massPi0, weight)
         
+
+        sel_photon = []
+        for photon in photons:
+            if photon.cutBased >= 1 and photon.pt > 220: sel_photon.append(photon)
+            break
+
+        self.ntwoprong_regions.Fill(len(sel_photon))
+
+        if len(sel_photon) == 0 or not pass_trigger: return True
+        
+        iso_sym_tp = []
+        iso_asym_tp = []
+        noniso_sym_tp = []
+        noniso_asym_tp = []
+        for twoprong in twoprongs:
+            if not twoprong.pt > 22 and not dR(twoprong.eta, sel_photon[0].eta, twoprong.phi, sel_photon[0].phi) < 0.1: continue
+            if twoprong.passIso and twoprong.passSym: 
+                iso_sym_tp.append(twoprong)
+                break
+            if twoprong.passIso and not twoprong.passSym: iso_asym_tp.append(twoprong)
+            if not twoprong.passIso and twoprong.passSym: noniso_sym_tp.append(twoprong)
+            if not twoprong.passIso and not twoprong.passSym: noniso_asym_tp.append(twoprong)
+        
+        if len(iso_sym_tp) != 0: sel_tp = iso_sym_tp[0]
+        elif len(iso_asym_tp) != 0: sel_tp = iso_asym_tp[0]
+        elif len(noniso_sym_tp) != 0: sel_tp = noniso_sym_tp[0]
+        elif len(noniso_asym_tp) != 0: sel_tp = noniso_asym_tp[0]
+        else: return True
+
+        if len(iso_sym_tp) != 0: # tight tight
+            self.twoprong_pt_iso_sym.Fill(sel_tp.pt, weight)
+            self.twoprong_eta_iso_sym.Fill(sel_tp.eta, weight)
+            self.ntwoprong_regions.Fill(1)
+            self.twoprong_masspi0_iso_sym.Fill(sel_tp.massPi0, weight)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin0.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin0.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin1.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin1.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin2.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin2.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin3.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin3.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin4.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin4.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin5.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin5.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin6.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin6.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin7.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin7.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin8.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin8.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin9.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+        elif len(iso_asym_tp) != 0:  # tight loose
+            self.twoprong_masspi0_iso_asym.Fill(sel_tp.massPi0, weight)
+            self.twoprong_pt_iso_asym.Fill(sel_tp.pt, weight)
+            self.twoprong_eta_iso_asym.Fill(sel_tp.eta, weight)
+            self.ntwoprong_regions.Fill(2)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin0.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin0.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin1.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin1.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin2.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin2.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin3.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin3.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin4.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin4.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin5.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin5.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin6.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin6.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin7.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin7.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin8.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin8.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin9.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+        elif len(noniso_sym_tp) != 0:  # loose tight
+            self.twoprong_masspi0_noniso_sym.Fill(sel_tp.massPi0, weight)
+            self.twoprong_pt_noniso_sym.Fill(sel_tp.pt, weight)
+            self.twoprong_eta_noniso_sym.Fill(sel_tp.eta, weight)
+            self.ntwoprong_regions.Fill(3)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin0.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin0.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin1.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin1.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin2.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin2.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin3.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin3.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin4.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin4.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin5.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin5.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin6.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin6.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin7.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin7.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin8.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin8.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin9.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+        elif len(noniso_asym_tp) != 0:  # loose loose
+            self.twoprong_masspi0_noniso_asym.Fill(sel_tp.massPi0, weight)
+            self.twoprong_pt_noniso_asym.Fill(sel_tp.pt, weight)
+            self.twoprong_eta_noniso_asym.Fill(sel_tp.eta, weight)
+            self.ntwoprong_regions.Fill(4)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin0.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin0.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin1.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin1.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin2.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin2.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin3.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin3.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin4.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin4.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin5.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin5.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin6.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin6.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin7.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin7.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin8.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin8.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin9.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+    
         return True
+
+
