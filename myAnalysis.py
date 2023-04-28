@@ -58,6 +58,36 @@ class MyAnalysis(Module):
         self.recophi_phi = ROOT.TH1F('recophi_phi', 'recophi_phi', 70, -3.5, 3.5)
         self.addObject(self.recophi_phi)
 
+        self.recophi_b_dphi = ROOT.TH1F('recophi_b_dphi', 'recophi_b_dphi', 35, 0, 3.5)
+        self.addObject(self.recophi_b_dphi)
+        self.recophi_b_deta = ROOT.TH1F('recophi_b_deta', 'recophi_b_deta', 70, 0, 7)
+        self.addObject(self.recophi_b_deta)
+        self.recophi_b_dr = ROOT.TH1F('recophi_b_dr', 'recophi_b_dr', 70, 0, 7)
+        self.addObject(self.recophi_b_dr)
+        self.recophi_b_m = ROOT.TH1F('recophi_b_m', 'recophi_b_m', 200, 0, 6000)
+        self.addObject(self.recophi_b_m)
+        self.recophi_b_pt = ROOT.TH1F('recophi_b_pt', 'recophi_b_pt', 200, 0, 2000)
+        self.addObject(self.recophi_b_pt)
+        self.recophi_b_eta = ROOT.TH1F('recophi_b_eta', 'recophi_b_eta', 200, -10, 10)
+        self.addObject(self.recophi_b_eta)
+        self.recophi_b_phi = ROOT.TH1F('recophi_b_phi', 'recophi_b_phi', 70, -3.5, 3.5)
+        self.addObject(self.recophi_b_phi)
+
+        self.recophi_e_dphi = ROOT.TH1F('recophi_e_dphi', 'recophi_e_dphi', 35, 0, 3.5)
+        self.addObject(self.recophi_e_dphi)
+        self.recophi_e_deta = ROOT.TH1F('recophi_e_deta', 'recophi_e_deta', 70, 0, 7)
+        self.addObject(self.recophi_e_deta)
+        self.recophi_e_dr = ROOT.TH1F('recophi_e_dr', 'recophi_e_dr', 70, 0, 7)
+        self.addObject(self.recophi_e_dr)
+        self.recophi_e_m = ROOT.TH1F('recophi_e_m', 'recophi_e_m', 200, 0, 6000)
+        self.addObject(self.recophi_e_m)
+        self.recophi_e_pt = ROOT.TH1F('recophi_e_pt', 'recophi_e_pt', 200, 0, 2000)
+        self.addObject(self.recophi_e_pt)
+        self.recophi_e_eta = ROOT.TH1F('recophi_e_eta', 'recophi_e_eta', 200, -10, 10)
+        self.addObject(self.recophi_e_eta)
+        self.recophi_e_phi = ROOT.TH1F('recophi_e_phi', 'recophi_e_phi', 70, -3.5, 3.5)
+        self.addObject(self.recophi_e_phi)
+
         self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 160, 0, 1600)
         self.addObject(self.photon_pt)
         self.photon_eta = ROOT.TH1F('photon_eta', 'photon_eta', 100, -5, 5)
@@ -139,7 +169,7 @@ class MyAnalysis(Module):
         
         self.cutflow.Fill(0)
         try:
-          if len(photons)>1:
+          if len(photons)>=1:
             self.hthat_gjets.Fill(event.htHat_lhe, weight)
             self.hthat_qcd.Fill(event.htHat_lhe, weight)
         except RuntimeError:
@@ -160,6 +190,28 @@ class MyAnalysis(Module):
           self.recophi_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong)), weight)
           self.recophi_deta.Fill(abs(photon.Eta() - twoprong.Eta()), weight)
           self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
+          if self.photon == 'HPID':
+            if abs(photons[recophi.photonindex].scEta)<1.4442: photon_subdet = 'barrel'
+            if abs(photons[recophi.photonindex].scEta)>1.566 and abs(photons[recophi.photonindex].scEta)<2.5: photon_subdet = 'endcap'
+          if self.photon == 'CBL':
+            if photons[recophi.photonindex].isScEtaEB: photon_subdet = 'barrel'
+            if photons[recophi.photonindex].isScEtaEE: photon_subdet = 'endcap'
+          if photon_subdet == 'barrel':
+            self.recophi_b_pt.Fill(recophi.pt, weight)
+            self.recophi_b_eta.Fill(recophi.eta, weight)
+            self.recophi_b_phi.Fill(recophi.phi, weight)
+            self.recophi_b_m.Fill(recophi.mass, weight)
+            self.recophi_b_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong)), weight)
+            self.recophi_b_deta.Fill(abs(photon.Eta() - twoprong.Eta()), weight)
+            self.recophi_b_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
+          if photon_subdet == 'endcap':
+            self.recophi_e_pt.Fill(recophi.pt, weight)
+            self.recophi_e_eta.Fill(recophi.eta, weight)
+            self.recophi_e_phi.Fill(recophi.phi, weight)
+            self.recophi_e_m.Fill(recophi.mass, weight)
+            self.recophi_e_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(photon,twoprong)), weight)
+            self.recophi_e_deta.Fill(abs(photon.Eta() - twoprong.Eta()), weight)
+            self.recophi_e_dr.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
           if event.NJets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
           if event.NJets == 1: self.recophi_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
           if event.NJets >= 2: self.recophi_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(photon,twoprong), weight)
