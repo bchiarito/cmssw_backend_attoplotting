@@ -33,10 +33,11 @@ parser.add_argument("--fast", action='store_true', default=False, help='test run
 parser.add_argument("--lumi", default=1.0, help='')
 parser.add_argument("--dEta", type=str, default='False', help='')
 parser.add_argument("--photonchoice", default="HPID", help='')
+parser.add_argument("--plotter", default="", help='')
 args = parser.parse_args()
 
 # import modules
-from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
+from PhysicsTools.NanoAODTools.fmk_plotting.sanityAnalysis import SanityAnalysis
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
@@ -124,7 +125,7 @@ elif args.dEta == 'True': deta = True
 else: deta = False
 
 modules = []
-modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, deta, args.photonchoice)]
+if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, deta, args.photonchoice)]
 
 if args.fast: n = 1
 else: n = None
