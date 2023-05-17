@@ -12,13 +12,13 @@ def get_vec(obj):
   return ROOT.Math.PtEtaPhiMVector(obj.pt, obj.eta, obj.phi, obj.mass)
 
 class SanityAnalysis(Module):
-    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, deta=False, photon='HPID'):
+    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, cut='None', photon='HPID'):
         self.writeHistFile = True
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
         self.datamc = datamc
-        self.deta = deta
+        self.cut = cut
         self.photon = photon
 
     def book_histo(self, name, bins, low, high, title=None):
@@ -96,9 +96,14 @@ class SanityAnalysis(Module):
 
         self.book_histo('SIGNAL_decaymode', 21, -1, 20, title='decaymode')
         self.book_histo('SIGNAL_prongs', 5, -1, 4, title='prongs')
-        self.book_histo('SIGNAL_tag_num_pt', 150, 0, 1500, title='tag_num_pt')
-        self.book_histo('SIGNAL_tag_den_pt', 150, 0, 1500, title='tag_den_pt')
-        self.book_histo('SIGNAL_tag_eff_pt', 150, 0, 1500, title='tag_eff_pt')
+        self.book_histo('SIGNAL_tag_pt_NUMER', 150, 0, 1500, title='tag_pt_NUMER')
+        self.book_histo('SIGNAL_tag_pt_DENOM', 150, 0, 1500, title='tag_pt_DENOM')
+        self.book_histo('SIGNAL_tag_eta_NUMER', 100, -5, 5, title='tag_eta_NUMER')
+        self.book_histo('SIGNAL_tag_eta_DENOM', 100, -5, 5, title='tag_eta_DENOM')
+        self.book_histo('SIGNAL_tag_phi_NUMER', 70, -3.5, 3.5, title='tag_phi_NUMER')
+        self.book_histo('SIGNAL_tag_phi_DENOM', 70, -3.5, 3.5, title='tag_phi_DENOM')
+        self.book_histo('SIGNAL_tag_npv_NUMER', 100, 0, 100, title='tag_npv_NUMER')
+        self.book_histo('SIGNAL_tag_npv_DENOM', 100, 0, 100, title='tag_npv_DENOM')
 
         self.cutflow = ROOT.TH1F('cutflow', 'cutflow', 10, 0, 10)
         self.addObject(self.cutflow)
@@ -140,11 +145,13 @@ class SanityAnalysis(Module):
           the_twoprong = get_vec(twoprongs[recophi.twoprongindex])
           deta = abs(the_photon.Eta() - the_twoprong.Eta())
 
+        '''
         # deta cut
         if region == 1:
           if self.deta and deta < 1.5: pass_deta = True
           elif self.deta and deta > 1.5: pass_deta = False
           else: pass_deta = True
+        '''
         
         # mc hthat
         self.cutflow.Fill(0)
@@ -159,10 +166,10 @@ class SanityAnalysis(Module):
         if region == 1:
           self.cutflow.Fill(1)
 
-        if region == 1 and the_photon.Pt() > 220 and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_deta:
+        if region == 1 and the_photon.Pt() > 220 and abs(photons[recophi.photonindex].scEta) < 1.4442:
           self.cutflow.Fill(2)
 
-        if region == 1 and the_photon.Pt() > 220 and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger and pass_deta:
+        if region == 1 and the_photon.Pt() > 220 and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger:
           self.cutflow.Fill(3)
           if self.photon == 'HPID':
             if abs(photons[recophi.photonindex].scEta)<1.4442: photon_subdet = 'barrel'
@@ -268,12 +275,14 @@ class SanityAnalysis(Module):
               if ROOT.Math.VectorUtil.DeltaR(genvec, twoprongvec) < 0.1 and ROOT.Math.VectorUtil.DeltaPhi(genvec, twoprongvec) < 0.1:
                 tagged = True
                 break
-            self.SIGNAL_tag_den_pt.Fill(genvec.Pt())
-            if tagged: self.SIGNAL_tag_num_pt.Fill(genvec.Pt())
-            if tagged: self.SIGNAL_tag_eff_pt.Fill(genvec.Pt())
-          #self.SIGNAL_tag_eff_pt = (self.SIGNAL_tag_num_pt.Clone(self.SIGNAL_tag_eff_pt.GetName()))
-          self.SIGNAL_tag_eff_pt.Divide(self.SIGNAL_tag_den_pt)
-          #self.SIGNAL_tag_eff_pt.Print('All')
+            self.SIGNAL_tag_pt_DENOM.Fill(genvec.Pt())
+            self.SIGNAL_tag_eta_DENOM.Fill(genvec.Eta())
+            self.SIGNAL_tag_phi_DENOM.Fill(genvec.Phi())
+            self.SIGNAL_tag_npv_DENOM.Fill(event.PV_npvs)
+            if tagged: self.SIGNAL_tag_pt_NUMER.Fill(genvec.Pt())
+            if tagged: self.SIGNAL_tag_eta_NUMER.Fill(genvec.Eta())
+            if tagged: self.SIGNAL_tag_phi_NUMER.Fill(genvec.Phi())
+            if tagged: self.SIGNAL_tag_npv_NUMER.Fill(event.PV_npvs)
           
         except RuntimeError:
           pass
