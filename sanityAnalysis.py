@@ -120,7 +120,6 @@ class SanityAnalysis(Module):
           weight = 1.0
 
         # get collections
-        genomegas = Collection(event, "GenOmega")
         twoprongs = Collection(event, "TwoProng")
         # FIXME sorting should be done upstream
         twoprongs = sorted(twoprongs, reverse=True, key=lambda obj : obj.pt)
@@ -262,6 +261,7 @@ class SanityAnalysis(Module):
 
         # signal
         try:
+          genomegas = Collection(event, "GenOmega")
           for i in range(event.nGenOmega):
             self.SIGNAL_decaymode.Fill(event.GenOmega_decaymode[i])
             self.SIGNAL_prongs.Fill(event.GenOmega_prongs[i])

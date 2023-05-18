@@ -38,6 +38,7 @@ args = parser.parse_args()
 
 # import modules
 from PhysicsTools.NanoAODTools.fmk_plotting.sanityAnalysis import SanityAnalysis
+from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
@@ -122,6 +123,7 @@ if args.data:
 
 modules = []
 if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice)]
+if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
 
 if args.fast: n = 1
 else: n = None
