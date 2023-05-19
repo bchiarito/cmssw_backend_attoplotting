@@ -30,8 +30,8 @@ class SanityAnalysis(Module):
         self.book_histo(name+'_'+var, bins, low, high)
         self.book_histo(name+'_B_B_'+var, bins, low, high)
         self.book_histo(name+'_B_E_'+var, bins, low, high)
-        self.book_histo(name+'_E_B_'+var, bins, low, high)
-        self.book_histo(name+'_E_E_'+var, bins, low, high)
+        #self.book_histo(name+'_E_B_'+var, bins, low, high)
+        #self.book_histo(name+'_E_E_'+var, bins, low, high)
 
     def beginJob(self, histFile=None, histDirName=None):
         Module.beginJob(self, histFile, histDirName)
@@ -204,6 +204,7 @@ class SanityAnalysis(Module):
             if event.NJets == 0: self.recophi_B_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets == 1: self.recophi_B_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets >= 2: self.recophi_B_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          '''
           if photon_subdet == 'endcap' and twoprong_subdet == 'barrel':
             self.recophi_E_B_pt.Fill(recophi.pt, weight)
             self.recophi_E_B_eta.Fill(recophi.eta, weight)
@@ -226,6 +227,7 @@ class SanityAnalysis(Module):
             if event.NJets == 0: self.recophi_E_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets == 1: self.recophi_E_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets >= 2: self.recophi_E_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          '''
           self.photon_pt.Fill(the_photon.Pt(), weight)
           self.photon_eta.Fill(the_photon.Eta(), weight)
           self.photon_phi.Fill(the_photon.Phi(), weight)
