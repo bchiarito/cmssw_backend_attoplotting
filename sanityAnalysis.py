@@ -144,23 +144,14 @@ class SanityAnalysis(Module):
           the_twoprong = get_vec(twoprongs[recophi.twoprongindex])
           deta = abs(the_photon.Eta() - the_twoprong.Eta())
 
-        '''
-        # deta cut
-        if region == 1:
-          if self.deta and deta < 1.5: pass_deta = True
-          elif self.deta and deta > 1.5: pass_deta = False
-          else: pass_deta = True
-        '''
-        
         # mc hthat
         self.cutflow.Fill(0)
-        try:
-          #if len(photons)>=1:
-          if True:
+        if self.datamc == 'mc':
+          try:
             self.hthat_gjets.Fill(event.htHat_lhe, weight)
             self.hthat_qcd.Fill(event.htHat_lhe, weight)
-        except RuntimeError:
-          pass
+          except RuntimeError:
+            pass
 
         if region == 1:
           self.cutflow.Fill(1)
@@ -260,7 +251,7 @@ class SanityAnalysis(Module):
             if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), weight)
 
         # signal
-        try:
+        if self.datamc == 'sigRes':
           genomegas = Collection(event, "GenOmega")
           for i in range(event.nGenOmega):
             self.SIGNAL_decaymode.Fill(event.GenOmega_decaymode[i])
@@ -283,8 +274,5 @@ class SanityAnalysis(Module):
             if tagged: self.SIGNAL_tag_eta_NUMER.Fill(genvec.Eta())
             if tagged: self.SIGNAL_tag_phi_NUMER.Fill(genvec.Phi())
             if tagged: self.SIGNAL_tag_npv_NUMER.Fill(event.PV_npvs)
-          
-        except RuntimeError:
-          pass
 
         return True
