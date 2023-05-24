@@ -41,6 +41,74 @@ class MyAnalysis(Module):
         self.addObject(self.twoprong_chargedIso_noniso_sym)
         self.addObject(self.twoprong_chargedIso_noniso_asym)
 
+        self.photon_tight_hoe_iso_sym = ROOT.TH1F('photon_tight_hoe_iso_sym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_tight_hoe_iso_sym)
+        self.photon_loose_hoe_iso_sym = ROOT.TH1F('photon_loose_hoe_iso_sym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_loose_hoe_iso_sym)
+        self.photon_tight_sieie_iso_sym = ROOT.TH1F('photon_tight_sieie_iso_sym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_tight_sieie_iso_sym)
+        self.photon_loose_sieie_iso_sym = ROOT.TH1F('photon_loose_sieie_iso_sym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_loose_sieie_iso_sym)
+        self.photon_tight_chgIso_iso_sym = ROOT.TH1F('photon_tight_pfRelIso03_chg_iso_sym', '; Photon_pfRelIso03_chg', 100, 0, 0.01)
+        self.addObject(self.photon_tight_chgIso_iso_sym)
+        self.photon_loose_chgIso_iso_sym = ROOT.TH1F('photon_loose_pfRelIso03_chg_iso_sym', '; Photon_pfRelIso03_chg', 500, 0, 5)
+        self.addObject(self.photon_loose_chgIso_iso_sym)
+        self.photon_tight_hadTow_iso_sym = ROOT.TH1F('photon_tight_hadTow_iso_sym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_tight_hadTow_iso_sym)
+        self.photon_loose_hadTow_iso_sym = ROOT.TH1F('photon_loose_hadTow_iso_sym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_loose_hadTow_iso_sym)
+
+        self.photon_tight_hoe_iso_asym = ROOT.TH1F('photon_tight_hoe_iso_asym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_tight_hoe_iso_asym)
+        self.photon_loose_hoe_iso_asym = ROOT.TH1F('photon_loose_hoe_iso_asym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_loose_hoe_iso_asym)
+        self.photon_tight_sieie_iso_asym = ROOT.TH1F('photon_tight_sieie_iso_asym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_tight_sieie_iso_asym)
+        self.photon_loose_sieie_iso_asym = ROOT.TH1F('photon_loose_sieie_iso_asym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_loose_sieie_iso_asym)
+        self.photon_tight_chgIso_iso_asym = ROOT.TH1F('photon_tight_pfRelIso03_chg_iso_asym', '; Photon_pfRelIso03_chg', 100, 0, 0.01)
+        self.addObject(self.photon_tight_chgIso_iso_asym)
+        self.photon_loose_chgIso_iso_asym = ROOT.TH1F('photon_loose_pfRelIso03_chg_iso_asym', '; Photon_pfRelIso03_chg', 500, 0, 5)
+        self.addObject(self.photon_loose_chgIso_iso_asym)
+        self.photon_tight_hadTow_iso_asym = ROOT.TH1F('photon_tight_hadTow_iso_asym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_tight_hadTow_iso_asym)
+        self.photon_loose_hadTow_iso_asym = ROOT.TH1F('photon_loose_hadTow_iso_asym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_loose_hadTow_iso_asym)
+        
+        self.photon_tight_hoe_noniso_sym = ROOT.TH1F('photon_tight_hoe_noniso_sym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_tight_hoe_noniso_sym)
+        self.photon_loose_hoe_noniso_sym = ROOT.TH1F('photon_loose_hoe_noniso_sym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_loose_hoe_noniso_sym)
+        self.photon_tight_sieie_noniso_sym = ROOT.TH1F('photon_tight_sieie_noniso_sym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_tight_sieie_noniso_sym)
+        self.photon_loose_sieie_noniso_sym = ROOT.TH1F('photon_loose_sieie_noniso_sym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_loose_sieie_noniso_sym)
+        self.photon_tight_chgIso_noniso_sym = ROOT.TH1F('photon_tight_pfRelIso03_chg_noniso_sym', '; Photon_pfRelIso03_chg', 100, 0, 0.01)
+        self.addObject(self.photon_tight_chgIso_noniso_sym)
+        self.photon_loose_chgIso_noniso_sym = ROOT.TH1F('photon_loose_pfRelIso03_chg_noniso_sym', '; Photon_pfRelIso03_chg', 500, 0, 5)
+        self.addObject(self.photon_loose_chgIso_noniso_sym)
+        self.photon_tight_hadTow_noniso_sym = ROOT.TH1F('photon_tight_hadTow_noniso_sym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_tight_hadTow_noniso_sym)
+        self.photon_loose_hadTow_noniso_sym = ROOT.TH1F('photon_loose_hadTow_noniso_sym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_loose_hadTow_noniso_sym)
+
+        self.photon_tight_hoe_noniso_asym = ROOT.TH1F('photon_tight_hoe_noniso_asym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_tight_hoe_noniso_asym)
+        self.photon_loose_hoe_noniso_asym = ROOT.TH1F('photon_loose_hoe_noniso_asym', '; Photon_hoe', 400, 0, 2)
+        self.addObject(self.photon_loose_hoe_noniso_asym)
+        self.photon_tight_sieie_noniso_asym = ROOT.TH1F('photon_tight_sieie_noniso_asym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_tight_sieie_noniso_asym)
+        self.photon_loose_sieie_noniso_asym = ROOT.TH1F('photon_loose_sieie_noniso_asym', '; Photon_sieie', 2000, 0, 2)
+        self.addObject(self.photon_loose_sieie_noniso_asym)
+        self.photon_tight_chgIso_noniso_asym = ROOT.TH1F('photon_tight_pfRelIso03_chg_noniso_asym', '; Photon_pfRelIso03_chg', 100, 0, 0.01)
+        self.addObject(self.photon_tight_chgIso_noniso_asym)
+        self.photon_loose_chgIso_noniso_asym = ROOT.TH1F('photon_loose_pfRelIso03_chg_noniso_asym', '; Photon_pfRelIso03_chg', 500, 0, 5)
+        self.addObject(self.photon_loose_chgIso_noniso_asym)
+        self.photon_tight_hadTow_noniso_asym = ROOT.TH1F('photon_tight_hadTow_noniso_asym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_tight_hadTow_noniso_asym)
+        self.photon_loose_hadTow_noniso_asym = ROOT.TH1F('photon_loose_hadTow_noniso_asym', '; Photon_hadTowOverEm', 400, 0, 2)
+        self.addObject(self.photon_loose_hadTow_noniso_asym)
+        
         self.twoprong_phi_noniso_asym = ROOT.TH1F('twoprong_phi_noniso_asym', ';Twoprong_phi', 70, -3.5, 3.5)
         self.addObject(self.twoprong_phi_noniso_asym)
         self.twoprong_phi_noniso_sym = ROOT.TH1F('twoprong_phi_noniso_sym', ';Twoprong_phi', 70, -3.5, 3.5)
@@ -71,38 +139,62 @@ class MyAnalysis(Module):
         self.ntwoprong_regions = ROOT.TH1F('ntwoprong_regions', 'Twoporng type', 4, 0, 4)
         self.addObject(self.ntwoprong_regions)
 
-        self.twoprong_masspi0_noniso_asym = ROOT.TH1F('twoprong_masspi0_noniso_asym', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
-        self.addObject(self.twoprong_masspi0_noniso_asym)
-        self.twoprong_masspi0_noniso_sym = ROOT.TH1F('twoprong_masspi0_noniso_sym', '; Twoprong_massPi0', 300, 0, 50)  # loose-tight twoprong
-        self.addObject(self.twoprong_masspi0_noniso_sym)
-        self.twoprong_masspi0_iso_asym = ROOT.TH1F('twoprong_masspi0_iso_asym', '; Twoprong_massPi0', 300, 0, 50)  # tight-loose twoprong
-        self.addObject(self.twoprong_masspi0_iso_asym)
-        self.twoprong_masspi0_iso_sym = ROOT.TH1F('twoprong_masspi0_iso_sym', '; Twoprong_massPi0', 300, 0, 50)  # tight-tight twoprong
-        self.addObject(self.twoprong_masspi0_iso_sym)
+        self.twoprong_masspi0_noniso_asym_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_asym_tight)
+        self.twoprong_masspi0_noniso_asym_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_asym_loose)
+        self.twoprong_masspi0_iso_sym_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_sym_tight)
+        self.twoprong_masspi0_iso_sym_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_sym_loose)
+        self.twoprong_masspi0_noniso_sym_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_sym_tight)
+        self.twoprong_masspi0_noniso_sym_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_sym_loose)
+        self.twoprong_masspi0_iso_asym_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_asym_tight)
+        self.twoprong_masspi0_iso_asym_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_asym_loose)
         
-        self.twoprong_masspi0_noniso_asym_barrel = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel)
-        self.twoprong_masspi0_noniso_sym_barrel = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel', '; Twoprong_massPi0', 300, 0, 50)  # loose-tight twoprong
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel)
-        self.twoprong_masspi0_iso_asym_barrel = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel', '; Twoprong_massPi0', 300, 0, 50)  # tight-loose twoprong
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel)
-        self.twoprong_masspi0_iso_sym_barrel = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel', '; Twoprong_massPi0', 300, 0, 50)  # tight-tight twoprong
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel)
+        self.twoprong_masspi0_noniso_asym_barrel_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_loose)
+        self.twoprong_masspi0_iso_sym_barrel_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_tight)
+        self.twoprong_masspi0_iso_sym_barrel_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_loose)
+        self.twoprong_masspi0_iso_asym_barrel_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_tight)
+        self.twoprong_masspi0_iso_asym_barrel_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_loose)
         
-        self.twoprong_masspi0_noniso_asym_endcap = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap)
-        self.twoprong_masspi0_noniso_sym_endcap = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap', '; Twoprong_massPi0', 300, 0, 50)  # loose-tight twoprong
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap)
-        self.twoprong_masspi0_iso_asym_endcap = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap', '; Twoprong_massPi0', 300, 0, 50)  # tight-loose twoprong
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap)
-        self.twoprong_masspi0_iso_sym_endcap = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap', '; Twoprong_massPi0', 300, 0, 50)  # tight-tight twoprong
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap)
-        
+        self.twoprong_masspi0_noniso_asym_endcap_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_loose)
+        self.twoprong_masspi0_iso_sym_endcap_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_tight)
+        self.twoprong_masspi0_iso_sym_endcap_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_loose)
+        self.twoprong_masspi0_iso_asym_endcap_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_tight', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_tight)
+        self.twoprong_masspi0_iso_asym_endcap_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_loose', '; Twoprong_massPi0', 300, 0, 50)  # loose-loose twoprong
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_loose)
+
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', '; htHat_lhe', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
 
         # TwoProng Pt Binning
-        self.pt_bins = [0,20,40,60,80,120,160,240,300,460,700]
+        self.pt_bins = [20,40,60,70,80,100,120,140,160,180,200,240,300,380,460]
         
         masspi0_iso_sym_barrel_hists = []
         masspi0_iso_sym_endcap_hists = []
@@ -124,204 +216,520 @@ class MyAnalysis(Module):
         bin8 = self.pt_bins[8] 
         bin9 = self.pt_bins[9] 
         bin10 = self.pt_bins[10] 
+        bin11 = self.pt_bins[11] 
+        bin12 = self.pt_bins[12] 
+        bin13 = self.pt_bins[13] 
+        bin14 = self.pt_bins[14] 
 
         # bin0 - bin1
-        self.twoprong_masspi0_noniso_asym_barrel_bin0 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin0)
-        self.twoprong_masspi0_noniso_asym_endcap_bin0 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin0)
-        self.twoprong_masspi0_iso_sym_barrel_bin0 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin0)
-        self.twoprong_masspi0_iso_sym_endcap_bin0 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin0)
-        self.twoprong_masspi0_iso_asym_barrel_bin0 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin0)
-        self.twoprong_masspi0_iso_asym_endcap_bin0 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin0)
-        self.twoprong_masspi0_noniso_sym_barrel_bin0 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin0)
-        self.twoprong_masspi0_noniso_sym_endcap_bin0 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin0)+'_'+str(bin1), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin0)
+        self.twoprong_masspi0_noniso_asym_barrel_bin0_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin0_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin0_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin0_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin0_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin0_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin0_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin0_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin0_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin0_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin0_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin0_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin0_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin0_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin0_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin0_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin0_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin0_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin0_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin0_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin0_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin0_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin0_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin0_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin0_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin0_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin0_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin0_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin0_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin0)+'_'+str(bin1)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin0_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin0_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin0)+'_'+str(bin1)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin0_loose)
 
         # bin1 - bin2
-        self.twoprong_masspi0_noniso_asym_barrel_bin1 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin1)
-        self.twoprong_masspi0_noniso_asym_endcap_bin1 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin1)
-        self.twoprong_masspi0_iso_sym_barrel_bin1 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin1)
-        self.twoprong_masspi0_iso_sym_endcap_bin1 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin1)
-        self.twoprong_masspi0_iso_asym_barrel_bin1 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin1)
-        self.twoprong_masspi0_iso_asym_endcap_bin1 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin1)
-        self.twoprong_masspi0_noniso_sym_barrel_bin1 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin1)
-        self.twoprong_masspi0_noniso_sym_endcap_bin1 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin1)+'_'+str(bin2), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin1)
-        
+        self.twoprong_masspi0_noniso_asym_barrel_bin1_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin1_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin1_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin1_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin1_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin1_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin1_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin1_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin1_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin1_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin1_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin1_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin1_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin1_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin1_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin1_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin1_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin1_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin1_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin1_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin1_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin1_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin1_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin1_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin1_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin1_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin1_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin1_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin1_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin1)+'_'+str(bin2)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin1_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin1_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin1)+'_'+str(bin2)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin1_loose)
+
         # bin2 - bin3
-        self.twoprong_masspi0_noniso_asym_barrel_bin2 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin2)
-        self.twoprong_masspi0_noniso_asym_endcap_bin2 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin2)
-        self.twoprong_masspi0_iso_sym_barrel_bin2 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin2)
-        self.twoprong_masspi0_iso_sym_endcap_bin2 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin2)
-        self.twoprong_masspi0_iso_asym_barrel_bin2 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin2)
-        self.twoprong_masspi0_iso_asym_endcap_bin2 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin2)
-        self.twoprong_masspi0_noniso_sym_barrel_bin2 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin2)
-        self.twoprong_masspi0_noniso_sym_endcap_bin2 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin2)+'_'+str(bin3), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin2)
+        self.twoprong_masspi0_noniso_asym_barrel_bin2_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin2_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin2_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin2_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin2_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin2_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin2_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin2_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin2_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin2_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin2_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin2_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin2_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin2_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin2_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin2_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin2_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin2_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin2_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin2_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin2_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin2_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin2_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin2_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin2_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin2_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin2_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin2_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin2_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin2)+'_'+str(bin3)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin2_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin2_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin2)+'_'+str(bin3)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin2_loose)
 
         # bin3 - bin4
-        self.twoprong_masspi0_noniso_asym_barrel_bin3 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin3)
-        self.twoprong_masspi0_noniso_asym_endcap_bin3 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin3)
-        self.twoprong_masspi0_iso_sym_barrel_bin3 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin3)
-        self.twoprong_masspi0_iso_sym_endcap_bin3 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin3)
-        self.twoprong_masspi0_iso_asym_barrel_bin3 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin3)
-        self.twoprong_masspi0_iso_asym_endcap_bin3 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin3)
-        self.twoprong_masspi0_noniso_sym_barrel_bin3 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin3)
-        self.twoprong_masspi0_noniso_sym_endcap_bin3 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin3)+'_'+str(bin4), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin3)
-        
+        self.twoprong_masspi0_noniso_asym_barrel_bin3_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin3_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin3_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin3_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin3_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin3_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin3_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin3_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin3_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin3_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin3_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin3_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin3_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin3_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin3_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin3_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin3_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin3_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin3_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin3_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin3_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin3_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin3_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin3_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin3_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin3_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin3_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin3_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin3_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin3)+'_'+str(bin4)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin3_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin3_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin3)+'_'+str(bin4)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin3_loose)
+       
         # bin4 - bin5
-        self.twoprong_masspi0_noniso_asym_barrel_bin4 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin4)
-        self.twoprong_masspi0_noniso_asym_endcap_bin4 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin4)
-        self.twoprong_masspi0_iso_sym_barrel_bin4 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin4)
-        self.twoprong_masspi0_iso_sym_endcap_bin4 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin4)
-        self.twoprong_masspi0_iso_asym_barrel_bin4 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin4)
-        self.twoprong_masspi0_iso_asym_endcap_bin4 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin4)
-        self.twoprong_masspi0_noniso_sym_barrel_bin4 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin4)
-        self.twoprong_masspi0_noniso_sym_endcap_bin4 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin4)+'_'+str(bin5), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin4)
-
+        self.twoprong_masspi0_noniso_asym_barrel_bin4_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin4_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin4_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin4_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin4_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin4_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin4_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin4_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin4_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin4_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin4_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin4_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin4_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin4_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin4_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin4_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin4_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin4_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin4_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin4_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin4_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin4_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin4_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin4_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin4_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin4_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin4_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin4_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin4_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin4)+'_'+str(bin5)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin4_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin4_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin4)+'_'+str(bin5)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin4_loose)
+        
         # bin5 - bin6
-        self.twoprong_masspi0_noniso_asym_barrel_bin5 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin5)
-        self.twoprong_masspi0_noniso_asym_endcap_bin5 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin5)
-        self.twoprong_masspi0_iso_sym_barrel_bin5 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin5)
-        self.twoprong_masspi0_iso_sym_endcap_bin5 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin5)
-        self.twoprong_masspi0_iso_asym_barrel_bin5 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin5)
-        self.twoprong_masspi0_iso_asym_endcap_bin5 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin5)
-        self.twoprong_masspi0_noniso_sym_barrel_bin5 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin5)
-        self.twoprong_masspi0_noniso_sym_endcap_bin5 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin5)+'_'+str(bin6), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin5)
-    
+        self.twoprong_masspi0_noniso_asym_barrel_bin5_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin5_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin5_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin5_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin5_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin5_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin5_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin5_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin5_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin5_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin5_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin5_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin5_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin5_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin5_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin5_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin5_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin5_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin5_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin5_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin5_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin5_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin5_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin5_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin5_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin5_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin5_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin5_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin5_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin5)+'_'+str(bin6)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin5_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin5_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin5)+'_'+str(bin6)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin5_loose)
+        
         # bin6 - bin7
-        self.twoprong_masspi0_noniso_asym_barrel_bin6 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin6)
-        self.twoprong_masspi0_noniso_asym_endcap_bin6 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin6)
-        self.twoprong_masspi0_iso_sym_barrel_bin6 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin6)
-        self.twoprong_masspi0_iso_sym_endcap_bin6 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin6)
-        self.twoprong_masspi0_iso_asym_barrel_bin6 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin6)
-        self.twoprong_masspi0_iso_asym_endcap_bin6 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin6)
-        self.twoprong_masspi0_noniso_sym_barrel_bin6 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin6)
-        self.twoprong_masspi0_noniso_sym_endcap_bin6 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin6)+'_'+str(bin7), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin6)
+        self.twoprong_masspi0_noniso_asym_barrel_bin6_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin6_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin6_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin6_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin6_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin6_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin6_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin6_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin6_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin6_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin6_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin6_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin6_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin6_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin6_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin6_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin6_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin6_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin6_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin6_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin6_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin6_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin6_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin6_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin6_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin6_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin6_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin6_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin6_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin6)+'_'+str(bin7)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin6_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin6_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin6)+'_'+str(bin7)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin6_loose)
         
         # bin7 - bin8
-        self.twoprong_masspi0_noniso_asym_barrel_bin7 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin7)
-        self.twoprong_masspi0_noniso_asym_endcap_bin7 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin7)
-        self.twoprong_masspi0_iso_sym_barrel_bin7 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin7)
-        self.twoprong_masspi0_iso_sym_endcap_bin7 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin7)
-        self.twoprong_masspi0_iso_asym_barrel_bin7 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin7)
-        self.twoprong_masspi0_iso_asym_endcap_bin7 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin7)
-        self.twoprong_masspi0_noniso_sym_barrel_bin7 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin7)
-        self.twoprong_masspi0_noniso_sym_endcap_bin7 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin7)+'_'+str(bin8), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin7)
+        self.twoprong_masspi0_noniso_asym_barrel_bin7_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin7_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin7_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin7_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin7_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin7_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin7_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin7_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin7_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin7_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin7_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin7_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin7_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin7_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin7_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin7_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin7_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin7_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin7_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin7_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin7_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin7_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin7_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin7_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin7_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin7_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin7_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin7_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin7_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin7)+'_'+str(bin8)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin7_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin7_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin7)+'_'+str(bin8)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin7_loose)
         
         # bin8 - bin9
-        self.twoprong_masspi0_noniso_asym_barrel_bin8 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin8)
-        self.twoprong_masspi0_noniso_asym_endcap_bin8 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin8)
-        self.twoprong_masspi0_iso_sym_barrel_bin8 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin8)
-        self.twoprong_masspi0_iso_sym_endcap_bin8 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin8)
-        self.twoprong_masspi0_iso_asym_barrel_bin8 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin8)
-        self.twoprong_masspi0_iso_asym_endcap_bin8 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin8)
-        self.twoprong_masspi0_noniso_sym_barrel_bin8 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin8)
-        self.twoprong_masspi0_noniso_sym_endcap_bin8 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin8)+'_'+str(bin9), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin8)
+        self.twoprong_masspi0_noniso_asym_barrel_bin8_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin8_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin8_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin8_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin8_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin8_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin8_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin8_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin8_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin8_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin8_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin8_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin8_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin8_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin8_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin8_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin8_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin8_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin8_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin8_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin8_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin8_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin8_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin8_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin8_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin8_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin8_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin8_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin8_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin8)+'_'+str(bin9)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin8_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin8_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin8)+'_'+str(bin9)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin8_loose)
         
         # bin9 - bin10
-        self.twoprong_masspi0_noniso_asym_barrel_bin9 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin9)
-        self.twoprong_masspi0_noniso_asym_endcap_bin9 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin9)
-        self.twoprong_masspi0_iso_sym_barrel_bin9 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin9)
-        self.twoprong_masspi0_iso_sym_endcap_bin9 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin9)
-        self.twoprong_masspi0_iso_asym_barrel_bin9 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin9)
-        self.twoprong_masspi0_iso_asym_endcap_bin9 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin9)
-        self.twoprong_masspi0_noniso_sym_barrel_bin9 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin9)
-        self.twoprong_masspi0_noniso_sym_endcap_bin9 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin9)+'_'+str(bin10), '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin9)
+        self.twoprong_masspi0_noniso_asym_barrel_bin9_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin9_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin9_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin9_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin9_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin9_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin9_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin9_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin9_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin9_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin9_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin9_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin9_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin9_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin9_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin9_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin9_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin9_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin9_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin9_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin9_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin9_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin9_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin9_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin9_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin9_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin9_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin9_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin9_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin9)+'_'+str(bin10)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin9_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin9_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin9)+'_'+str(bin10)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin9_loose)
         
-        # bin10 +
-        self.twoprong_masspi0_noniso_asym_barrel_bin10 = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin10)
-        self.twoprong_masspi0_noniso_asym_endcap_bin10 = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin10)
-        self.twoprong_masspi0_iso_sym_barrel_bin10 = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin10)
-        self.twoprong_masspi0_iso_sym_endcap_bin10 = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin10)
-        self.twoprong_masspi0_iso_asym_barrel_bin10 = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin10)
-        self.twoprong_masspi0_iso_asym_endcap_bin10 = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin10)
-        self.twoprong_masspi0_noniso_sym_barrel_bin10 = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin10)
-        self.twoprong_masspi0_noniso_sym_endcap_bin10 = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin10)+'+', '; Twoprong_massPi0', 300, 0, 50)  
-        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin10)
+        # bin10 - bin11
+        self.twoprong_masspi0_noniso_asym_barrel_bin10_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin10_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin10_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin10_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin10_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin10_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin10_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin10_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin10_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin10_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin10_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin10_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin10_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin10_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin10_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin10_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin10_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin10_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin10_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin10_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin10_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin10_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin10_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin10_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin10_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin10_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin10_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin10_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin10_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin10)+'_'+str(bin11)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin10_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin10_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin10)+'_'+str(bin11)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin10_loose)
+        
+        # bin11 - bin12
+        self.twoprong_masspi0_noniso_asym_barrel_bin11_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin11_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin11_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin11_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin11_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin11_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin11_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin11_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin11_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin11_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin11_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin11_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin11_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin11_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin11_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin11_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin11_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin11_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin11_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin11_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin11_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin11_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin11_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin11_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin11_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin11_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin11_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin11_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin11_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin11)+'_'+str(bin12)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin11_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin11_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin11)+'_'+str(bin12)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin11_loose)
+       
+        # bin12 - bin13
+        self.twoprong_masspi0_noniso_asym_barrel_bin12_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin12_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin12_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin12_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin12_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin12_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin12_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin12_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin12_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin12_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin12_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin12_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin12_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin12_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin12_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin12_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin12_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin12_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin12_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin12_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin12_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin12_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin12_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin12_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin12_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin12_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin12_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin12_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin12_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin12)+'_'+str(bin13)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin12_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin12_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin12)+'_'+str(bin13)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin12_loose)
+
+        # bin13 - bin14
+        self.twoprong_masspi0_noniso_asym_barrel_bin13_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin13_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin13_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin13_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin13_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin13_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin13_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin13_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin13_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin13_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin13_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin13_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin13_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin13_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin13_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin13_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin13_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin13_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin13_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin13_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin13_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin13_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin13_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin13_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin13_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin13_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin13_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin13_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin13_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin13)+'_'+str(bin14)+'_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin13_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin13_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin13)+'_'+str(bin14)+'_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin13_loose)
+
+        # bin14 +
+        self.twoprong_masspi0_noniso_asym_barrel_bin14_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin14_tight)
+        self.twoprong_masspi0_noniso_asym_barrel_bin14_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_barrel_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_barrel_bin14_loose)
+        self.twoprong_masspi0_noniso_asym_endcap_bin14_tight = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin14_tight)
+        self.twoprong_masspi0_noniso_asym_endcap_bin14_loose = ROOT.TH1F('twoprong_masspi0_noniso_asym_endcap_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_asym_endcap_bin14_loose)
+        self.twoprong_masspi0_iso_sym_barrel_bin14_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin14_tight)
+        self.twoprong_masspi0_iso_sym_barrel_bin14_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_barrel_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_barrel_bin14_loose)
+        self.twoprong_masspi0_iso_sym_endcap_bin14_tight = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin14_tight)
+        self.twoprong_masspi0_iso_sym_endcap_bin14_loose = ROOT.TH1F('twoprong_masspi0_iso_sym_endcap_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_sym_endcap_bin14_loose)
+        self.twoprong_masspi0_noniso_sym_barrel_bin14_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin14_tight)
+        self.twoprong_masspi0_noniso_sym_barrel_bin14_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_barrel_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_barrel_bin14_loose)
+        self.twoprong_masspi0_noniso_sym_endcap_bin14_tight = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin14_tight)
+        self.twoprong_masspi0_noniso_sym_endcap_bin14_loose = ROOT.TH1F('twoprong_masspi0_noniso_sym_endcap_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_noniso_sym_endcap_bin14_loose)
+        self.twoprong_masspi0_iso_asym_barrel_bin14_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin14_tight)
+        self.twoprong_masspi0_iso_asym_barrel_bin14_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_barrel_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_barrel_bin14_loose)
+        self.twoprong_masspi0_iso_asym_endcap_bin14_tight = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin14)+'+_tight', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin14_tight)
+        self.twoprong_masspi0_iso_asym_endcap_bin14_loose = ROOT.TH1F('twoprong_masspi0_iso_asym_endcap_'+str(bin14)+'+_loose', '; Twoprong_massPi0', 300, 0, 50)  
+        self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin14_loose)
    
 
     def analyze(self, event):
@@ -333,32 +741,36 @@ class MyAnalysis(Module):
         else:
             weight = 1.0
     
-        #hthat = Object(event, "htHat")
         twoprongs = Collection(event, "TwoProng")
         photons = Collection(event, "Photon")
         pass_trigger = event.HLT_Photon200
 
-        # Immediately fill lhe histogram
-        #if len(photons) > 0: self.hthat_gjets.Fill(hthat.lhe, weight)
-        
         bins = []
         for i in range(len(self.pt_bins)):
             bins.append(self.pt_bins[i])
-        
 
-        sel_photons = []
+        tight_photons = []
+        loose_photons = []
         for photon in photons:
-            if photon.cutBased >= 1 and photon.pt > 220 and abs(photon.scEta) < 1.4442: sel_photons.append(photon)
-            break
-
-        self.ntwoprong_regions.Fill(len(sel_photons))
-        if len(sel_photons) == 0 or not pass_trigger: return True
-        sel_photon = sel_photons[0]
+            if photon.pt > 220 and photon.isScEtaEB and photon.hadTowOverEm < 0.04596: # photon cuts
+                if photon.cutBased >= 1: 
+                    tight_photons.append(photon)
+                    break
+                else: loose_photons.append(photon)
         
+        if len(loose_photons) == 0 and len(tight_photons) == 0 or not pass_trigger: return True
+        tight_photon = False
+
+        if not len(tight_photons) == 0: 
+            sel_photon = tight_photons[0]
+            tight_photon = True
+        else: sel_photon = loose_photons[0]
+
         iso_sym_tp = []
         iso_asym_tp = []
         noniso_sym_tp = []
         noniso_asym_tp = []
+        
         for twoprong in twoprongs:
             if twoprong.pt < 20 or dR(twoprong.eta, sel_photon.eta, twoprong.phi, sel_photon.phi) < 0.1 or twoprong.chargedIso > 1: continue
             if twoprong.passIso and twoprong.passSym: 
@@ -378,170 +790,514 @@ class MyAnalysis(Module):
             self.twoprong_phi_iso_sym.Fill(sel_tp.phi, weight)
             self.twoprong_pt_iso_sym.Fill(sel_tp.pt, weight)
             self.twoprong_eta_iso_sym.Fill(sel_tp.eta, weight)
-            self.ntwoprong_regions.Fill(0)
             self.twoprong_chargedIso_iso_sym.Fill(sel_tp.chargedIso, weight)
-            self.twoprong_masspi0_iso_sym.Fill(sel_tp.massPi0, weight)
-            if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel.Fill(sel_tp.massPi0, weight)
-            else: self.twoprong_masspi0_iso_sym_endcap.Fill(sel_tp.massPi0, weight)
-            if bins[0] < sel_tp.pt < bins[1]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-            elif bins[1] < sel_tp.pt < bins[2]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-            elif bins[2] < sel_tp.pt < bins[3]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-            elif bins[3] < sel_tp.pt < bins[4]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-            elif bins[4] < sel_tp.pt < bins[5]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-            elif bins[5] < sel_tp.pt < bins[6]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-            elif bins[6] < sel_tp.pt < bins[7]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-            elif bins[7] < sel_tp.pt < bins[8]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-            elif bins[8] < sel_tp.pt < bins[9]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-            elif bins[9] < sel_tp.pt < bins[10]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+            if not tight_photon:
+                self.twoprong_masspi0_iso_sym_loose.Fill(sel_tp.massPi0, weight)
+                self.photon_loose_chgIso_iso_sym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_loose_hoe_iso_sym.Fill(sel_photon.hoe, weight)
+                self.photon_loose_sieie_iso_sym.Fill(sel_photon.sieie, weight)
+                self.photon_loose_hadTow_iso_sym.Fill(sel_photon.hadTowOverEm, weight)
             else:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_sym_barrel_bin10.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_sym_endcap_bin10.Fill(sel_tp.massPi0, weight)
+                self.twoprong_masspi0_iso_sym_tight.Fill(sel_tp.massPi0, weight)
+                self.photon_tight_chgIso_iso_sym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_tight_hoe_iso_sym.Fill(sel_photon.hoe, weight)
+                self.photon_tight_sieie_iso_sym.Fill(sel_photon.sieie, weight)
+                self.photon_tight_hadTow_iso_sym.Fill(sel_photon.hadTowOverEm, weight)
+            if abs(sel_tp.eta) < 1.4442:
+                if tight_photon: self.twoprong_masspi0_iso_sym_barrel_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_barrel_loose.Fill(sel_tp.massPi0, weight)
+            else: 
+                if tight_photon: self.twoprong_masspi0_iso_sym_endcap_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_sym_endcap_loose.Fill(sel_tp.massPi0, weight)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin0_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin0_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin1_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin1_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin2_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin2_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin3_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin3_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin4_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin4_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin5_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin5_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin6_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin6_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin7_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin7_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin8_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin8_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[9] < sel_tp.pt < bins[10]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin9_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin9_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[10] < sel_tp.pt < bins[11]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin10_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin10_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[11] < sel_tp.pt < bins[12]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin11_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin11_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[12] < sel_tp.pt < bins[13]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin12_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin12_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[13] < sel_tp.pt < bins[14]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin13_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin13_loose.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_sym_barrel_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_barrel_bin14_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_sym_endcap_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_sym_endcap_bin14_loose.Fill(sel_tp.massPi0, weight)
         elif len(iso_asym_tp) != 0:  # tight loose
             self.twoprong_phi_iso_asym.Fill(sel_tp.phi, weight)
             self.twoprong_pt_iso_asym.Fill(sel_tp.pt, weight)
             self.twoprong_eta_iso_asym.Fill(sel_tp.eta, weight)
             self.twoprong_chargedIso_iso_asym.Fill(sel_tp.chargedIso, weight)
-            self.ntwoprong_regions.Fill(1)
-            self.twoprong_masspi0_iso_asym.Fill(sel_tp.massPi0, weight)
-            if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel.Fill(sel_tp.massPi0, weight)
-            else: self.twoprong_masspi0_iso_asym_endcap.Fill(sel_tp.massPi0, weight)
-            if bins[0] < sel_tp.pt < bins[1]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-            elif bins[1] < sel_tp.pt < bins[2]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-            elif bins[2] < sel_tp.pt < bins[3]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-            elif bins[3] < sel_tp.pt < bins[4]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-            elif bins[4] < sel_tp.pt < bins[5]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-            elif bins[5] < sel_tp.pt < bins[6]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-            elif bins[6] < sel_tp.pt < bins[7]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-            elif bins[7] < sel_tp.pt < bins[8]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-            elif bins[8] < sel_tp.pt < bins[9]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-            elif bins[9] < sel_tp.pt < bins[10]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+            if not tight_photon:
+                self.twoprong_masspi0_iso_asym_loose.Fill(sel_tp.massPi0, weight)
+                self.photon_loose_chgIso_iso_asym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_loose_hoe_iso_asym.Fill(sel_photon.hoe, weight)
+                self.photon_loose_sieie_iso_asym.Fill(sel_photon.sieie, weight)
+                self.photon_loose_hadTow_iso_asym.Fill(sel_photon.hadTowOverEm, weight)
             else:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_iso_asym_barrel_bin10.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_iso_asym_endcap_bin10.Fill(sel_tp.massPi0, weight)
+                self.twoprong_masspi0_iso_asym_tight.Fill(sel_tp.massPi0, weight)
+                self.photon_tight_chgIso_iso_asym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_tight_hoe_iso_asym.Fill(sel_photon.hoe, weight)
+                self.photon_tight_sieie_iso_asym.Fill(sel_photon.sieie, weight)
+                self.photon_tight_hadTow_iso_asym.Fill(sel_photon.hadTowOverEm, weight)
+            if abs(sel_tp.eta) < 1.4442:
+                if tight_photon: self.twoprong_masspi0_iso_asym_barrel_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_barrel_loose.Fill(sel_tp.massPi0, weight)
+            else: 
+                if tight_photon: self.twoprong_masspi0_iso_asym_endcap_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_iso_asym_endcap_loose.Fill(sel_tp.massPi0, weight)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin0_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin0_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin1_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin1_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin2_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin2_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin3_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin3_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin4_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin4_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin5_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin5_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin6_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin6_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin7_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin7_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin8_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin8_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[9] < sel_tp.pt < bins[10]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin9_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin9_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[10] < sel_tp.pt < bins[11]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin10_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin10_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[11] < sel_tp.pt < bins[12]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin11_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin11_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[12] < sel_tp.pt < bins[13]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin12_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin12_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[13] < sel_tp.pt < bins[14]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin13_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin13_loose.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_iso_asym_barrel_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_barrel_bin14_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_iso_asym_endcap_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_iso_asym_endcap_bin14_loose.Fill(sel_tp.massPi0, weight)
         elif len(noniso_sym_tp) != 0:  # loose tight
             self.twoprong_phi_noniso_sym.Fill(sel_tp.phi, weight)
             self.twoprong_pt_noniso_sym.Fill(sel_tp.pt, weight)
             self.twoprong_eta_noniso_sym.Fill(sel_tp.eta, weight)
-            self.ntwoprong_regions.Fill(2)
             self.twoprong_chargedIso_noniso_sym.Fill(sel_tp.chargedIso, weight)
-            self.twoprong_masspi0_noniso_sym.Fill(sel_tp.massPi0, weight)
-            if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel.Fill(sel_tp.massPi0, weight)
-            else: self.twoprong_masspi0_noniso_sym_endcap.Fill(sel_tp.massPi0, weight)
-            if bins[0] < sel_tp.pt < bins[1]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-            elif bins[1] < sel_tp.pt < bins[2]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-            elif bins[2] < sel_tp.pt < bins[3]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-            elif bins[3] < sel_tp.pt < bins[4]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-            elif bins[4] < sel_tp.pt < bins[5]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-            elif bins[5] < sel_tp.pt < bins[6]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-            elif bins[6] < sel_tp.pt < bins[7]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-            elif bins[7] < sel_tp.pt < bins[8]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-            elif bins[8] < sel_tp.pt < bins[9]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-            elif bins[9] < sel_tp.pt < bins[10]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+            if not tight_photon:
+                self.twoprong_masspi0_noniso_sym_loose.Fill(sel_tp.massPi0, weight)
+                self.photon_loose_chgIso_noniso_sym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_loose_hoe_noniso_sym.Fill(sel_photon.hoe, weight)
+                self.photon_loose_sieie_noniso_sym.Fill(sel_photon.sieie, weight)
+                self.photon_loose_hadTow_noniso_sym.Fill(sel_photon.hadTowOverEm, weight)
             else:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_sym_barrel_bin10.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_sym_endcap_bin10.Fill(sel_tp.massPi0, weight)
+                self.twoprong_masspi0_noniso_sym_tight.Fill(sel_tp.massPi0, weight)
+                self.photon_tight_chgIso_noniso_sym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_tight_hoe_noniso_sym.Fill(sel_photon.hoe, weight)
+                self.photon_tight_sieie_noniso_sym.Fill(sel_photon.sieie, weight)
+                self.photon_tight_hadTow_noniso_sym.Fill(sel_photon.hadTowOverEm, weight)
+            if abs(sel_tp.eta) < 1.4442:
+                if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_barrel_loose.Fill(sel_tp.massPi0, weight)
+            else: 
+                if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_sym_endcap_loose.Fill(sel_tp.massPi0, weight)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin0_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin0_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin1_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin1_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin2_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin2_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin3_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin3_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin4_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin4_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin5_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin5_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin6_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin6_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin7_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin7_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin8_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin8_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[9] < sel_tp.pt < bins[10]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin9_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin9_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[10] < sel_tp.pt < bins[11]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin10_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin10_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[11] < sel_tp.pt < bins[12]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin11_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin11_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[12] < sel_tp.pt < bins[13]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin12_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin12_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[13] < sel_tp.pt < bins[14]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin13_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin13_loose.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_barrel_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_barrel_bin14_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_sym_endcap_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_sym_endcap_bin14_loose.Fill(sel_tp.massPi0, weight)
         elif len(noniso_asym_tp) != 0:  # loose loose
             self.twoprong_phi_noniso_asym.Fill(sel_tp.phi, weight)
             self.twoprong_pt_noniso_asym.Fill(sel_tp.pt, weight)
             self.twoprong_eta_noniso_asym.Fill(sel_tp.eta, weight)
-            self.ntwoprong_regions.Fill(3)
             self.twoprong_chargedIso_noniso_asym.Fill(sel_tp.chargedIso, weight)
-            self.twoprong_masspi0_noniso_asym.Fill(sel_tp.massPi0, weight)
-            if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel.Fill(sel_tp.massPi0, weight)
-            else: self.twoprong_masspi0_noniso_asym_endcap.Fill(sel_tp.massPi0, weight)
-            if bins[0] < sel_tp.pt < bins[1]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin0.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin0.Fill(sel_tp.massPi0, weight)
-            elif bins[1] < sel_tp.pt < bins[2]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin1.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin1.Fill(sel_tp.massPi0, weight)
-            elif bins[2] < sel_tp.pt < bins[3]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin2.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin2.Fill(sel_tp.massPi0, weight)
-            elif bins[3] < sel_tp.pt < bins[4]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin3.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin3.Fill(sel_tp.massPi0, weight)
-            elif bins[4] < sel_tp.pt < bins[5]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin4.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin4.Fill(sel_tp.massPi0, weight)
-            elif bins[5] < sel_tp.pt < bins[6]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin5.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin5.Fill(sel_tp.massPi0, weight)
-            elif bins[6] < sel_tp.pt < bins[7]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin6.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin6.Fill(sel_tp.massPi0, weight)
-            elif bins[7] < sel_tp.pt < bins[8]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin7.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin7.Fill(sel_tp.massPi0, weight)
-            elif bins[8] < sel_tp.pt < bins[9]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin8.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin8.Fill(sel_tp.massPi0, weight)
-            elif bins[9] < sel_tp.pt < bins[10]:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin9.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin9.Fill(sel_tp.massPi0, weight)
+            if not tight_photon:
+                self.twoprong_masspi0_noniso_asym_loose.Fill(sel_tp.massPi0, weight)
+                self.photon_loose_chgIso_noniso_asym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_loose_hoe_noniso_asym.Fill(sel_photon.hoe, weight)
+                self.photon_loose_sieie_noniso_asym.Fill(sel_photon.sieie, weight)
+                self.photon_loose_hadTow_noniso_asym.Fill(sel_photon.hadTowOverEm, weight)
             else:
-                if abs(sel_tp.eta) < 1.4442: self.twoprong_masspi0_noniso_asym_barrel_bin10.Fill(sel_tp.massPi0, weight)
-                else: self.twoprong_masspi0_noniso_asym_endcap_bin10.Fill(sel_tp.massPi0, weight)
+                self.twoprong_masspi0_noniso_asym_tight.Fill(sel_tp.massPi0, weight)
+                self.photon_tight_chgIso_noniso_asym.Fill(sel_photon.pfRelIso03_chg)
+                self.photon_tight_hoe_noniso_asym.Fill(sel_photon.hoe, weight)
+                self.photon_tight_sieie_noniso_asym.Fill(sel_photon.sieie, weight)
+                self.photon_tight_hadTow_noniso_asym.Fill(sel_photon.hadTowOverEm, weight)
+            if abs(sel_tp.eta) < 1.4442:
+                if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_barrel_loose.Fill(sel_tp.massPi0, weight)
+            else: 
+                if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_tight.Fill(sel_tp.massPi0, weight)
+                else: self.twoprong_masspi0_noniso_asym_endcap_loose.Fill(sel_tp.massPi0, weight)
+            if bins[0] < sel_tp.pt < bins[1]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin0_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin0_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin0_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[1] < sel_tp.pt < bins[2]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin1_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin1_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin1_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[2] < sel_tp.pt < bins[3]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin2_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin2_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin2_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[3] < sel_tp.pt < bins[4]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin3_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin3_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin3_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[4] < sel_tp.pt < bins[5]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin4_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin4_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin4_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[5] < sel_tp.pt < bins[6]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin5_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin5_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin5_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[6] < sel_tp.pt < bins[7]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin6_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin6_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin6_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[7] < sel_tp.pt < bins[8]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin7_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin7_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin7_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[8] < sel_tp.pt < bins[9]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin8_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin8_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin8_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[9] < sel_tp.pt < bins[10]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin9_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin9_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin9_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[10] < sel_tp.pt < bins[11]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin10_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin10_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin10_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[11] < sel_tp.pt < bins[12]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin11_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin11_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin11_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[12] < sel_tp.pt < bins[13]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin12_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin12_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin12_loose.Fill(sel_tp.massPi0, weight)
+            elif bins[13] < sel_tp.pt < bins[14]:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin13_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin13_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin13_loose.Fill(sel_tp.massPi0, weight)
+            else:
+                if abs(sel_tp.eta) < 1.4442: 
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_barrel_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_barrel_bin14_loose.Fill(sel_tp.massPi0, weight)
+                else:
+                    if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin14_tight.Fill(sel_tp.massPi0, weight)
+                    else: self.twoprong_masspi0_noniso_asym_endcap_bin14_loose.Fill(sel_tp.massPi0, weight)
     
         return True
 
