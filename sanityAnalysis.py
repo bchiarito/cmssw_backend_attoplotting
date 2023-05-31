@@ -30,8 +30,8 @@ class SanityAnalysis(Module):
         self.book_histo(name+'_'+var, bins, low, high)
         self.book_histo(name+'_B_B_'+var, bins, low, high)
         self.book_histo(name+'_B_E_'+var, bins, low, high)
-        self.book_histo(name+'_E_B_'+var, bins, low, high)
-        self.book_histo(name+'_E_E_'+var, bins, low, high)
+        #self.book_histo(name+'_E_B_'+var, bins, low, high)
+        #self.book_histo(name+'_E_E_'+var, bins, low, high)
 
     def beginJob(self, histFile=None, histDirName=None):
         Module.beginJob(self, histFile, histDirName)
@@ -144,23 +144,14 @@ class SanityAnalysis(Module):
           the_twoprong = get_vec(twoprongs[recophi.twoprongindex])
           deta = abs(the_photon.Eta() - the_twoprong.Eta())
 
-        '''
-        # deta cut
-        if region == 1:
-          if self.deta and deta < 1.5: pass_deta = True
-          elif self.deta and deta > 1.5: pass_deta = False
-          else: pass_deta = True
-        '''
-        
         # mc hthat
         self.cutflow.Fill(0)
-        try:
-          #if len(photons)>=1:
-          if True:
+        if self.datamc == 'mc':
+          try:
             self.hthat_gjets.Fill(event.htHat_lhe, weight)
             self.hthat_qcd.Fill(event.htHat_lhe, weight)
-        except RuntimeError:
-          pass
+          except RuntimeError:
+            pass
 
         if region == 1:
           self.cutflow.Fill(1)
@@ -213,6 +204,7 @@ class SanityAnalysis(Module):
             if event.NJets == 0: self.recophi_B_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets == 1: self.recophi_B_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets >= 2: self.recophi_B_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          '''
           if photon_subdet == 'endcap' and twoprong_subdet == 'barrel':
             self.recophi_E_B_pt.Fill(recophi.pt, weight)
             self.recophi_E_B_eta.Fill(recophi.eta, weight)
@@ -235,6 +227,7 @@ class SanityAnalysis(Module):
             if event.NJets == 0: self.recophi_E_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets == 1: self.recophi_E_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
             if event.NJets >= 2: self.recophi_E_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          '''
           self.photon_pt.Fill(the_photon.Pt(), weight)
           self.photon_eta.Fill(the_photon.Eta(), weight)
           self.photon_phi.Fill(the_photon.Phi(), weight)
@@ -260,7 +253,7 @@ class SanityAnalysis(Module):
             if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), weight)
 
         # signal
-        try:
+        if self.datamc == 'sigRes':
           genomegas = Collection(event, "GenOmega")
           for i in range(event.nGenOmega):
             self.SIGNAL_decaymode.Fill(event.GenOmega_decaymode[i])
@@ -283,8 +276,5 @@ class SanityAnalysis(Module):
             if tagged: self.SIGNAL_tag_eta_NUMER.Fill(genvec.Eta())
             if tagged: self.SIGNAL_tag_phi_NUMER.Fill(genvec.Phi())
             if tagged: self.SIGNAL_tag_npv_NUMER.Fill(event.PV_npvs)
-          
-        except RuntimeError:
-          pass
 
         return True
