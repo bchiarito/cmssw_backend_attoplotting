@@ -8,6 +8,20 @@ import sys
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
+PHOTON_CUTBASED_ID = 1 # loose
+PHOTON_BARREL_ETA = 1.4442
+PHOTON_MIN_PT = 35 # b/c HLT_Photon35_Twoprongs35
+PHOTON_PT_CUT = 220
+PHOTON_HoverE_CUT = 0.04596
+
+
+def dPhi(vec1, vec2):
+  pi = ROOT.TMath.Pi()
+  dphi = vec1.Phi() - vec2.Phi()
+  if dphi > pi: dphi = dphi - 2.0*pi
+  elif dphi <= -pi: dphi = dphi + 2*pi
+  return dphi
+
 def get_vec(obj):
   return ROOT.Math.PtEtaPhiMVector(obj.pt, obj.eta, obj.phi, obj.mass)
 
@@ -105,6 +119,15 @@ class SanityAnalysis(Module):
         self.book_histo('SIGNAL_tag_npv_NUMER', 100, 0, 100, title='tag_npv_NUMER')
         self.book_histo('SIGNAL_tag_npv_DENOM', 100, 0, 100, title='tag_npv_DENOM')
 
+        self.book_histo('SIGNAL_photontag_pt_NUMER', 150, 0, 1500, title='photontag_pt_NUMER')
+        self.book_histo('SIGNAL_photontag_pt_DENOM', 150, 0, 1500, title='photontag_pt_DENOM')
+        self.book_histo('SIGNAL_photontag_eta_NUMER', 100, -5, 5, title='photontag_eta_NUMER')
+        self.book_histo('SIGNAL_photontag_eta_DENOM', 100, -5, 5, title='photontag_eta_DENOM')
+        self.book_histo('SIGNAL_photontag_phi_NUMER', 70, -3.5, 3.5, title='photontag_phi_NUMER')
+        self.book_histo('SIGNAL_photontag_phi_DENOM', 70, -3.5, 3.5, title='photontag_phi_DENOM')
+        self.book_histo('SIGNAL_photontag_npv_NUMER', 100, 0, 100, title='photontag_npv_NUMER')
+        self.book_histo('SIGNAL_photontag_npv_DENOM', 100, 0, 100, title='photontag_npv_DENOM')
+
         self.cutflow = ROOT.TH1F('cutflow', 'cutflow', 10, 0, 10)
         self.addObject(self.cutflow)
 
@@ -125,12 +148,16 @@ class SanityAnalysis(Module):
         twoprongs = sorted(twoprongs, reverse=True, key=lambda obj : obj.pt)
         if self.photon == 'HPID':
           photons = Collection(event, "HighPtIdPhoton")
-          recophi = Object(event, "RecoPhi")
-          region = event.Region
+          recophi = Object(event, "HPID_RecoPhi")
+          region = event.HPID_Region
+          njets = event.HPID_NJets
+          ht = event.HPID_HT
         elif self.photon == 'CBL':
           photons = Collection(event, "Photon")
-          recophi = Object(event, "CutBased_RecoPhi")
-          region = event.CutBased_Region
+          recophi = Object(event, "CBL_RecoPhi")
+          region = event.CBL_Region
+          njets = event.CBL_NJets
+          ht = event.CBL_HT
         pass_trigger = event.HLT_Photon200
         ntwoprong = 0
         for twoprong in twoprongs:
@@ -156,10 +183,10 @@ class SanityAnalysis(Module):
         if region == 1:
           self.cutflow.Fill(1)
 
-        if region == 1 and the_photon.Pt() > 220 and abs(photons[recophi.photonindex].scEta) < 1.4442:
+        if region == 1 and the_photon.Pt() > 50 and abs(photons[recophi.photonindex].scEta) < 1.4442:
           self.cutflow.Fill(2)
 
-        if region == 1 and the_photon.Pt() > 220 and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger:
+        if region == 1 and the_photon.Pt() > 50 and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger:
           self.cutflow.Fill(3)
           if self.photon == 'HPID':
             if abs(photons[recophi.photonindex].scEta)<1.4442: photon_subdet = 'barrel'
@@ -170,40 +197,39 @@ class SanityAnalysis(Module):
             elif photons[recophi.photonindex].isScEtaEE: photon_subdet = 'endcap'
             else: photon_subdet = 'other'
           if abs(twoprongs[recophi.twoprongindex].eta)<1.4442: twoprong_subdet = 'barrel'
-          #elif abs(twoprongs[recophi.twoprongindex].eta)>1.566 and abs(twoprongs[recophi.twoprongindex].eta)<2.5: twoprong_subdet = 'endcap'
           else: twoprong_subdet = 'endcap'
           self.recophi_pt.Fill(recophi.pt, weight)
           self.recophi_eta.Fill(recophi.eta, weight)
           self.recophi_phi.Fill(recophi.phi, weight)
           self.recophi_m.Fill(recophi.mass, weight)
-          self.recophi_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), weight)
+          self.recophi_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), weight)
           self.recophi_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
           self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-          if event.NJets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-          if event.NJets == 1: self.recophi_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-          if event.NJets >= 2: self.recophi_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          if njets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          if njets == 1: self.recophi_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          if njets >= 2: self.recophi_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
           if photon_subdet == 'barrel' and twoprong_subdet == 'barrel':
             self.recophi_B_B_pt.Fill(recophi.pt, weight)
             self.recophi_B_B_eta.Fill(recophi.eta, weight)
             self.recophi_B_B_phi.Fill(recophi.phi, weight)
             self.recophi_B_B_m.Fill(recophi.mass, weight)
-            self.recophi_B_B_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), weight)
+            self.recophi_B_B_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), weight)
             self.recophi_B_B_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
             self.recophi_B_B_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 0: self.recophi_B_B_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 1: self.recophi_B_B_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets >= 2: self.recophi_B_B_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            if njets == 0: self.recophi_B_B_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            if njets == 1: self.recophi_B_B_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            if njets >= 2: self.recophi_B_B_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
           if photon_subdet == 'barrel' and twoprong_subdet == 'endcap':
             self.recophi_B_E_pt.Fill(recophi.pt, weight)
             self.recophi_B_E_eta.Fill(recophi.eta, weight)
             self.recophi_B_E_phi.Fill(recophi.phi, weight)
             self.recophi_B_E_m.Fill(recophi.mass, weight)
-            self.recophi_B_E_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), weight)
+            self.recophi_B_E_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), weight)
             self.recophi_B_E_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
             self.recophi_B_E_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 0: self.recophi_B_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 1: self.recophi_B_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets >= 2: self.recophi_B_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            if njets == 0: self.recophi_B_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            if njets == 1: self.recophi_B_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            if njets >= 2: self.recophi_B_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
           '''
           if photon_subdet == 'endcap' and twoprong_subdet == 'barrel':
             self.recophi_E_B_pt.Fill(recophi.pt, weight)
@@ -237,10 +263,10 @@ class SanityAnalysis(Module):
           self.twoprong_mass.Fill(twoprongs[recophi.twoprongindex].mass, weight)
           self.twoprong_masspi0.Fill(twoprongs[recophi.twoprongindex].massPi0, weight)
           self.twoprong_masseta.Fill(twoprongs[recophi.twoprongindex].massEta, weight)
-          self.nphoton.Fill(event.nHighPtIdPhoton, weight)
+          self.nphoton.Fill(len(photons), weight)
           self.ntwoprong.Fill(ntwoprong, weight)
-          self.njets.Fill(event.NJets, weight)
-          self.ht.Fill(event.HT, weight)
+          self.njets.Fill(njets, weight)
+          self.ht.Fill(ht, weight)
           self.met.Fill(event.MET_pt, weight)
           self.met_phi.Fill(event.MET_phi, weight)
           if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
@@ -264,8 +290,7 @@ class SanityAnalysis(Module):
             tagged = False
             for twoprong in twoprongs:
               twoprongvec = get_vec(twoprong)
-              ROOT.Math.VectorUtil.DeltaPhi(genvec, twoprongvec) # line does nothing but must be run
-              if ROOT.Math.VectorUtil.DeltaR(genvec, twoprongvec) < 0.1 and ROOT.Math.VectorUtil.DeltaPhi(genvec, twoprongvec) < 0.1:
+              if ROOT.Math.VectorUtil.DeltaR(genvec, twoprongvec) < 0.1:
                 tagged = True
                 break
             self.SIGNAL_tag_pt_DENOM.Fill(genvec.Pt())
@@ -276,5 +301,32 @@ class SanityAnalysis(Module):
             if tagged: self.SIGNAL_tag_eta_NUMER.Fill(genvec.Eta())
             if tagged: self.SIGNAL_tag_phi_NUMER.Fill(genvec.Phi())
             if tagged: self.SIGNAL_tag_npv_NUMER.Fill(event.PV_npvs)
+            photon_tagged = False
+            if self.photon == 'CBL': 
+              photon_tagged = False
+              for photon in photons:
+                if photon.cutBased < PHOTON_CUTBASED_ID: continue
+                if abs(photon.scEta) > PHOTON_BARREL_ETA: continue
+                if photon.pt <= PHOTON_MIN_PT: continue
+                if photon.hadTowOverEm > PHOTON_HoverE_CUT: continue
+                photonvec = get_vec(photon)
+                if ROOT.Math.VectorUtil.DeltaR(genvec, photonvec) < 0.1:
+                  photon_tagged = True
+                  break
+            if self.photon == 'HPID': 
+              photon_tagged = False
+              for photon in photons:
+                photonvec = get_vec(photon)
+                if ROOT.Math.VectorUtil.DeltaR(genvec, photonvec) < 0.1:
+                  photon_tagged = True
+                  break
+            self.SIGNAL_photontag_pt_DENOM.Fill(genvec.Pt())
+            self.SIGNAL_photontag_eta_DENOM.Fill(genvec.Eta())
+            self.SIGNAL_photontag_phi_DENOM.Fill(genvec.Phi())
+            self.SIGNAL_photontag_npv_DENOM.Fill(event.PV_npvs)
+            if photon_tagged: self.SIGNAL_photontag_pt_NUMER.Fill(genvec.Pt())
+            if photon_tagged: self.SIGNAL_photontag_eta_NUMER.Fill(genvec.Eta())
+            if photon_tagged: self.SIGNAL_photontag_phi_NUMER.Fill(genvec.Phi())
+            if photon_tagged: self.SIGNAL_photontag_npv_NUMER.Fill(event.PV_npvs)
 
         return True

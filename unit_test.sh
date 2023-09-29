@@ -1,2 +1,2 @@
 #! /bin/sh
-python nanoaodtools_looper.py ATTOAODv1p0c10_90.root --data --dEta=False --photonchoice=CBL
+python nanoaodtools_looper.py ATTOAODv1p2_0.root --sigRes --photonchoice=CBL --plotter sanity
