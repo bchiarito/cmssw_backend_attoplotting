@@ -987,7 +987,6 @@ class MyAnalysis(Module):
                 else:
                     if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin9_tight.Fill(sel_tp.massPi0, weight)
                     else: self.twoprong_masspi0_noniso_asym_endcap_bin9_loose.Fill(sel_tp.massPi0, weight)
-            elif bins[10] < sel_tp.pt < bins[11]:
         
         return True
 
