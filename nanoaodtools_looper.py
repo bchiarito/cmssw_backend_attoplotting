@@ -40,6 +40,7 @@ args = parser.parse_args()
 # import modules
 from PhysicsTools.NanoAODTools.fmk_plotting.sanityAnalysis import SanityAnalysis
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
+from PhysicsTools.NanoAODTools.fmk_plotting.sigAnalysis import SigAnalysis
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
@@ -50,10 +51,11 @@ else: raise SystemExit('ERROR: Must specify one of --data / --mc / --sigRes / --
 files = []
 if not args.loc: metadata_chain = ROOT.TChain('Metadata')
 if args.input == 'local':
-  for fi in os.listdir("."):
-    if fi.endswith(".root"):
-      files.append(fi)
-      if not args.loc: metadata_chain.Add(fi)
+    for fi in os.listdir("."):
+        if fi == 'scalefactor.root': continue
+        if fi.endswith(".root"):
+            files.append(fi)
+            if not args.loc: metadata_chain.Add(fi)
 else:
   if '.root' in args.input:
     files = [args.input]
@@ -125,6 +127,7 @@ if args.data:
 modules = []
 if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice)]
 if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.phislice)]
+if args.plotter == 'sigeff': modules += [SigAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
 
 if args.fast: n = 1
 else: n = None
