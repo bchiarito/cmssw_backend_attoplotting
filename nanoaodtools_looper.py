@@ -34,6 +34,7 @@ parser.add_argument("--lumi", default=1.0, help='')
 parser.add_argument("--cut", type=str, default='None', help='')
 parser.add_argument("--photonchoice", default="HPID", help='')
 parser.add_argument("--plotter", default="", help='')
+parser.add_argument("--phislice", type=int, default=0, help='')
 args = parser.parse_args()
 
 # import modules
@@ -123,7 +124,7 @@ if args.data:
 
 modules = []
 if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice)]
-if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
+if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.phislice)]
 
 if args.fast: n = 1
 else: n = None
