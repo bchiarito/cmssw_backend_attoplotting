@@ -18,16 +18,20 @@ def dR(eta1, eta2, phi1, phi2):
 
 
 class MyAnalysis(Module):
-    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None):
+    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, phislice=0):
         self.writeHistFile = True
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
         self.datamc = datamc
+        self.phislice = phislice
 
     def beginJob(self, histFile=None, histDirName=None):
         Module.beginJob(self, histFile, histDirName)
         
+        self.recophi_mass = ROOT.TH1F('recophi_mass', '; RecoPhi_mass', 600, 0, 6000)
+        self.addObject(self.recophi_mass)
+
         self.twoprong_chargedIso_iso_sym = ROOT.TH1F('twoprong_chargedIso_iso_sym', '; Twoprong_chargedIso', 2000, 0, 100)
         self.twoprong_chargedIso_iso_asym = ROOT.TH1F('twoprong_chargedIso_iso_asym', '; Twoprong_chargedIso', 2000, 0, 100)
         self.twoprong_chargedIso_noniso_sym = ROOT.TH1F('twoprong_chargedIso_noniso_sym', '; Twoprong_chargedIso', 2000, 0, 100)
@@ -201,7 +205,7 @@ class MyAnalysis(Module):
         self.addObject(self.hthat_gjets)
 
         # TwoProng Pt Binning
-        self.bins = [20,40,60,80,100,140,180,220,300,380]
+        self.pt_bins = [20,40,60,80,100,140,180,220,300,380]
         
         bin0 = self.pt_bins[0] 
         bin1 = self.pt_bins[1] 
@@ -566,8 +570,10 @@ class MyAnalysis(Module):
     
         twoprongs = Collection(event, "TwoProng")
         photons = Collection(event, "Photon")
+        recophi = Object(event, "CBL_RecoPhi")
         PVs = Object(event, "PV")
-        pass_trigger = event.HLT_Photon35_TwoProngs35
+        #pass_trigger = event.HLT_Photon35_TwoProngs35
+        pass_trigger = True
 
         bins = []
         for i in range(len(self.pt_bins)):
@@ -590,6 +596,10 @@ class MyAnalysis(Module):
             tight_photon = True
         else: sel_photon = loose_photons[0]
 
+        if self.phislice == 1:
+          phi_window = [600, 700]
+          if recophi.mass < phi_window[0] or recophi.mass > phi_window[1]: return False
+
         iso_sym_tp = []
         iso_asym_tp = []
         noniso_sym_tp = []
@@ -610,6 +620,7 @@ class MyAnalysis(Module):
         elif len(noniso_asym_tp) != 0: sel_tp = noniso_asym_tp[0]
         else: return True
 
+        self.recophi_mass.Fill(recophi.mass)
         if len(iso_sym_tp) != 0: # tight tight
             self.twoprong_phi_iso_sym.Fill(sel_tp.phi, weight)
             self.twoprong_eta_iso_sym.Fill(sel_tp.eta, weight)
