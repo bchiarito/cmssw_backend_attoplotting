@@ -41,6 +41,7 @@ args = parser.parse_args()
 from PhysicsTools.NanoAODTools.fmk_plotting.sanityAnalysis import SanityAnalysis
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
 from PhysicsTools.NanoAODTools.fmk_plotting.sigAnalysis import SigAnalysis
+#from PhysicsTools.NanoAODTools.fmk_plotting.HistogramProducerModVer import HistProd
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
@@ -49,24 +50,24 @@ elif args.sigNonRes: datamc = 'sigNonRes'
 else: raise SystemExit('ERROR: Must specify one of --data / --mc / --sigRes / --sigNonRes !')
 
 files = []
-if not args.loc: metadata_chain = ROOT.TChain('Metadata')
+if not args.loc and not args.plotter=="zttplot": metadata_chain = ROOT.TChain('Metadata')
 if args.input == 'local':
     for fi in os.listdir("."):
         if fi == 'scalefactor.root': continue
         if fi.endswith(".root"):
             files.append(fi)
-            if not args.loc: metadata_chain.Add(fi)
+            if not args.loc and not args.plotter=="zttplot": metadata_chain.Add(fi)
 else:
   if '.root' in args.input:
     files = [args.input]
-    if not args.loc: metadata_chain.Add(args.input)
+    if not args.loc and not args.plotter=="zttplot": metadata_chain.Add(args.input)
   elif '/store/' in args.input:
     list_of_files = (subprocess.check_output("xrdfs root://cmseos.fnal.gov ls " + args.input, shell=True)).split('\n')
     list_of_files = [x for x in list_of_files if x]
     list_of_files.sort(key=filename_num)
     for line in list_of_files:
         files.append('root://cmseos.fnal.gov/'+line)
-        if not args.loc: metadata_chain.Add('root://cmseos.fnal.gov/'+line)
+        if not args.loc and args.plotter=="zttplot": metadata_chain.Add('root://cmseos.fnal.gov/'+line)
   else:
     with open(args.input) as fi:
       for line in fi:
@@ -87,9 +88,9 @@ else:
           for fi in list_of_files:
             print fi
             files.append('root://cmseos.fnal.gov/'+fi)
-            if not args.loc: metadata_chain.Add('root://cmseos.fnal.gov/'+fi)
+            if not args.loc and not args.plotter=="zttplot": metadata_chain.Add('root://cmseos.fnal.gov/'+fi)
 
-if args.loc:
+if args.loc and not args.plotter=="zttplot":
   d = plotting_util.get_meta(args.loc, jobdir=False)
   print(d)
   lookup_xs = {}; lookup_xs[d['dataset_id']] = d['xs']
@@ -99,7 +100,7 @@ if args.loc:
   for key in lookup_ngen:
     print(key, '->', lookup_ngen[key])
   
-if not args.loc:
+if not args.loc and not args.plotter=="zttplot":
   lookup_xs = {}
   lookup_ngen = {}
   for event in metadata_chain:
@@ -128,6 +129,7 @@ modules = []
 if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice)]
 if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.phislice)]
 if args.plotter == 'sigeff': modules += [SigAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
+#if args.plotter == 'zttplot': modules += [HistProd(datamc)]
 
 if args.fast: n = 1
 else: n = None
