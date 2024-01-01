@@ -34,7 +34,7 @@ parser.add_argument("--lumi", default=1.0, help='')
 parser.add_argument("--cut", type=str, default='None', help='')
 parser.add_argument("--photonchoice", default="HPID", help='')
 parser.add_argument("--plotter", default="", help='')
-parser.add_argument("--phislice", type=int, default=0, help='')
+parser.add_argument("--phislice", type=bool, default=False, help='')
 args = parser.parse_args()
 
 # import modules
