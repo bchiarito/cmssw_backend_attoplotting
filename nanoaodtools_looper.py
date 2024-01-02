@@ -35,6 +35,7 @@ parser.add_argument("--cut", type=str, default='None', help='')
 parser.add_argument("--photonchoice", default="HPID", help='')
 parser.add_argument("--plotter", default="", help='')
 parser.add_argument("--phislice", type=int, default=0, help='')
+parser.add_argument("--year", default="UL18", choices=["UL17", "UL18"], help='')
 args = parser.parse_args()
 
 # import modules
@@ -48,6 +49,11 @@ elif args.mc: datamc = 'mc'
 elif args.sigRes: datamc = 'sigRes'
 elif args.sigNonRes: datamc = 'sigNonRes'
 else: raise SystemExit('ERROR: Must specify one of --data / --mc / --sigRes / --sigNonRes !')
+
+# append the year to the datamc string 
+datamc += args.year[2:]
+
+print("DATAMC: " + datamc)
 
 files = []
 if not args.loc and not args.plotter=="zttplot": metadata_chain = ROOT.TChain('Metadata')

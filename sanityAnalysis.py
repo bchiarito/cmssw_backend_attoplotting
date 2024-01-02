@@ -10,7 +10,6 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 PHOTON_CUTBASED_ID = 1 # loose
 PHOTON_BARREL_ETA = 1.4442
-PHOTON_MIN_PT = 35 # b/c HLT_Photon35_Twoprongs35
 PHOTON_PT_CUT = 220
 PHOTON_HoverE_CUT = 0.04596
 
@@ -31,9 +30,37 @@ class SanityAnalysis(Module):
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
-        self.datamc = datamc
         self.cut = cut
+
+        self.datamc = datamc
+        self.year = "17" # default
+        if "data" in self.datamc:
+            if not len(self.datamc) == 4: 
+                self.year = self.datamc[4:]
+                self.datamc = self.datamc[:4]
+        elif "mc" in self.datamc:
+            if not len(self.datamc) == 2:
+                self.year = self.datamc[2:]
+                self.datamc = self.datamc[:2]
+        elif "sigRes" in self.datamc:
+            if not len(self.datamc) == 6:
+                self.year = self.datamc[6:]
+                self.datamc = self.datamc[:6]
+        elif "sigNonRes" in self.datamc:
+            if not len(self.datamc) == 9:
+                self.year = self.datamc[9:]
+                self.datamc = self.datamc[:9]
+
         self.photon = photon
+        self.photon_min_pt = 220  # default
+        if "CBL" in self.photon: 
+            if not len(self.photon) == 3: 
+                self.photon_min_pt = int(self.photon[3:])
+                self.photon = self.photon[:3]
+        elif "HPID" in self.photon: 
+            if not len(self.photon) == 4: 
+                self.photon_min_pt = int(self.photon[4:])
+                self.photon = self.photon[:4]
 
     def book_histo(self, name, bins, low, high, title=None):
         if not title: title = name
@@ -158,7 +185,8 @@ class SanityAnalysis(Module):
           region = event.CBL_Region
           njets = event.CBL_NJets
           ht = event.CBL_HT
-        pass_trigger = event.HLT_Photon200
+        if self.year == "18": pass_trigger = event.HLT_Photon200
+        elif self.year == "17": pass_trigger = event.HLT_Photon175
         ntwoprong = 0
         for twoprong in twoprongs:
           try:
@@ -183,10 +211,10 @@ class SanityAnalysis(Module):
         if region == 1:
           self.cutflow.Fill(1)
 
-        if region == 1 and the_photon.Pt() > 50 and abs(photons[recophi.photonindex].scEta) < 1.4442:
+        if region == 1 and the_photon.Pt() > self.photon_min_pt and abs(photons[recophi.photonindex].scEta) < 1.4442:
           self.cutflow.Fill(2)
 
-        if region == 1 and the_photon.Pt() > 50 and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger:
+        if region == 1 and the_photon.Pt() > self.photon_min_pt and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger:
           self.cutflow.Fill(3)
           if self.photon == 'HPID':
             if abs(photons[recophi.photonindex].scEta)<1.4442: photon_subdet = 'barrel'
