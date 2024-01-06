@@ -10,12 +10,12 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 
 def dR(eta1, eta2, phi1, phi2):
+    pi = ROOT.TMath.Pi()
     dEta = abs(eta1 - eta2)
-    dPhi = abs(phi1 - phi2)  # abs() is fine because delta_phi will be squared eventually 
-    # ensure that delta_phi is between 0 and pi (not -pi and pi due to abs())
-    if dPhi > ROOT.TMath.Pi(): dPhi -= ROOT.TMath.Pi()
+    dPhi = phi1 - phi2
+    if dPhi > pi: dPhi -= 2.0*pi
+    elif dPhi <= -pi: dPhi += 2.0*pi
     return ROOT.TMath.Sqrt(dEta**2 + dPhi**2)
-
 
 class MyAnalysis(Module):
     def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, phislice=0):
