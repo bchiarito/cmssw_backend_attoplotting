@@ -6,8 +6,10 @@ from importlib import import_module
 import os
 import sys
 import ROOT
+import itertools
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
+INFINITY = 1e15
 
 def dR(eta1, eta2, phi1, phi2):
     pi = ROOT.TMath.Pi()
@@ -18,19 +20,42 @@ def dR(eta1, eta2, phi1, phi2):
     return ROOT.TMath.Sqrt(dEta**2 + dPhi**2)
 
 class MyAnalysis(Module):
-    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, phislice=0):
+    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, phislice=False):
         self.writeHistFile = True
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
         self.datamc = datamc
-        self.phislice = phislice
+        self.phislice = bool(phislice)
+        print(self.phislice)
+
+        # TwoProng Pt Binning
+        self.pt_bins = [20,40,60,80,100,140,180,220,300,380]
+
+        # phislice variables
+        self.phi_bins = [0, 500, 1000, 1500, 2000, INFINITY]
+        self.phislice_hists = {}
+        self.phislice_omegamass_prefix = 'twoprong_masspi0'
+        self.phislice_ptspec_prefix = 'twoprong_pt'
 
     def beginJob(self, histFile=None, histDirName=None):
         Module.beginJob(self, histFile, histDirName)
         
-        self.recophi_mass = ROOT.TH1F('recophi_mass', '; RecoPhi_mass', 600, 0, 6000)
-        self.addObject(self.recophi_mass)
+        # phislice branches
+        if self.phislice:
+          self.recophi_mass = ROOT.TH1F('recophi_mass', '; RecoPhi_mass', 600, 0, 6000)
+          self.addObject(self.recophi_mass)
+          tp_types = ['iso_sym', 'noniso_sym', 'iso_asym', 'noniso_asym']
+          etaregions = ['barrel', 'endcap']
+          photon_types = ['tight', 'loose']
+          for phi_bin, tp_type, etaregion, pt_bin, photon_type in itertools.product(self.phi_bins[:-1], tp_types, etaregions, self.pt_bins, photon_types):
+            self.add_omegamass_phislice_hist(phi_bin, tp_type, etaregion, pt_bin, photon_type)
+          for tp_type, etaregion, pt_bin, photon_type in itertools.product(tp_types, etaregions, self.pt_bins, photon_types):
+            self.add_omegamass_phislice_hist('sum', tp_type, etaregion, pt_bin, photon_type)
+          for phi_bin, tp_type, etaregion, photon_type in itertools.product(self.phi_bins[:-1], tp_types, etaregions, photon_types):
+            self.add_ptspec_phislice_hist(phi_bin, tp_type, etaregion, photon_type)
+          for tp_type, etaregion, photon_type in itertools.product(tp_types, etaregions, photon_types):
+            self.add_ptspec_phislice_hist('sum', tp_type, etaregion, photon_type)
 
         self.twoprong_chargedIso_iso_sym = ROOT.TH1F('twoprong_chargedIso_iso_sym', '; Twoprong_chargedIso', 2000, 0, 100)
         self.twoprong_chargedIso_iso_asym = ROOT.TH1F('twoprong_chargedIso_iso_asym', '; Twoprong_chargedIso', 2000, 0, 100)
@@ -204,8 +229,6 @@ class MyAnalysis(Module):
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', '; htHat_lhe', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
 
-        # TwoProng Pt Binning
-        self.pt_bins = [20,40,60,80,100,140,180,220,300,380]
         
         bin0 = self.pt_bins[0] 
         bin1 = self.pt_bins[1] 
@@ -558,6 +581,33 @@ class MyAnalysis(Module):
         self.twoprong_masspi0_iso_asym_endcap_bin9_loose = ROOT.TH1D('twoprong_masspi0_iso_asym_endcap_'+str(bin9)+'+_loose', '; Twoprong_massPi0', 1000, 0, 50)  
         self.addObject(self.twoprong_masspi0_iso_asym_endcap_bin9_loose)
         
+    def add_omegamass_phislice_hist(self, phi_bin, tp_type, etaregion, pt_bin, photon_type):
+      name = self.getphislicename(self.phislice_omegamass_prefix, phi_bin, tp_type, etaregion, photon_type, pt_bin)
+      self.phislice_hists[name] = ROOT.TH1F(name, '; Twoprong_massPi0', 1000, 0, 50)
+      self.addObject(self.phislice_hists[name])
+
+    def add_ptspec_phislice_hist(self, phi_bin, tp_type, etaregion, photon_type):
+      name = self.getphislicename(self.phislice_ptspec_prefix, phi_bin, tp_type, etaregion, photon_type)
+      self.phislice_hists[name] = ROOT.TH1F(name, '; Twoprong_massPi0', 150, 0, 1500)
+      self.addObject(self.phislice_hists[name])
+
+    def getphislicename(self, prefix, phi_bin, tp_type, etaregion, photon_type, pt_bin=None):
+      if pt_bin == None:
+        pt_bin = 'X'
+        pt_bin2 = 'X'
+      else:
+        ind = self.pt_bins.index(pt_bin)
+        if ind == len(self.pt_bins)-1: pt_bin2 = "Inf" 
+        else: pt_bin2 = self.pt_bins[ind+1]
+      if phi_bin == 'sum':
+        name = prefix+'_phiAll_{}_{}_pt{}-{}_{}'.format(tp_type, etaregion, pt_bin, pt_bin2, photon_type)
+      else:
+        ind = self.phi_bins.index(phi_bin)
+        if ind == len(self.phi_bins)-2: phi_bin2 = "Inf"
+        else: phi_bin2 = self.phi_bins[ind+1]
+        name = prefix+'_phi{}-{}_{}_{}_pt{}-{}_{}'.format(phi_bin, phi_bin2, tp_type, etaregion, pt_bin, pt_bin2, photon_type)
+      if pt_bin == 'X': name.replace('ptX-X', '')
+      return name
 
     def analyze(self, event):
         if self.dict_xs and self.dict_ngen:
@@ -596,10 +646,6 @@ class MyAnalysis(Module):
             tight_photon = True
         else: sel_photon = loose_photons[0]
 
-        if self.phislice == 1:
-          phi_window = [600, 700]
-          if recophi.mass < phi_window[0] or recophi.mass > phi_window[1]: return False
-
         iso_sym_tp = []
         iso_asym_tp = []
         noniso_sym_tp = []
@@ -620,7 +666,6 @@ class MyAnalysis(Module):
         elif len(noniso_asym_tp) != 0: sel_tp = noniso_asym_tp[0]
         else: return True
 
-        self.recophi_mass.Fill(recophi.mass)
         if len(iso_sym_tp) != 0: # tight tight
             self.twoprong_phi_iso_sym.Fill(sel_tp.phi, weight)
             self.twoprong_eta_iso_sym.Fill(sel_tp.eta, weight)
@@ -998,7 +1043,36 @@ class MyAnalysis(Module):
                 else:
                     if tight_photon: self.twoprong_masspi0_noniso_asym_endcap_bin9_tight.Fill(sel_tp.massPi0, weight)
                     else: self.twoprong_masspi0_noniso_asym_endcap_bin9_loose.Fill(sel_tp.massPi0, weight)
-        
+
+        # fill phi window branches
+        if self.phislice:
+          tp_type = 'None'
+          if len(iso_sym_tp) != 0: tp_type = 'iso_sym' # tight tight
+          elif len(iso_asym_tp) != 0:  tp_type = 'iso_asym' # tight loose
+          elif len(noniso_sym_tp) != 0:  tp_type = 'noniso_sym' # loose tight
+          elif len(noniso_asym_tp) != 0:  tp_type = 'noniso_asym' # loose loose
+          for b in range(len(self.pt_bins)):
+            if b == len(self.pt_bins)-1:
+              if self.pt_bins[b] < sel_tp.pt : pt_bin = self.pt_bins[b]
+            else:
+              if self.pt_bins[b] < sel_tp.pt < self.pt_bins[b+1]: pt_bin = self.pt_bins[b]
+          if abs(sel_tp.eta) < 1.4442: etaregion = 'barrel'
+          else: etaregion = 'endcap'
+          if tight_photon: photon_type = 'tight'
+          else: photon_type = 'loose'
+          phi_bin = -1
+          for pb in range(len(self.phi_bins)-1):
+            if recophi.mass >= self.phi_bins[pb] and recophi.mass < self.phi_bins[pb+1]: phi_bin = self.phi_bins[pb]
+          if not phi_bin == -1:
+            self.phislice_hists[self.getphislicename(self.phislice_omegamass_prefix, phi_bin, tp_type, etaregion, photon_type, pt_bin)].Fill(sel_tp.massPi0, weight)
+            self.phislice_hists[self.getphislicename(self.phislice_ptspec_prefix, phi_bin, tp_type, etaregion, photon_type)].Fill(sel_tp.pt, weight)
+          else:
+            print('%%%%%%%%%%%%%%%%%%%%%%%%')
+            print(recophi.mass)
+            print('%%%%%%%%%%%%%%%%%%%%%%%%')
+          self.phislice_hists[self.getphislicename(self.phislice_omegamass_prefix, 'sum', tp_type, etaregion, photon_type, pt_bin)].Fill(sel_tp.massPi0, weight)
+          self.phislice_hists[self.getphislicename(self.phislice_ptspec_prefix, 'sum', tp_type, etaregion, photon_type)].Fill(sel_tp.pt, weight)
+
+          self.recophi_mass.Fill(recophi.mass)
+
         return True
-
-
