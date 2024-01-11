@@ -103,6 +103,10 @@ class SanityAnalysis(Module):
 
         self.photon_pt = ROOT.TH1F('photon_pt', 'photon_pt', 160, 0, 1600)
         self.addObject(self.photon_pt)
+        self.photon_pt_up = ROOT.TH1F('photon_pt_up', 'photon_pt_up', 160, 0, 1600)
+        self.addObject(self.photon_pt_up)
+        self.photon_pt_down = ROOT.TH1F('photon_pt_down', 'photon_pt_down', 160, 0, 1600)
+        self.addObject(self.photon_pt_down)
         self.photon_eta = ROOT.TH1F('photon_eta', 'photon_eta', 100, -5, 5)
         self.addObject(self.photon_eta)
         self.photon_phi = ROOT.TH1F('photon_phi', 'photon_phi', 70, -3.5, 3.5)
@@ -283,6 +287,18 @@ class SanityAnalysis(Module):
             if event.NJets >= 2: self.recophi_E_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
           '''
           self.photon_pt.Fill(the_photon.Pt(), weight)
+            
+          # scaling and smearing for photon_pt
+          corr_photon = photons[recophi.photonindex]
+        
+          corr_up = corr_photon.dEscaleUp + corr_photon.dEsigmaUp * corr_photon.eCorr
+          photon_pt_up = corr_photon.pt / corr_photon.eCorr * corr_up
+          corr_down = corr_photon.dEscaledown + corr_photon.dEsigmadown * corr_photon.eCorr
+          photon_pt_down = corr_photon.pt / corr_photon.eCorr * corr_down
+          
+          self.photon_pt_up.Fill(photon_pt_up, weight)
+          self.photon_pt_down.Fill(photon_pt_down, weight)
+          
           self.photon_eta.Fill(the_photon.Eta(), weight)
           self.photon_phi.Fill(the_photon.Phi(), weight)
           self.twoprong_pt.Fill(the_twoprong.Pt(), weight)
