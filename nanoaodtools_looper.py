@@ -42,6 +42,7 @@ args = parser.parse_args()
 from PhysicsTools.NanoAODTools.fmk_plotting.sanityAnalysis import SanityAnalysis
 from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
 from PhysicsTools.NanoAODTools.fmk_plotting.sigAnalysis import SigAnalysis
+from PhysicsTools.NanoAODTools.fmk_plotting.trigAnalysis import TriggerAnalysis
 #from PhysicsTools.NanoAODTools.fmk_plotting.HistogramProducerModVer import HistProd
 
 if args.data: datamc = 'data'
@@ -96,7 +97,7 @@ else:
             files.append('root://cmseos.fnal.gov/'+fi)
             if not args.loc and not args.plotter=="zttplot": metadata_chain.Add('root://cmseos.fnal.gov/'+fi)
 
-if args.loc and not args.plotter=="zttplot":
+if args.loc and not args.plotter=="zttplot" and not args.data:
   d = plotting_util.get_meta(args.loc, jobdir=False)
   print(d)
   lookup_xs = {}; lookup_xs[d['dataset_id']] = d['xs']
@@ -106,7 +107,7 @@ if args.loc and not args.plotter=="zttplot":
   for key in lookup_ngen:
     print(key, '->', lookup_ngen[key])
   
-if not args.loc and not args.plotter=="zttplot":
+if not args.loc and not args.plotter=="zttplot" and not args.data:
   lookup_xs = {}
   lookup_ngen = {}
   for event in metadata_chain:
@@ -135,6 +136,7 @@ modules = []
 if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice)]
 if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.phislice)]
 if args.plotter == 'sigeff': modules += [SigAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
+if args.plotter == 'trig': modules += [TriggerAnalysis(float(args.lumi), lookup_xs, lookup_ngen)]
 #if args.plotter == 'zttplot': modules += [HistProd(datamc)]
 
 if args.fast: n = 1
