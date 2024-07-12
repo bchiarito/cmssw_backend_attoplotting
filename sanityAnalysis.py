@@ -10,9 +10,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 PHOTON_CUTBASED_ID = 1 # loose
 PHOTON_BARREL_ETA = 1.4442
-PHOTON_PT_CUT = 220
 PHOTON_HoverE_CUT = 0.04596
-
 
 def dPhi(vec1, vec2):
   pi = ROOT.TMath.Pi()
@@ -33,7 +31,7 @@ class SanityAnalysis(Module):
         self.cut = cut
 
         self.datamc = datamc
-        self.year = "17" # default
+        self.year = "18" # default
         if "data" in self.datamc:
             if not len(self.datamc) == 4: 
                 self.year = self.datamc[4:]
@@ -61,6 +59,9 @@ class SanityAnalysis(Module):
             if not len(self.photon) == 4: 
                 self.photon_min_pt = int(self.photon[4:])
                 self.photon = self.photon[:4]
+        print('WWW')
+        print(self.photon_min_pt)
+        print('WWW')
 
     def book_histo(self, name, bins, low, high, title=None):
         if not title: title = name
@@ -130,6 +131,9 @@ class SanityAnalysis(Module):
         self.twoprong_eta_endcap = ROOT.TH1F('twoprong_eta_endcap', 'twoprong_eta_endcap', 100, -5, 5)
         self.addObject(self.twoprong_eta_endcap)
 
+        self.recomass_2d = ROOT.TH2D('recomass_2d', 'recomass_2d', 300, 0, 15, 200, 0, 6000)
+        self.addObject(self.recomass_2d)
+
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
         self.hthat_qcd = ROOT.TH1F('QCD_hthat_lhe', 'hthat', 300, 0, 3000)
@@ -170,9 +174,9 @@ class SanityAnalysis(Module):
           weight = 1.0
 
         # get collections
+        flags = Object(event, "Flag")
         twoprongs = Collection(event, "TwoProng")
-        # FIXME sorting should be done upstream
-        twoprongs = sorted(twoprongs, reverse=True, key=lambda obj : obj.pt)
+        twoprongs = sorted(twoprongs, reverse=True, key=lambda obj : obj.pt) # FIXME sorting should be done upstream
         if self.photon == 'HPID':
           photons = Collection(event, "HighPtIdPhoton")
           recophi = Object(event, "HPID_RecoPhi")
@@ -185,8 +189,11 @@ class SanityAnalysis(Module):
           region = event.CBL_Region
           njets = event.CBL_NJets
           ht = event.CBL_HT
+
         if self.year == "18": pass_trigger = event.HLT_Photon200
-        elif self.year == "17": pass_trigger = event.HLT_Photon175
+        elif self.year == "17": pass_trigger = event.HLT_Photon200
+        elif self.year == "16": pass_trigger = event.HLT_Photon175
+        else: pass_trigger = True
         ntwoprong = 0
         for twoprong in twoprongs:
           try:
@@ -194,12 +201,34 @@ class SanityAnalysis(Module):
           except RuntimeError:
             tight = True
           if tight: ntwoprong += 1
+        pass_UL18_HEM = True
         if region == 1:
           the_photon = get_vec(photons[recophi.photonindex])
           the_twoprong = get_vec(twoprongs[recophi.twoprongindex])
-          deta = abs(the_photon.Eta() - the_twoprong.Eta())
+          recophi_vec = get_vec(twoprongs[recophi.twoprongindex]) + get_vec(photons[recophi.photonindex])
+          # HEM correction
+          if self.year == "18":
+            if the_twoprong.Phi() > -1.57 and the_twoprong.Phi() < -0.87 and \
+              the_twoprong.Eta() > -3.0 and the_twoprong.Eta() < -1.4: pass_UL18_HEM = False
 
-        # mc hthat
+        # filter decision for data
+        '''
+        if self.datamc == 'data':
+          pass_filters = False
+          if flags.goodVertices and \
+            flags.globalSuperTightHalo2016Filter and \
+            flags.HBHENoiseFilter and \
+            flags.HBHENoiseIsoFilter and \
+            flags.EcalDeadCellTriggerPrimitiveFilter and \
+            flags.BadPFMuonFilter and \
+            flags.eeBadScFilter and \
+            flags.ecalBadCalibFilter:
+              pass_filters = True
+        '''
+
+        pass_analysis_selection = (region == 1 and the_photon.Pt() > self.photon_min_pt and abs(photons[recophi.photonindex].scEta) < 1.4442 and abs(the_photon.Eta() - the_twoprong.Eta() < 1.4 and pass_UL18_HEM))
+
+        # Fill
         self.cutflow.Fill(0)
         if self.datamc == 'mc':
           try:
@@ -211,10 +240,10 @@ class SanityAnalysis(Module):
         if region == 1:
           self.cutflow.Fill(1)
 
-        if region == 1 and the_photon.Pt() > self.photon_min_pt and abs(photons[recophi.photonindex].scEta) < 1.4442:
+        if region == 1 and pass_analysis_selection:
           self.cutflow.Fill(2)
 
-        if region == 1 and the_photon.Pt() > self.photon_min_pt and abs(photons[recophi.photonindex].scEta) < 1.4442 and pass_trigger:
+        if region == 1 and pass_analysis_selection and pass_trigger:
           self.cutflow.Fill(3)
           if self.photon == 'HPID':
             if abs(photons[recophi.photonindex].scEta)<1.4442: photon_subdet = 'barrel'
@@ -305,6 +334,7 @@ class SanityAnalysis(Module):
           if self.photon == 'CBL':
             if photons[recophi.photonindex].isScEtaEB: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), weight)
             if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), weight)
+          self.recomass_2d.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
 
         # signal
         if self.datamc == 'sigRes':
@@ -335,7 +365,7 @@ class SanityAnalysis(Module):
               for photon in photons:
                 if photon.cutBased < PHOTON_CUTBASED_ID: continue
                 if abs(photon.scEta) > PHOTON_BARREL_ETA: continue
-                if photon.pt <= PHOTON_MIN_PT: continue
+                if photon.pt <= self.photon_min_pt: continue
                 if photon.hadTowOverEm > PHOTON_HoverE_CUT: continue
                 photonvec = get_vec(photon)
                 if ROOT.Math.VectorUtil.DeltaR(genvec, photonvec) < 0.1:
