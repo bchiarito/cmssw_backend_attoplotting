@@ -39,11 +39,11 @@ parser.add_argument("--phislice", type=bool, default=False, help='')
 args = parser.parse_args()
 
 # import modules
-from PhysicsTools.NanoAODTools.fmk_plotting.sanityAnalysis import SanityAnalysis
-from PhysicsTools.NanoAODTools.fmk_plotting.myAnalysis import MyAnalysis
-from PhysicsTools.NanoAODTools.fmk_plotting.sigAnalysis import SigAnalysis
-from PhysicsTools.NanoAODTools.fmk_plotting.trigAnalysis import TriggerAnalysis
-#from PhysicsTools.NanoAODTools.fmk_plotting.HistogramProducerModVer import HistProd
+from PhysicsTools.NanoAODTools.fmk_histo.sanityAnalysis import SanityAnalysis
+from PhysicsTools.NanoAODTools.fmk_histo.myAnalysis import MyAnalysis
+from PhysicsTools.NanoAODTools.fmk_histo.sigAnalysis import SigAnalysis
+from PhysicsTools.NanoAODTools.fmk_histo.trigAnalysis import TriggerAnalysis
+#from PhysicsTools.NanoAODTools.fmk_histo.HistogramProducerModVer import HistProd
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
