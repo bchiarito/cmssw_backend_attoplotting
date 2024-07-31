@@ -3,6 +3,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection, Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 from importlib import import_module
+from array import array
 import os
 import sys
 import ROOT
@@ -135,8 +136,13 @@ class SanityAnalysis(Module):
         self.twoprong_eta_endcap = ROOT.TH1F('twoprong_eta_endcap', 'twoprong_eta_endcap', 100, -5, 5)
         self.addObject(self.twoprong_eta_endcap)
 
+        phi_bins = [500, 520, 541, 563, 586, 609, 633, 658, 684, 711, 739, 769, 800, 832, 865, 900, 936, 973, 1012, 1052, 1094, 1138, 1184, 1231, 1280, 1331, 1384, 1439, 1497, 1557, 1619, 1684, 1751, 1821, 1894, 1970, 2049, 2131, 2216, 2305, 2397, 2493, 2593, 2697, 2805, 2917, 3034, 3155, 3281, 3412, 3548, 3690, 3838, 3992]
+        omega_bins = [0.40, 0.53, 0.58, 0.64, 0.70, 0.77, 0.85, 0.94, 1.03, 1.13, 1.24, 1.36, 1.50, 1.65, 1.81, 1.99, 2.19, 2.41, 2.65, 2.92, 3.21, 3.5]
+
         self.recomass_2d = ROOT.TH2D('recomass_2d', 'recomass_2d', 300, 0, 15, 200, 0, 6000)
         self.addObject(self.recomass_2d)
+        self.recomass_2d_variable = ROOT.TH2D('recomass_2d_variable', 'recomass_2d_variable', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
+        self.addObject(self.recomass_2d_variable)
 
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
@@ -318,15 +324,15 @@ class SanityAnalysis(Module):
           self.photon_pt.Fill(the_photon.Pt(), weight)
             
           # scaling and smearing for photon_pt
-          corr_photon = photons[recophi.photonindex]
+          #corr_photon = photons[recophi.photonindex]
         
-          corr_up = corr_photon.dEscaleUp + corr_photon.dEsigmaUp * corr_photon.eCorr
-          photon_pt_up = corr_photon.pt / corr_photon.eCorr * corr_up
-          corr_down = corr_photon.dEscaledown + corr_photon.dEsigmadown * corr_photon.eCorr
-          photon_pt_down = corr_photon.pt / corr_photon.eCorr * corr_down
+          #corr_up = corr_photon.dEscaleUp + corr_photon.dEsigmaUp * corr_photon.eCorr
+          #photon_pt_up = corr_photon.pt / corr_photon.eCorr * corr_up
+          #corr_down = corr_photon.dEscaledown + corr_photon.dEsigmadown * corr_photon.eCorr
+          #photon_pt_down = corr_photon.pt / corr_photon.eCorr * corr_down
           
-          self.photon_pt_up.Fill(photon_pt_up, weight)
-          self.photon_pt_down.Fill(photon_pt_down, weight)
+          #self.photon_pt_up.Fill(photon_pt_up, weight)
+          #self.photon_pt_down.Fill(photon_pt_down, weight)
           
           self.photon_eta.Fill(the_photon.Eta(), weight)
           self.photon_phi.Fill(the_photon.Phi(), weight)
@@ -351,6 +357,7 @@ class SanityAnalysis(Module):
             if photons[recophi.photonindex].isScEtaEB: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), weight)
             if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), weight)
           self.recomass_2d.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
+          self.recomass_2d_variable.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
 
         # signal
         if self.datamc == 'sigRes':
