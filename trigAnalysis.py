@@ -13,11 +13,11 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 class TriggerAnalysis(Module):
     def __init__(self, lumi=1.0, dict_xs=None, dict_ngen=None):
+        self.writeHistFile = True
         self.year = "2018"
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
- 
 
     def beginJob(self, histFile=None, histDirName=None):
         Module.beginJob(self, histFile, histDirName)
