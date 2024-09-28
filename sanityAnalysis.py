@@ -13,6 +13,14 @@ PHOTON_CUTBASED_ID = 1 # loose
 PHOTON_BARREL_ETA = 1.4442
 PHOTON_HoverE_CUT = 0.04596
 
+def dR(eta1, eta2, phi1, phi2):
+    pi = ROOT.TMath.Pi()
+    dEta = abs(eta1 - eta2)
+    dPhi = phi1 - phi2
+    if dPhi > pi: dPhi -= 2.0*pi
+    elif dPhi <= -pi: dPhi += 2.0*pi
+    return ROOT.TMath.Sqrt(dEta**2 + dPhi**2)
+
 def dPhi(vec1, vec2):
   pi = ROOT.TMath.Pi()
   dphi = vec1.Phi() - vec2.Phi()
@@ -143,6 +151,10 @@ class SanityAnalysis(Module):
         self.addObject(self.recomass_2d)
         self.recomass_2d_variable = ROOT.TH2D('recomass_2d_variable', 'recomass_2d_variable', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
         self.addObject(self.recomass_2d_variable)
+        self.recomass_2d_variable_sb = ROOT.TH2D('recomass_2d_variable_sb', 'recomass_2d_variable_sb', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
+        self.addObject(self.recomass_2d_variable_sb)
+        self.recomass_2d_variable_sb_tightpho = ROOT.TH2D('recomass_2d_variable_sb_tightpho', 'recomass_2d_variable_sb_tightpho', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
+        self.addObject(self.recomass_2d_variable_sb_tightpho)
 
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
@@ -358,6 +370,45 @@ class SanityAnalysis(Module):
             if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), weight)
           self.recomass_2d.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
           self.recomass_2d_variable.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
+          self.recomass_2d_variable.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
+
+        tight_photons = []
+        loose_photons = []
+        for photon in photons:
+            if photon.pt > 220 and photon.isScEtaEB and photon.hadTowOverEm < 0.04596: # photon cuts
+                if photon.cutBased >= 1:
+                    tight_photons.append(photon)
+                    break
+                else: loose_photons.append(photon)
+        if len(loose_photons) == 0 and len(tight_photons) == 0: return False
+        if not len(tight_photons) == 0:
+          sel_photon = tight_photons[0]
+          tight_photon = True
+        else: sel_photon = loose_photons[0]
+        tight_photon = False
+        iso_sym_tp = []
+        iso_asym_tp = []
+        noniso_sym_tp = []
+        noniso_asym_tp = []
+        for twoprong in twoprongs:
+            if twoprong.pt < 20 or dR(twoprong.eta, sel_photon.eta, twoprong.phi, sel_photon.phi) < 0.1 or twoprong.chargedIso > 1: continue
+            if twoprong.passIso and twoprong.passSym:
+                iso_sym_tp.append(twoprong)
+                break
+            if twoprong.passIso and not twoprong.passSym: iso_asym_tp.append(twoprong)
+            if not twoprong.passIso and twoprong.passSym: noniso_sym_tp.append(twoprong)
+            if not twoprong.passIso and not twoprong.passSym: noniso_asym_tp.append(twoprong)
+        if len(iso_sym_tp) != 0: sel_tp = iso_sym_tp[0]
+        elif len(iso_asym_tp) != 0: sel_tp = iso_asym_tp[0]
+        elif len(noniso_sym_tp) != 0: sel_tp = noniso_sym_tp[0]
+        elif len(noniso_asym_tp) != 0: sel_tp = noniso_asym_tp[0]
+        else: return False
+        if len(loose_photons) >= 1 and len(tight_photons) == 0 and pass_trigger and len(iso_asym_tp) != 0:  # loose photon and loose twoprong
+          self.cutflow.Fill(4)
+          self.recomass_2d_variable_sb.Fill(sel_tp.massPi0, recophi.mass, weight)
+        if len(tight_photons) >= 1 and pass_trigger and len(noniso_asym_tp) != 0 and len(iso_sym_tp) == 0 and len(iso_asym_tp) == 0 and len(noniso_sym_tp) == 0:  # tight photon and loose twoprong (asym and noniso)
+          self.cutflow.Fill(5)
+          self.recomass_2d_variable_sb_tightpho.Fill(sel_tp.massPi0, recophi.mass, weight)
 
         # signal
         if self.datamc == 'sigRes':
@@ -409,5 +460,6 @@ class SanityAnalysis(Module):
             if photon_tagged: self.SIGNAL_photontag_eta_NUMER.Fill(genvec.Eta())
             if photon_tagged: self.SIGNAL_photontag_phi_NUMER.Fill(genvec.Phi())
             if photon_tagged: self.SIGNAL_photontag_npv_NUMER.Fill(event.PV_npvs)
+
 
         return True
