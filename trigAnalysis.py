@@ -72,7 +72,8 @@ class TriggerAnalysis(Module):
 
         ps = []
         for p in photons:
-            if p.cutBased >= 1 and p.electronVeto == 1 and abs(p.scEta) < 1.4442:
+            #if p.cutBased >= 1 and p.electronVeto == 1 and abs(p.scEta) < 1.4442:
+            if p.cutBased >= 1 and p.electronVeto == 1 and p.isScEtaEB:
                 ps.append(p)
                 break
         
