@@ -51,7 +51,6 @@ class TriggerAnalysis(Module):
 
 
     def analyze(self, event):
-        twoprongs = Collection(event, "TwoProng")
         flags     = Object(event, "Flag")
         photons   = Collection(event, "Photon")
         passtrig = event.HLT_Photon200
