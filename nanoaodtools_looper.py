@@ -34,7 +34,7 @@ parser.add_argument("--lumi", default=1.0, help='')
 parser.add_argument("--cut", type=str, default='None', help='')
 parser.add_argument("--photonchoice", default="HPID", help='')
 parser.add_argument("--plotter", default="", help='')
-parser.add_argument("--year", default="UL18", choices=["UL17", "UL18"], help='')
+parser.add_argument("--year", default="UL18", choices=["UL17", "UL18", "UL16"], help='')
 parser.add_argument("--phislice", type=bool, default=False, help='')
 args = parser.parse_args()
 
