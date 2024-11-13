@@ -43,7 +43,7 @@ from PhysicsTools.NanoAODTools.fmk_histo.sanityAnalysis import SanityAnalysis
 from PhysicsTools.NanoAODTools.fmk_histo.myAnalysis import MyAnalysis
 from PhysicsTools.NanoAODTools.fmk_histo.sigAnalysis import SigAnalysis
 from PhysicsTools.NanoAODTools.fmk_histo.trigAnalysis import TriggerAnalysis
-#from PhysicsTools.NanoAODTools.fmk_histo.HistogramProducerModVer import HistProd
+from PhysicsTools.NanoAODTools.fmk_histo.Histo_test import HistProd
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
@@ -137,7 +137,7 @@ if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi)
 if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.phislice)]
 if args.plotter == 'sigeff': modules += [SigAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
 if args.plotter == 'trig': modules += [TriggerAnalysis(float(args.lumi), lookup_xs, lookup_ngen)]
-#if args.plotter == 'zttplot': modules += [HistProd(datamc)]
+if args.plotter == 'zttplot': modules += [HistProd(datamc)]
 
 if args.fast: n = 1
 else: n = None
