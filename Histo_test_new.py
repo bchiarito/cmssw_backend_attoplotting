@@ -11,6 +11,18 @@ import ctypes
 import json
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
+BINNING = {}
+BINNING['pt'] = [100, 0, 1000]
+BINNING['eta'] = [100, -5, 5]
+BINNING['phi'] = [64, -3.2, 3.2]
+BINNING['Zmass'] = [100, 0, 500]
+BINNING['omegamass'] = [1000, 0, 10]
+REGIONS = ['SIGNAL', 'SS', 'ANTI', 'SSANTI']
+VERS = ['TAU']
+PREFIXES = ['VerTau']
+PREFIX = {}
+for ver, tag in zip(VERS, PREFIXES):
+  PREFIX[ver] = tag
 
 class HistProd(Module):
     def __init__(self,datamc):
@@ -119,6 +131,7 @@ class HistProd(Module):
 	self.kSpreadMC = rc.kSpreadMC
 	self.kSmearMC = rc.kSmearMC
 	self.kScaleDT = rc.kScaleDT
+
     def set_type_vals(self,type):
 	bins, min,max = 100,0,400
 	for item in self.types:
@@ -130,11 +143,57 @@ class HistProd(Module):
 	return bins,min,max
 
 
+
     def beginJob(self, histFile=None, histDirName=None):
-	Module.beginJob(self, histFile, histDirName)
 
+        def add_hist(name, nbins, low, high):
+          self.histograms[name] = ROOT.TH1D(name, name, nbins, low, high)
 
+        def add_all(basename, nbins, low, high):
+          for ver in VERS:
+            for region in REGIONS:
+              name = region + '_' + ver + '_' + basename
+              add_hist(name, nbins, low, high)
 
+        def add_hist2(name, template):
+            nbins, low, high = BINNING[template]
+            add_hist(name, nbins, low, high)
+
+        def add_all2(basename, template):
+            nbins, low, high = BINNING[template]
+            add_all(basename, nbins, low, high)
+
+        def book_hists():
+            keys = self.histograms.keys()
+            for entry in sorted(keys):
+              self.addObject(self.histograms[entry])
+              
+        Module.beginJob(self, histFile, histDirName)
+
+        add_all2('Zvis_pt', 'pt')
+        add_all2('Zvis_eta', 'eta')
+        add_all2('Zvis_phi', 'phi')
+        add_all2('Zvis_mass', 'Zmass')
+        add_all('Zvis_dR', 300, 0, 3)
+
+        add_all2('TauCand_pt', 'pt')
+        add_all2('TauCand_eta', 'eta')
+        add_all2('TauCand_phi', 'phi')
+        add_all2('TauCand_mass', 'omegamass')
+        add_all2('TauCand_massPi0', 'omegamass')
+        add_all2('TauCand_massEta', 'omegamass')
+
+        add_all2('Muon_pt', 'pt')
+        add_all2('Muon_eta', 'eta')
+        add_all2('Muon_phi', 'phi')
+        add_all('Muon_mass', 500, 0, 5)
+
+        add_all('Pzeta', 50, -50, 200)
+        add_all('MT', 100, 0, 200)
+
+        book_hists()
+
+        '''
         for iter in self.string_list:
             name=iter[0]
             branch=iter[1]
@@ -173,10 +232,15 @@ class HistProd(Module):
                         self.histograms[name_os_tp_syst] = ROOT.TH1D(name_os_tp_syst, name_os_tp_syst, bins, min, max)
                         self.addObject(self.histograms[name_os_tp_syst])
                         self.histograms[name_os_tau_syst] = ROOT.TH1D(name_os_tau_syst, name_os_tau_syst, bins, min, max)
-                        self.addObject(self.histograms[name_os_tau_syst])
+                        self.addObject(self.histograms[name_os_tau_syst])'''
 
     def analyze(self, event):
-        """process event, return True (go to next module) or False (fail, go to next event)"""
+
+        muons = Collection(event, "Muon")
+        taus = Collection(event, "Tau")
+        twoprongs = Collection(event, "TwoProng")
+        twoprongsmod = Collection(event, "TwoProngModified")
+
         dataset=1
         weights = [dataset*event.GSF_pileup_central*event.GSF_id_iso_trig,
         dataset*event.GSF_pileup_plus*event.GSF_id_iso_trig,
@@ -189,6 +253,84 @@ class HistProd(Module):
            	        TwoProng_charge=1
         if event.GTPnTracks == 3:
             TwoProng_charge= np.signbit(event.GChextra_charge)
+
+        #weight = event.GSF_pileup_central*event.GSF_id_iso_trig
+        weight = 1.0
+
+        def fill(basename, value, region, ver, weight=1.0):
+            histoname = region + '_' + ver + '_' + basename
+            self.histograms[histoname].Fill(value, weight)
+
+        def get_val(branchbase, ver):
+            branch = PREFIX[ver] + '_' + branchbase
+            return getattr(event, branch)
+
+        def get_region(ver):
+            ISO = get_val('RegionIso', ver)
+            OSSS = get_val('RegionOSSS', ver)
+            if ISO == -1 or OSSS == -1: return 'None'
+            elif ISO ==  1 or OSSS ==  1: return REGIONS[0]
+            elif ISO ==  1 or OSSS ==  2: return REGIONS[1]
+            elif ISO ==  2 or OSSS ==  1: return REGIONS[2]
+            elif ISO ==  2 or OSSS ==  2: return REGIONS[3]
+            else: return 'ERR'
+
+        for ver in VERS:
+          region = get_region(ver)
+
+          Zvis_pt = get_val('Zvis_pt', ver)
+          Zvis_eta = get_val('Zvis_eta', ver)
+          Zvis_phi = get_val('Zvis_phi', ver)
+          Zvis_mass = get_val('Zvis_mass', ver)
+          Zvis_dR = get_val('Zvis_dR', ver)
+
+          Muon_index = int(get_val('Index_muon', ver))
+          muonobj = muons[Muon_index]
+          Muon_pt = muonobj.pt
+          Muon_eta = muonobj.eta
+          Muon_phi = muonobj.phi
+          Muon_mass = muonobj.mass
+
+          TauCand_index = int(get_val('Index_tauobj', ver))
+          if ver == 'TAU': tauobj = taus[TauCand_index]
+          elif ver == 'TP': tauobj = twoprongs[TauCand_index]
+          elif ver == 'TPM': tauobj = twoprongsmod[TauCand_index]
+          TauCand_pt = tauobj.pt
+          TauCand_eta = tauobj.eta
+          TauCand_phi = tauobj.phi
+          TauCand_mass = tauobj.mass
+          if ver == 'TP' or ver == 'TPM': 
+            TauCand_massPi0 = tauobj.massPi0
+            TauCand_massEta = tauobj.massEta
+          elif ver == 'TAU': 
+            TauCand_massPi0 = tauobj.mass
+            TauCand_massEta = tauobj.mass
+
+          Pzeta = get_val('cut_Pzeta', ver)
+          MT = get_val('cut_MT', ver)
+       
+          fill('Zvis_pt', Zvis_pt, region, ver, weight)
+          fill('Zvis_eta', Zvis_eta, region, ver, weight)
+          fill('Zvis_phi', Zvis_phi, region, ver, weight)
+          fill('Zvis_mass', Zvis_mass, region, ver, weight)
+          fill('Zvis_dR', Zvis_dR, region, ver, weight)
+
+          fill('TauCand_pt', TauCand_pt, region, ver, weight)
+          fill('TauCand_eta', TauCand_eta, region, ver, weight)
+          fill('TauCand_phi', TauCand_phi, region, ver, weight)
+          fill('TauCand_mass', TauCand_mass, region, ver, weight)
+          fill('TauCand_massPi0', TauCand_massPi0, region, ver, weight)
+          fill('TauCand_massEta', TauCand_massEta, region, ver, weight)
+
+          fill('Muon_pt', Muon_pt, region, ver, weight)
+          fill('Muon_eta', Muon_eta, region, ver, weight)
+          fill('Muon_phi', Muon_phi, region, ver, weight)
+          fill('Muon_mass', Muon_mass, region, ver, weight)
+
+          fill('Pzeta', Pzeta, region, ver, weight)
+          fill('MT', MT, region, ver, weight)
+        
+        '''
         for iter in self.string_list:
             name=iter[0]
             branch=iter[1]
@@ -222,42 +364,11 @@ class HistProd(Module):
                     if  np.signbit(event.GMuon_charge) == np.signbit(TwoProng_charge) and event.GMuon_charge != 0 and TwoProng_charge !=0 and event.GTwoProng_pt >0 and event.GTPnTracks == 3 and event.GPZeta_TP: self.histograms[name_ss_tp_syst].Fill(getattr(event,branch),weights[num])
                     if  np.signbit(event.GMuon_charge) != np.signbit(event.GTau_charge) and event.GTau_pt >0 and event.GPZeta_Tau: self.histograms[name_os_tau_syst].Fill(getattr(event,branch),weights[num])
                     if  np.signbit(event.GMuon_charge) != np.signbit(TwoProng_charge) and event.GMuon_charge != 0 and TwoProng_charge !=0 and event.GTwoProng_pt >0 and event.GTPnTracks == 3 and event.GPZeta_TP: self.histograms[name_os_tp_syst].Fill(getattr(event,branch),weights[num])
-
-
-
-
-
-
-
-
-
-
-
-
-
+'''
         return True
-
-
 
         #This is how the rochester corrections are called in the Atto step. One supplies the charge, pt, eta, phi, and then either gen pt, tracker layer number, or nothing else for data.
         #if DMC==1:
             #if GoodMuon_genpt != -1 : sf_roc= self.kSpreadMC(self.roccin, int(GoodMuon_charge), GoodMuon_pt, GoodMuon_eta ,GoodMuon_phi,GoodMuon_genpt, 0,0 )
             #else: sf_roc= self.kSmearMC(self.roccin, int(GoodMuon_charge), GoodMuon_pt, GoodMuon_eta ,GoodMuon_phi ,int(GoodMuon_ntrackerlayer), nrandom, 0,0 )
         #else: sf_roc= self.kScaleDT(self.roccin, int(GoodMuon_charge), GoodMuon_pt, GoodMuon_eta, GoodMuon_phi, 0, 0)
-
-
-        def PZeta_Cut(self, muon_pt,muon_eta,muon_phi,tau_pt,tau_eta,tau_phi, met,mcorrections):
-
-            muvec= ROOT.TVector3()
-            muvec.SetPtEtaPhi(muon_pt*mcorrections,muon_eta,0)
-            tauvec= ROOT.TVector3()
-            tauvec.SetPtEtaPhi(tau_pt,tau_eta,0)
-            etvec= ROOT.TVector3()
-            etvec.SetPtEtaPhi(met_pt,0,met_phi)
-            zetaU=ROOT.TVector3()
-            zetaU= muvec*(1/muvec.Mag()) +tauvec*(1/tauvec.Mag())
-            pall=(muvec + tauvec + etvec).Dot(zetaU)
-            pvis=(muvec+ tauvec).Dot(zetaU)
-            pzeta=pall-0.85*(pvis)
-            if pzeta > -25: return True
-            else: return False

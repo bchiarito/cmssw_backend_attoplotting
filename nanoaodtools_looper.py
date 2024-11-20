@@ -43,7 +43,8 @@ from PhysicsTools.NanoAODTools.fmk_histo.sanityAnalysis import SanityAnalysis
 from PhysicsTools.NanoAODTools.fmk_histo.myAnalysis import MyAnalysis
 from PhysicsTools.NanoAODTools.fmk_histo.sigAnalysis import SigAnalysis
 from PhysicsTools.NanoAODTools.fmk_histo.trigAnalysis import TriggerAnalysis
-from PhysicsTools.NanoAODTools.fmk_histo.Histo_test import HistProd
+#from PhysicsTools.NanoAODTools.fmk_histo.Histo_test import HistProd
+from PhysicsTools.NanoAODTools.fmk_histo.Histo_test_new import HistProd
 
 if args.data: datamc = 'data'
 elif args.mc: datamc = 'mc'
