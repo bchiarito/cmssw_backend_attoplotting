@@ -269,10 +269,10 @@ class HistProd(Module):
             ISO = get_val('RegionIso', ver)
             OSSS = get_val('RegionOSSS', ver)
             if ISO == -1 or OSSS == -1: return 'None'
-            elif ISO ==  1 or OSSS ==  1: return REGIONS[0]
-            elif ISO ==  1 or OSSS ==  2: return REGIONS[1]
-            elif ISO ==  2 or OSSS ==  1: return REGIONS[2]
-            elif ISO ==  2 or OSSS ==  2: return REGIONS[3]
+            elif ISO ==  1 and OSSS ==  1: return REGIONS[0]
+            elif ISO ==  1 and OSSS ==  2: return REGIONS[1]
+            elif ISO ==  2 and OSSS ==  1: return REGIONS[2]
+            elif ISO ==  2 and OSSS ==  2: return REGIONS[3]
             else: return 'ERR'
 
         for ver in VERS:
