@@ -16,10 +16,10 @@ BINNING['pt'] = [100, 0, 1000]
 BINNING['eta'] = [100, -5, 5]
 BINNING['phi'] = [64, -3.2, 3.2]
 BINNING['Zmass'] = [100, 0, 500]
-BINNING['omegamass'] = [1000, 0, 10]
+BINNING['omegamass'] = [100, 0, 10]
 REGIONS = ['SIGNAL', 'SS', 'ANTI', 'SSANTI']
-VERS = ['TAU']
-PREFIXES = ['VerTau']
+VERS = ['TAU', 'TP', 'TPM']
+PREFIXES = ['AnaTau', 'AnaTp', 'AnaTpm']
 PREFIX = {}
 for ver, tag in zip(VERS, PREFIXES):
   PREFIX[ver] = tag
@@ -174,7 +174,7 @@ class HistProd(Module):
         add_all2('Zvis_eta', 'eta')
         add_all2('Zvis_phi', 'phi')
         add_all2('Zvis_mass', 'Zmass')
-        add_all('Zvis_dR', 300, 0, 3)
+        add_all('Zvis_dR', 30, 0, 3)
 
         add_all2('TauCand_pt', 'pt')
         add_all2('TauCand_eta', 'eta')
@@ -190,6 +190,11 @@ class HistProd(Module):
 
         add_all('Pzeta', 50, -50, 200)
         add_all('MT', 100, 0, 200)
+        add_all('HT', 100, 0, 1000)
+        add_all('nJets', 20, 0, 20)
+        add_hist('NPV', 100, 0, 100)
+
+        add_all('DyDecayType', 13, -3, 10)
 
         book_hists()
 
@@ -268,6 +273,7 @@ class HistProd(Module):
         def get_region(ver):
             ISO = get_val('RegionIso', ver)
             OSSS = get_val('RegionOSSS', ver)
+            if ISO == -2 or OSSS == -2: return 'Skip'
             if ISO == -1 or OSSS == -1: return 'None'
             elif ISO ==  1 and OSSS ==  1: return REGIONS[0]
             elif ISO ==  1 and OSSS ==  2: return REGIONS[1]
@@ -277,6 +283,7 @@ class HistProd(Module):
 
         for ver in VERS:
           region = get_region(ver)
+          if region == 'Skip': continue
 
           Zvis_pt = get_val('Zvis_pt', ver)
           Zvis_eta = get_val('Zvis_eta', ver)
@@ -308,6 +315,8 @@ class HistProd(Module):
 
           Pzeta = get_val('cut_Pzeta', ver)
           MT = get_val('cut_MT', ver)
+          HT = get_val('HT', ver)
+          njets = get_val('NJets', ver)
        
           fill('Zvis_pt', Zvis_pt, region, ver, weight)
           fill('Zvis_eta', Zvis_eta, region, ver, weight)
@@ -329,7 +338,15 @@ class HistProd(Module):
 
           fill('Pzeta', Pzeta, region, ver, weight)
           fill('MT', MT, region, ver, weight)
-        
+          fill('HT', HT, region, ver, weight)
+          fill('nJets', njets, region, ver, weight)
+
+          if self.datamc == 'sigRes': fill('DyDecayType', event.dyDecayType, region, ver, weight)
+          else: fill('DyDecayType', -3, region, ver, weight)
+
+        # fill histograms not tied to ver
+        self.histograms['NPV'].Fill(event.PV_npvs, weight)
+          
         '''
         for iter in self.string_list:
             name=iter[0]
