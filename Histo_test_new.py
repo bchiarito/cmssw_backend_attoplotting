@@ -17,7 +17,7 @@ BINNING['eta'] = [100, -5, 5]
 BINNING['phi'] = [64, -3.2, 3.2]
 BINNING['Zmass'] = [100, 0, 500]
 BINNING['omegamass'] = [100, 0, 10]
-REGIONS = ['SIGNAL', 'SS', 'ANTI', 'SSANTI']
+REGIONS = ['SIGNAL', 'SS', 'ANTI', 'SSANTI', 'MTFAIL']
 VERS = ['TAU', 'TP', 'TPM']
 PREFIXES = ['AnaTau', 'AnaTp', 'AnaTpm']
 PREFIX = {}
@@ -273,17 +273,26 @@ class HistProd(Module):
         def get_region(ver):
             ISO = get_val('RegionIso', ver)
             OSSS = get_val('RegionOSSS', ver)
-            if ISO == -2 or OSSS == -2: return 'Skip'
-            if ISO == -1 or OSSS == -1: return 'None'
-            elif ISO ==  1 and OSSS ==  1: return REGIONS[0]
-            elif ISO ==  1 and OSSS ==  2: return REGIONS[1]
-            elif ISO ==  2 and OSSS ==  1: return REGIONS[2]
-            elif ISO ==  2 and OSSS ==  2: return REGIONS[3]
-            else: return 'ERR'
+            passPzeta = get_val('PassPzeta', ver)
+            passMT = get_val('PassMT', ver)
+            if not passPzeta: return 'Skip'
+
+            if   ISO == -2 or OSSS == -2: return 'Skip'
+            elif ISO == -1 or OSSS == -1: return 'None'
+            elif ISO ==  1 and OSSS ==  1 and passMT: return REGIONS[0]
+            elif ISO ==  1 and OSSS ==  2 and passMT: return REGIONS[1]
+            elif ISO ==  2 and OSSS ==  1 and passMT: return REGIONS[2]
+            elif ISO ==  2 and OSSS ==  2 and passMT: return REGIONS[3]
+            elif ISO ==  1 and OSSS ==  1 and not passMT: return REGIONS[4]
+            elif not passMT: return 'Skip'
+            else:
+                print('ERROR:', ver, ISO, OSSS)
+                return 'ERR'
 
         for ver in VERS:
           region = get_region(ver)
           if region == 'Skip': continue
+
 
           Zvis_pt = get_val('Zvis_pt', ver)
           Zvis_eta = get_val('Zvis_eta', ver)
@@ -317,35 +326,40 @@ class HistProd(Module):
           MT = get_val('cut_MT', ver)
           HT = get_val('HT', ver)
           njets = get_val('NJets', ver)
-       
-          fill('Zvis_pt', Zvis_pt, region, ver, weight)
-          fill('Zvis_eta', Zvis_eta, region, ver, weight)
-          fill('Zvis_phi', Zvis_phi, region, ver, weight)
-          fill('Zvis_mass', Zvis_mass, region, ver, weight)
-          fill('Zvis_dR', Zvis_dR, region, ver, weight)
+          passSel = get_val('PassSel', ver)
+          passPzeta = get_val('PassPzeta', ver)
+          passMT = get_val('PassMT', ver)
 
-          fill('TauCand_pt', TauCand_pt, region, ver, weight)
-          fill('TauCand_eta', TauCand_eta, region, ver, weight)
-          fill('TauCand_phi', TauCand_phi, region, ver, weight)
-          fill('TauCand_mass', TauCand_mass, region, ver, weight)
-          fill('TauCand_massPi0', TauCand_massPi0, region, ver, weight)
-          fill('TauCand_massEta', TauCand_massEta, region, ver, weight)
+          if passMT: fill('Pzeta', Pzeta, region, ver, weight)
+          if passPzeta: fill('MT', MT, region, ver, weight)
+          if passMT and passPzeta:
+              fill('Zvis_pt', Zvis_pt, region, ver, weight)
+              fill('Zvis_eta', Zvis_eta, region, ver, weight)
+              fill('Zvis_phi', Zvis_phi, region, ver, weight)
+              fill('Zvis_mass', Zvis_mass, region, ver, weight)
+              fill('Zvis_dR', Zvis_dR, region, ver, weight)
 
-          fill('Muon_pt', Muon_pt, region, ver, weight)
-          fill('Muon_eta', Muon_eta, region, ver, weight)
-          fill('Muon_phi', Muon_phi, region, ver, weight)
-          fill('Muon_mass', Muon_mass, region, ver, weight)
+              fill('TauCand_pt', TauCand_pt, region, ver, weight)
+              fill('TauCand_eta', TauCand_eta, region, ver, weight)
+              fill('TauCand_phi', TauCand_phi, region, ver, weight)
+              fill('TauCand_mass', TauCand_mass, region, ver, weight)
+              fill('TauCand_massPi0', TauCand_massPi0, region, ver, weight)
+              fill('TauCand_massEta', TauCand_massEta, region, ver, weight)
 
-          fill('Pzeta', Pzeta, region, ver, weight)
-          fill('MT', MT, region, ver, weight)
-          fill('HT', HT, region, ver, weight)
-          fill('nJets', njets, region, ver, weight)
+              fill('Muon_pt', Muon_pt, region, ver, weight)
+              fill('Muon_eta', Muon_eta, region, ver, weight)
+              fill('Muon_phi', Muon_phi, region, ver, weight)
+              fill('Muon_mass', Muon_mass, region, ver, weight)
 
-          if self.datamc == 'sigRes': fill('DyDecayType', event.dyDecayType, region, ver, weight)
-          else: fill('DyDecayType', -3, region, ver, weight)
+              fill('HT', HT, region, ver, weight)
+              fill('nJets', njets, region, ver, weight)
+
+              if self.datamc == 'sigRes': fill('DyDecayType', event.dyDecayType, region, ver, weight)
+              else: fill('DyDecayType', -3, region, ver, weight)
 
         # fill histograms not tied to ver
-        self.histograms['NPV'].Fill(event.PV_npvs, weight)
+        if passMT and passPzeta:
+            self.histograms['NPV'].Fill(event.PV_npvs, weight)
           
         '''
         for iter in self.string_list:
