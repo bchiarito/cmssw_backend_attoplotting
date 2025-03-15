@@ -13,6 +13,9 @@ PHOTON_CUTBASED_ID = 1 # loose
 PHOTON_BARREL_ETA = 1.4442
 PHOTON_HoverE_CUT = 0.04596
 
+PHI_BINS = [500, 520, 541, 563, 586, 609, 633, 658, 684, 711, 739, 769, 800, 832, 865, 900, 936, 973, 1012, 1052, 1094, 1138, 1184, 1231, 1280, 1331, 1384, 1439, 1497, 1557, 1619, 1684, 1751, 1821, 1894, 1970, 2049, 2131, 2216, 2305, 2397, 2493, 2593, 2697, 2805, 2917, 3034, 3155, 3281, 3412, 3548, 3690, 3838, 3998]
+OMEGA_BINS = [0.40, 0.53, 0.58, 0.64, 0.70, 0.77, 0.85, 0.94, 1.03, 1.13, 1.24, 1.36, 1.50, 1.65, 1.81, 1.99, 2.19, 2.41, 2.65, 2.92, 3.21, 3.5, 3.85, 4.24, 4.66, 5.33]
+
 def dR(eta1, eta2, phi1, phi2):
     pi = ROOT.TMath.Pi()
     dEta = abs(eta1 - eta2)
@@ -71,6 +74,18 @@ class SanityAnalysis(Module):
         print('WWW')
         print(self.photon_min_pt)
         print('WWW')
+
+        '''
+        if self.dict_xs and self.dict_ngen:
+          dataset_id = event.dataset_id
+          xs = self.dict_xs[dataset_id]
+          Ngen = self.dict_ngen[dataset_id]
+          self.weight = xs * self.lumi / Ngen
+        else:
+          self.weight = 1.0
+        '''
+        self.weight = 1.0
+        print("weight", self.weight)
 
     def book_histo(self, name, bins, low, high, title=None):
         if not title: title = name
@@ -144,17 +159,20 @@ class SanityAnalysis(Module):
         self.twoprong_eta_endcap = ROOT.TH1F('twoprong_eta_endcap', 'twoprong_eta_endcap', 100, -5, 5)
         self.addObject(self.twoprong_eta_endcap)
 
-        phi_bins = [500, 520, 541, 563, 586, 609, 633, 658, 684, 711, 739, 769, 800, 832, 865, 900, 936, 973, 1012, 1052, 1094, 1138, 1184, 1231, 1280, 1331, 1384, 1439, 1497, 1557, 1619, 1684, 1751, 1821, 1894, 1970, 2049, 2131, 2216, 2305, 2397, 2493, 2593, 2697, 2805, 2917, 3034, 3155, 3281, 3412, 3548, 3690, 3838, 3992]
-        omega_bins = [0.40, 0.53, 0.58, 0.64, 0.70, 0.77, 0.85, 0.94, 1.03, 1.13, 1.24, 1.36, 1.50, 1.65, 1.81, 1.99, 2.19, 2.41, 2.65, 2.92, 3.21, 3.5]
-
-        self.recomass_2d = ROOT.TH2D('recomass_2d', 'recomass_2d', 300, 0, 15, 200, 0, 6000)
-        self.addObject(self.recomass_2d)
-        self.recomass_2d_variable = ROOT.TH2D('recomass_2d_variable', 'recomass_2d_variable', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
-        self.addObject(self.recomass_2d_variable)
-        self.recomass_2d_variable_sb = ROOT.TH2D('recomass_2d_variable_sb', 'recomass_2d_variable_sb', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
-        self.addObject(self.recomass_2d_variable_sb)
-        self.recomass_2d_variable_sb_tightpho = ROOT.TH2D('recomass_2d_variable_sb_tightpho', 'recomass_2d_variable_sb_tightpho', len(omega_bins)-1, array('d', omega_bins), len(phi_bins)-1, array('d', phi_bins))
-        self.addObject(self.recomass_2d_variable_sb_tightpho)
+        self.recomass = ROOT.TH2D('recomass', 'recomass', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass)
+        self.recomass_barrel = ROOT.TH2D('recomass_barrel', 'recomass_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel)
+        self.recomass_endcap = ROOT.TH2D('recomass_endcap', 'recomass_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap)
+        self.recomass_sideband = ROOT.TH2D('recomass_sideband', 'recomass_sideband', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_sideband)
+        self.recomass_sideband_barrel = ROOT.TH2D('recomass_sideband_barrel', 'recomass_sideband_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_sideband_barrel)
+        self.recomass_sideband_endcap = ROOT.TH2D('recomass_sideband_endcap', 'recomass_sideband_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_sideband_endcap)
+        self.recomass_uniformbinning = ROOT.TH2D('recomass_uniformbinning', 'recomass_uniformbinning', 300, 0, 15, 200, 0, 6000)
+        self.addObject(self.recomass_uniformbinning)
 
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
@@ -186,15 +204,6 @@ class SanityAnalysis(Module):
 
     def analyze(self, event):
         
-        # weight
-        if self.dict_xs and self.dict_ngen:
-          dataset_id = event.dataset_id
-          xs = self.dict_xs[dataset_id]
-          Ngen = self.dict_ngen[dataset_id]
-          weight = xs * self.lumi / Ngen
-        else:
-          weight = 1.0
-
         # get collections
         flags = Object(event, "Flag")
         twoprongs = Collection(event, "TwoProng")
@@ -254,8 +263,8 @@ class SanityAnalysis(Module):
         self.cutflow.Fill(0)
         if self.datamc == 'mc':
           try:
-            self.hthat_gjets.Fill(event.htHat_lhe, weight)
-            self.hthat_qcd.Fill(event.htHat_lhe, weight)
+            self.hthat_gjets.Fill(event.htHat_lhe, self.weight)
+            self.hthat_qcd.Fill(event.htHat_lhe, self.weight)
           except RuntimeError:
             pass
 
@@ -277,63 +286,63 @@ class SanityAnalysis(Module):
             else: photon_subdet = 'other'
           if abs(twoprongs[recophi.twoprongindex].eta)<1.4442: twoprong_subdet = 'barrel'
           else: twoprong_subdet = 'endcap'
-          self.recophi_pt.Fill(recophi.pt, weight)
-          self.recophi_eta.Fill(recophi.eta, weight)
-          self.recophi_phi.Fill(recophi.phi, weight)
-          self.recophi_m.Fill(recophi.mass, weight)
-          self.recophi_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), weight)
-          self.recophi_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
-          self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-          if njets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-          if njets == 1: self.recophi_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-          if njets >= 2: self.recophi_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+          self.recophi_pt.Fill(recophi.pt, self.weight)
+          self.recophi_eta.Fill(recophi.eta, self.weight)
+          self.recophi_phi.Fill(recophi.phi, self.weight)
+          self.recophi_m.Fill(recophi.mass, self.weight)
+          self.recophi_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), self.weight)
+          self.recophi_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), self.weight)
+          self.recophi_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+          if njets == 0: self.recophi_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+          if njets == 1: self.recophi_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+          if njets >= 2: self.recophi_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
           if photon_subdet == 'barrel' and twoprong_subdet == 'barrel':
-            self.recophi_B_B_pt.Fill(recophi.pt, weight)
-            self.recophi_B_B_eta.Fill(recophi.eta, weight)
-            self.recophi_B_B_phi.Fill(recophi.phi, weight)
-            self.recophi_B_B_m.Fill(recophi.mass, weight)
-            self.recophi_B_B_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), weight)
-            self.recophi_B_B_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
-            self.recophi_B_B_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if njets == 0: self.recophi_B_B_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if njets == 1: self.recophi_B_B_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if njets >= 2: self.recophi_B_B_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            self.recophi_B_B_pt.Fill(recophi.pt, self.weight)
+            self.recophi_B_B_eta.Fill(recophi.eta, self.weight)
+            self.recophi_B_B_phi.Fill(recophi.phi, self.weight)
+            self.recophi_B_B_m.Fill(recophi.mass, self.weight)
+            self.recophi_B_B_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), self.weight)
+            self.recophi_B_B_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), self.weight)
+            self.recophi_B_B_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if njets == 0: self.recophi_B_B_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if njets == 1: self.recophi_B_B_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if njets >= 2: self.recophi_B_B_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
           if photon_subdet == 'barrel' and twoprong_subdet == 'endcap':
-            self.recophi_B_E_pt.Fill(recophi.pt, weight)
-            self.recophi_B_E_eta.Fill(recophi.eta, weight)
-            self.recophi_B_E_phi.Fill(recophi.phi, weight)
-            self.recophi_B_E_m.Fill(recophi.mass, weight)
-            self.recophi_B_E_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), weight)
-            self.recophi_B_E_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
-            self.recophi_B_E_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if njets == 0: self.recophi_B_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if njets == 1: self.recophi_B_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if njets >= 2: self.recophi_B_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            self.recophi_B_E_pt.Fill(recophi.pt, self.weight)
+            self.recophi_B_E_eta.Fill(recophi.eta, self.weight)
+            self.recophi_B_E_phi.Fill(recophi.phi, self.weight)
+            self.recophi_B_E_m.Fill(recophi.mass, self.weight)
+            self.recophi_B_E_dphi.Fill(abs(dPhi(the_photon,the_twoprong)), self.weight)
+            self.recophi_B_E_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), self.weight)
+            self.recophi_B_E_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if njets == 0: self.recophi_B_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if njets == 1: self.recophi_B_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if njets >= 2: self.recophi_B_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
           '''
           if photon_subdet == 'endcap' and twoprong_subdet == 'barrel':
-            self.recophi_E_B_pt.Fill(recophi.pt, weight)
-            self.recophi_E_B_eta.Fill(recophi.eta, weight)
-            self.recophi_E_B_phi.Fill(recophi.phi, weight)
-            self.recophi_E_B_m.Fill(recophi.mass, weight)
-            self.recophi_E_B_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), weight)
-            self.recophi_E_B_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
-            self.recophi_E_B_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 0: self.recophi_E_B_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 1: self.recophi_E_B_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets >= 2: self.recophi_E_B_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            self.recophi_E_B_pt.Fill(recophi.pt, self.weight)
+            self.recophi_E_B_eta.Fill(recophi.eta, self.weight)
+            self.recophi_E_B_phi.Fill(recophi.phi, self.weight)
+            self.recophi_E_B_m.Fill(recophi.mass, self.weight)
+            self.recophi_E_B_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), self.weight)
+            self.recophi_E_B_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), self.weight)
+            self.recophi_E_B_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if event.NJets == 0: self.recophi_E_B_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if event.NJets == 1: self.recophi_E_B_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if event.NJets >= 2: self.recophi_E_B_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
           if photon_subdet == 'endcap' and twoprong_subdet == 'endcap':
-            self.recophi_E_E_pt.Fill(recophi.pt, weight)
-            self.recophi_E_E_eta.Fill(recophi.eta, weight)
-            self.recophi_E_E_phi.Fill(recophi.phi, weight)
-            self.recophi_E_E_m.Fill(recophi.mass, weight)
-            self.recophi_E_E_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), weight)
-            self.recophi_E_E_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), weight)
-            self.recophi_E_E_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 0: self.recophi_E_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets == 1: self.recophi_E_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
-            if event.NJets >= 2: self.recophi_E_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), weight)
+            self.recophi_E_E_pt.Fill(recophi.pt, self.weight)
+            self.recophi_E_E_eta.Fill(recophi.eta, self.weight)
+            self.recophi_E_E_phi.Fill(recophi.phi, self.weight)
+            self.recophi_E_E_m.Fill(recophi.mass, self.weight)
+            self.recophi_E_E_dphi.Fill(abs(ROOT.Math.VectorUtil.DeltaPhi(the_photon,the_twoprong)), self.weight)
+            self.recophi_E_E_deta.Fill(abs(the_photon.Eta() - the_twoprong.Eta()), self.weight)
+            self.recophi_E_E_dr.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if event.NJets == 0: self.recophi_E_E_dr_0jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if event.NJets == 1: self.recophi_E_E_dr_1jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
+            if event.NJets >= 2: self.recophi_E_E_dr_2jet.Fill(ROOT.Math.VectorUtil.DeltaR(the_photon,the_twoprong), self.weight)
           '''
-          self.photon_pt.Fill(the_photon.Pt(), weight)
+          self.photon_pt.Fill(the_photon.Pt(), self.weight)
             
           # scaling and smearing for photon_pt
           #corr_photon = photons[recophi.photonindex]
@@ -343,34 +352,43 @@ class SanityAnalysis(Module):
           #corr_down = corr_photon.dEscaledown + corr_photon.dEsigmadown * corr_photon.eCorr
           #photon_pt_down = corr_photon.pt / corr_photon.eCorr * corr_down
           
-          #self.photon_pt_up.Fill(photon_pt_up, weight)
-          #self.photon_pt_down.Fill(photon_pt_down, weight)
+          #self.photon_pt_up.Fill(photon_pt_up, self.weight)
+          #self.photon_pt_down.Fill(photon_pt_down, self.weight)
+
+          # Create photon pt scaled hists
+          #scaleup_pt = sel_photon.pt * sel_photon.dEscaleUp
+          #scaledown_pt = sel_photon.pt * sel_photon.dEscaleDown
+
+          #self.photon_scaleup_sigmaup.Fill(scaleup_pt, self.weight)
+          #self.photon_scaledown_sigmadown.Fill(scaledown_pt, self.weight)
+          #self.photon_unscaled.Fill(sel_photon.pt, self.weight)
           
-          self.photon_eta.Fill(the_photon.Eta(), weight)
-          self.photon_phi.Fill(the_photon.Phi(), weight)
-          self.twoprong_pt.Fill(the_twoprong.Pt(), weight)
-          self.twoprong_eta.Fill(the_twoprong.Eta(), weight)
-          self.twoprong_phi.Fill(the_twoprong.Phi(), weight)
-          self.twoprong_mass.Fill(twoprongs[recophi.twoprongindex].mass, weight)
-          self.twoprong_masspi0.Fill(twoprongs[recophi.twoprongindex].massPi0, weight)
-          self.twoprong_masseta.Fill(twoprongs[recophi.twoprongindex].massEta, weight)
-          self.nphoton.Fill(len(photons), weight)
-          self.ntwoprong.Fill(ntwoprong, weight)
-          self.njets.Fill(njets, weight)
-          self.ht.Fill(ht, weight)
-          self.met.Fill(event.MET_pt, weight)
-          self.met_phi.Fill(event.MET_phi, weight)
-          if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, weight)
-          self.npv.Fill(event.PV_npvs, weight)
+          self.photon_eta.Fill(the_photon.Eta(), self.weight)
+          self.photon_phi.Fill(the_photon.Phi(), self.weight)
+          self.twoprong_pt.Fill(the_twoprong.Pt(), self.weight)
+          self.twoprong_eta.Fill(the_twoprong.Eta(), self.weight)
+          self.twoprong_phi.Fill(the_twoprong.Phi(), self.weight)
+          self.twoprong_mass.Fill(twoprongs[recophi.twoprongindex].mass, self.weight)
+          self.twoprong_masspi0.Fill(twoprongs[recophi.twoprongindex].massPi0, self.weight)
+          self.twoprong_masseta.Fill(twoprongs[recophi.twoprongindex].massEta, self.weight)
+          self.nphoton.Fill(len(photons), self.weight)
+          self.ntwoprong.Fill(ntwoprong, self.weight)
+          self.njets.Fill(njets, self.weight)
+          self.ht.Fill(ht, self.weight)
+          self.met.Fill(event.MET_pt, self.weight)
+          self.met_phi.Fill(event.MET_phi, self.weight)
+          if event.MET_pt > 30: self.met_phi_cut.Fill(event.MET_phi, self.weight)
+          self.npv.Fill(event.PV_npvs, self.weight)
           if self.photon == 'HPID':
-            if abs(photons[recophi.photonindex].scEta)<1.4442: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), weight)
-            if abs(photons[recophi.photonindex].scEta)>1.566 and abs(photons[recophi.photonindex].scEta)<2.5: self.twoprong_eta_endcap.Fill(twoprong.Eta(), weight)
+            if abs(photons[recophi.photonindex].scEta)<1.4442: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), self.weight)
+            if abs(photons[recophi.photonindex].scEta)>1.566 and abs(photons[recophi.photonindex].scEta)<2.5: self.twoprong_eta_endcap.Fill(twoprong.Eta(), self.weight)
           if self.photon == 'CBL':
-            if photons[recophi.photonindex].isScEtaEB: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), weight)
-            if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), weight)
-          self.recomass_2d.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
-          self.recomass_2d_variable.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
-          self.recomass_2d_variable.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, weight)
+            if photons[recophi.photonindex].isScEtaEB: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), self.weight)
+            if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), self.weight)
+          self.recomass_uniformbinning.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+          self.recomass.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+          if twoprong_subdet == 'barrel': self.recomass_barrel.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+          if twoprong_subdet == 'endcap': self.recomass_endcap.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
 
         tight_photons = []
         loose_photons = []
@@ -403,12 +421,15 @@ class SanityAnalysis(Module):
         elif len(noniso_sym_tp) != 0: sel_tp = noniso_sym_tp[0]
         elif len(noniso_asym_tp) != 0: sel_tp = noniso_asym_tp[0]
         else: return False
-        if len(loose_photons) >= 1 and len(tight_photons) == 0 and pass_trigger and len(iso_asym_tp) != 0:  # loose photon and loose twoprong
-          self.cutflow.Fill(4)
-          self.recomass_2d_variable_sb.Fill(sel_tp.massPi0, recophi.mass, weight)
+        if abs(sel_tp.eta)<1.4442: twoprong_subdet = 'barrel'
+        else: twoprong_subdet = 'endcap'
         if len(tight_photons) >= 1 and pass_trigger and len(noniso_asym_tp) != 0 and len(iso_sym_tp) == 0 and len(iso_asym_tp) == 0 and len(noniso_sym_tp) == 0:  # tight photon and loose twoprong (asym and noniso)
           self.cutflow.Fill(5)
-          self.recomass_2d_variable_sb_tightpho.Fill(sel_tp.massPi0, recophi.mass, weight)
+          self.recomass_sideband.Fill(sel_tp.massPi0, recophi.mass, self.weight)
+          if twoprong_subdet == 'barrel': self.recomass_sideband_barrel.Fill(sel_tp.massPi0, recophi.mass, self.weight)
+          if twoprong_subdet == 'endcap': self.recomass_sideband_endcap.Fill(sel_tp.massPi0, recophi.mass, self.weight)
+        if len(loose_photons) >= 1 and len(tight_photons) == 0 and pass_trigger and len(iso_asym_tp) != 0:  # loose photon and loose twoprong
+          pass
 
         # signal
         if self.datamc == 'sigRes':
