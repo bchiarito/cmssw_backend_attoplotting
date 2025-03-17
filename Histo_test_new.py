@@ -31,7 +31,7 @@ class HistProd(Module):
     	self.kSmearMC = None
     	self.kScaleDT = None
     	self.roccin = None
-	self.datamc = datamc
+	self.datamc = datamc[:-2]
         self.histograms = {}
         self.string_list = [
 	('Dataset_Scale_Factor','GSF_dataset','sf','NA'),
@@ -326,6 +326,10 @@ class HistProd(Module):
           passPzeta = get_val('PassPzeta', ver)
           passMT = get_val('PassMT', ver)
           dyDecayType = get_val('DyDecayType', ver)
+
+          if self.datamc == 'sigRes' and not dyDecayType==1: continue
+          elif self.datamc == 'sigNonRes' and dyDecayType==1: continue
+          else: pass
 
           if passMT: fill('Pzeta', Pzeta, region, ver, weight)
           if passPzeta: fill('MT', MT, region, ver, weight)
