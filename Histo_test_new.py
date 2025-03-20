@@ -24,6 +24,10 @@ PREFIX = {}
 for ver, tag in zip(VERS, PREFIXES):
   PREFIX[ver] = tag
 
+ZWINDOW = True
+ZWINDOW_LOW = 60
+ZWINDOW_HIGH = 90
+
 class HistProd(Module):
     def __init__(self,datamc):
         self.writeHistFile = True
@@ -325,7 +329,8 @@ class HistProd(Module):
           passSel = get_val('PassSel', ver)
           passPzeta = get_val('PassPzeta', ver)
           passMT = get_val('PassMT', ver)
-          dyDecayType = get_val('DyDecayType', ver)
+          if self.datamc == 'sigRes' or self.datamc == 'sigNonRes': dyDecayType = get_val('DyDecayType', ver)
+          else: dyDecayType = -3
 
           if self.datamc == 'sigRes' and not dyDecayType==1: continue
           elif self.datamc == 'sigNonRes' and dyDecayType==1: continue
@@ -334,6 +339,8 @@ class HistProd(Module):
           if passMT: fill('Pzeta', Pzeta, region, ver, weight)
           if passPzeta: fill('MT', MT, region, ver, weight)
           if passMT and passPzeta:
+              if ZWINDOW and Zvis_mass < ZWINDOW_LOW: continue
+              if ZWINDOW and Zvis_mass > ZWINDOW_HIGH: continue
               fill('Zvis_pt', Zvis_pt, region, ver, weight)
               fill('Zvis_eta', Zvis_eta, region, ver, weight)
               fill('Zvis_phi', Zvis_phi, region, ver, weight)
