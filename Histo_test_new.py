@@ -16,7 +16,7 @@ BINNING['pt'] = [100, 0, 1000]
 BINNING['eta'] = [100, -5, 5]
 BINNING['phi'] = [64, -3.2, 3.2]
 BINNING['Zmass'] = [100, 0, 500]
-BINNING['omegamass'] = [100, 0, 10]
+BINNING['omegamass'] = [40, 0, 10]
 REGIONS = ['SIGNAL', 'SS', 'ANTI', 'SSANTI']
 VERS = ['TAU', 'TP', 'TPM']
 PREFIXES = ['AnaTau', 'AnaTp', 'AnaTpm']
@@ -24,9 +24,12 @@ PREFIX = {}
 for ver, tag in zip(VERS, PREFIXES):
   PREFIX[ver] = tag
 
-ZWINDOW = True
 ZWINDOW_LOW = 60
 ZWINDOW_HIGH = 90
+
+TPWINDOW_LOW = 1.0
+TPWINDOW_HIGH = 1.5
+r = ROOT.TRandom(1)
 
 class HistProd(Module):
     def __init__(self,datamc):
@@ -200,6 +203,99 @@ class HistProd(Module):
 
         add_all('DyDecayType', 13, -3, 10)
 
+
+
+        add_all2('Zvis_pt_ZWIN', 'pt')
+        add_all2('Zvis_eta_ZWIN', 'eta')
+        add_all2('Zvis_phi_ZWIN', 'phi')
+        add_all2('Zvis_mass_ZWIN', 'Zmass')
+        add_all('Zvis_dR_ZWIN', 30, 0, 3)
+
+        add_all2('TauCand_pt_ZWIN', 'pt')
+        add_all2('TauCand_eta_ZWIN', 'eta')
+        add_all2('TauCand_phi_ZWIN', 'phi')
+        add_all2('TauCand_mass_ZWIN', 'omegamass')
+
+        add_all2('TauCand_massPi0_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_10per_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_20per_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_30per_ZWIN', 'omegamass')
+
+        add_all2('TauCand_massPi0_0p8_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p8_pt20_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p8_pt40_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p8_pt60_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p8_pt80_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p9_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p9_pt20_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p9_pt40_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p9_pt60_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_0p9_pt80_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p1_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p1_pt20_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p1_pt40_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p1_pt60_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p1_pt80_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p2_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p2_pt20_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p2_pt40_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p2_pt60_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_1p2_pt80_ZWIN', 'omegamass')
+
+        add_all2('TauCand_massPi0_pt20_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_pt40_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_pt60_ZWIN', 'omegamass')
+        add_all2('TauCand_massPi0_pt80_ZWIN', 'omegamass')
+
+        add_all2('TauCand_massEta_ZWIN', 'omegamass')
+
+        add_all2('Muon_pt_ZWIN', 'pt')
+        add_all2('Muon_eta_ZWIN', 'eta')
+        add_all2('Muon_phi_ZWIN', 'phi')
+        add_all('Muon_mass_ZWIN', 500, 0, 5)
+
+        add_all('Pzeta_ZWIN', 50, -50, 200)
+        add_all('MT_ZWIN', 100, 0, 200)
+        add_all('HT_ZWIN', 100, 0, 1000)
+        add_all('nJets_ZWIN', 20, 0, 20)
+        add_hist('NPV_ZWIN', 100, 0, 100)
+
+        add_all('DyDecayType_ZWIN', 13, -3, 10)
+
+
+
+        add_all2('Zvis_pt_TPWIN', 'pt')
+        add_all2('Zvis_eta_TPWIN', 'eta')
+        add_all2('Zvis_phi_TPWIN', 'phi')
+        add_all2('Zvis_mass_TPWIN', 'Zmass')
+        add_all2('Zvis_mass_0p8_TPWIN', 'Zmass')
+        add_all2('Zvis_mass_0p9_TPWIN', 'Zmass')
+        add_all2('Zvis_mass_1p1_TPWIN', 'Zmass')
+        add_all2('Zvis_mass_1p2_TPWIN', 'Zmass')
+        add_all('Zvis_dR_TPWIN', 30, 0, 3)
+
+        add_all2('TauCand_pt_TPWIN', 'pt')
+        add_all2('TauCand_eta_TPWIN', 'eta')
+        add_all2('TauCand_phi_TPWIN', 'phi')
+        add_all2('TauCand_mass_TPWIN', 'omegamass')
+        add_all2('TauCand_massPi0_TPWIN', 'omegamass')
+        add_all2('TauCand_massEta_TPWIN', 'omegamass')
+
+        add_all2('Muon_pt_TPWIN', 'pt')
+        add_all2('Muon_eta_TPWIN', 'eta')
+        add_all2('Muon_phi_TPWIN', 'phi')
+        add_all('Muon_mass_TPWIN', 500, 0, 5)
+
+        add_all('Pzeta_TPWIN', 50, -50, 200)
+        add_all('MT_TPWIN', 100, 0, 200)
+        add_all('HT_TPWIN', 100, 0, 1000)
+        add_all('nJets_TPWIN', 20, 0, 20)
+        add_hist('NPV_TPWIN', 100, 0, 100)
+
+        add_all('DyDecayType_TPWIN', 13, -3, 10)
+
+
+
         book_hists()
 
         '''
@@ -339,8 +435,8 @@ class HistProd(Module):
           if passMT: fill('Pzeta', Pzeta, region, ver, weight)
           if passPzeta: fill('MT', MT, region, ver, weight)
           if passMT and passPzeta:
-              if ZWINDOW and Zvis_mass < ZWINDOW_LOW: continue
-              if ZWINDOW and Zvis_mass > ZWINDOW_HIGH: continue
+              if Zvis_pt > 60: continue
+              if Pzeta > 40: continue
               fill('Zvis_pt', Zvis_pt, region, ver, weight)
               fill('Zvis_eta', Zvis_eta, region, ver, weight)
               fill('Zvis_phi', Zvis_phi, region, ver, weight)
@@ -362,9 +458,109 @@ class HistProd(Module):
               fill('HT', HT, region, ver, weight)
               fill('nJets', njets, region, ver, weight)
 
-              #if self.datamc == 'sigRes': fill('DyDecayType', event.dyDecayType, region, ver, weight)
-              #else: fill('DyDecayType', -3, region, ver, weight)
               fill('DyDecayType', dyDecayType, region, ver, weight)
+
+              if Zvis_mass > ZWINDOW_LOW and Zvis_mass < ZWINDOW_HIGH:
+                  fill('Zvis_pt_ZWIN', Zvis_pt, region, ver, weight)
+                  fill('Zvis_eta_ZWIN', Zvis_eta, region, ver, weight)
+                  fill('Zvis_phi_ZWIN', Zvis_phi, region, ver, weight)
+                  fill('Zvis_mass_ZWIN', Zvis_mass, region, ver, weight)
+                  fill('Zvis_dR_ZWIN', Zvis_dR, region, ver, weight)
+
+                  fill('TauCand_pt_ZWIN', TauCand_pt, region, ver, weight)
+                  fill('TauCand_eta_ZWIN', TauCand_eta, region, ver, weight)
+                  fill('TauCand_phi_ZWIN', TauCand_phi, region, ver, weight)
+                  fill('TauCand_mass_ZWIN', TauCand_mass, region, ver, weight)
+                  fill('TauCand_massPi0_ZWIN', TauCand_massPi0, region, ver, weight)
+
+                  rand = r.Gaus(0,1)
+
+                  TauCand_massPi0_10per = TauCand_massPi0 * (1 + rand * 0.46)
+                  TauCand_massPi0_20per = TauCand_massPi0 * (1 + rand * 0.66)
+                  TauCand_massPi0_30per = TauCand_massPi0 * (1 + rand * 0.83)
+
+                  fill('TauCand_massPi0_10per_ZWIN', TauCand_massPi0_10per, region, ver, weight)
+                  fill('TauCand_massPi0_20per_ZWIN', TauCand_massPi0_20per, region, ver, weight)
+                  fill('TauCand_massPi0_30per_ZWIN', TauCand_massPi0_30per, region, ver, weight)
+
+                  fill('TauCand_massPi0_0p8_ZWIN', TauCand_massPi0 * 0.8, region, ver, weight)
+                  if TauCand_pt >= 20 and TauCand_pt < 30: fill('TauCand_massPi0_0p8_pt20_ZWIN', TauCand_massPi0 * 0.8, region, ver, weight)
+                  if TauCand_pt >= 30 and TauCand_pt < 40: fill('TauCand_massPi0_0p8_pt40_ZWIN', TauCand_massPi0 * 0.8, region, ver, weight)
+                  if TauCand_pt >= 40 and TauCand_pt < 50: fill('TauCand_massPi0_0p8_pt60_ZWIN', TauCand_massPi0 * 0.8, region, ver, weight)
+                  if TauCand_pt >= 50 and TauCand_pt < 60: fill('TauCand_massPi0_0p8_pt80_ZWIN', TauCand_massPi0 * 0.8, region, ver, weight)
+                  fill('TauCand_massPi0_0p9_ZWIN', TauCand_massPi0 * 0.9, region, ver, weight)
+                  if TauCand_pt >= 20 and TauCand_pt < 30: fill('TauCand_massPi0_0p9_pt20_ZWIN', TauCand_massPi0 * 0.9, region, ver, weight)
+                  if TauCand_pt >= 30 and TauCand_pt < 40: fill('TauCand_massPi0_0p9_pt40_ZWIN', TauCand_massPi0 * 0.9, region, ver, weight)
+                  if TauCand_pt >= 40 and TauCand_pt < 50: fill('TauCand_massPi0_0p9_pt60_ZWIN', TauCand_massPi0 * 0.9, region, ver, weight)
+                  if TauCand_pt >= 50 and TauCand_pt < 60: fill('TauCand_massPi0_0p9_pt80_ZWIN', TauCand_massPi0 * 0.9, region, ver, weight)
+                  fill('TauCand_massPi0_1p1_ZWIN', TauCand_massPi0 * 1.1, region, ver, weight)
+                  if TauCand_pt >= 20 and TauCand_pt < 30: fill('TauCand_massPi0_1p1_pt20_ZWIN', TauCand_massPi0 * 1.1, region, ver, weight)
+                  if TauCand_pt >= 30 and TauCand_pt < 40: fill('TauCand_massPi0_1p1_pt40_ZWIN', TauCand_massPi0 * 1.1, region, ver, weight)
+                  if TauCand_pt >= 40 and TauCand_pt < 50: fill('TauCand_massPi0_1p1_pt60_ZWIN', TauCand_massPi0 * 1.1, region, ver, weight)
+                  if TauCand_pt >= 50 and TauCand_pt < 60: fill('TauCand_massPi0_1p1_pt80_ZWIN', TauCand_massPi0 * 1.1, region, ver, weight)
+                  fill('TauCand_massPi0_1p2_ZWIN', TauCand_massPi0 * 1.2, region, ver, weight)
+                  if TauCand_pt >= 20 and TauCand_pt < 30: fill('TauCand_massPi0_1p2_pt20_ZWIN', TauCand_massPi0 * 1.2, region, ver, weight)
+                  if TauCand_pt >= 30 and TauCand_pt < 40: fill('TauCand_massPi0_1p2_pt40_ZWIN', TauCand_massPi0 * 1.2, region, ver, weight)
+                  if TauCand_pt >= 40 and TauCand_pt < 50: fill('TauCand_massPi0_1p2_pt60_ZWIN', TauCand_massPi0 * 1.2, region, ver, weight)
+                  if TauCand_pt >= 50 and TauCand_pt < 60: fill('TauCand_massPi0_1p2_pt80_ZWIN', TauCand_massPi0 * 1.2, region, ver, weight)
+
+
+                  if TauCand_pt >= 20 and TauCand_pt < 30: fill('TauCand_massPi0_pt20_ZWIN', TauCand_massPi0, region, ver, weight)
+                  if TauCand_pt >= 30 and TauCand_pt < 40: fill('TauCand_massPi0_pt40_ZWIN', TauCand_massPi0, region, ver, weight)
+                  if TauCand_pt >= 40 and TauCand_pt < 50: fill('TauCand_massPi0_pt60_ZWIN', TauCand_massPi0, region, ver, weight)
+                  if TauCand_pt >= 50 and TauCand_pt < 60: fill('TauCand_massPi0_pt80_ZWIN', TauCand_massPi0, region, ver, weight)
+                  fill('TauCand_massEta_ZWIN', TauCand_massEta, region, ver, weight)
+
+                  fill('Muon_pt_ZWIN', Muon_pt, region, ver, weight)
+                  fill('Muon_eta_ZWIN', Muon_eta, region, ver, weight)
+                  fill('Muon_phi_ZWIN', Muon_phi, region, ver, weight)
+                  fill('Muon_mass_ZWIN', Muon_mass, region, ver, weight)
+
+                  fill('HT_ZWIN', HT, region, ver, weight)
+                  fill('nJets_ZWIN', njets, region, ver, weight)
+
+                  fill('DyDecayType_ZWIN', dyDecayType, region, ver, weight)
+
+              if TauCand_massPi0 > TPWINDOW_LOW and TauCand_massPi0 < TPWINDOW_HIGH:
+                  taucand_vec_0p8 = ROOT.Math.PtEtaPhiMVector(TauCand_pt*0.8, TauCand_eta, TauCand_phi, TauCand_mass)
+                  taucand_vec_0p9 = ROOT.Math.PtEtaPhiMVector(TauCand_pt*0.9, TauCand_eta, TauCand_phi, TauCand_mass)
+                  taucand_vec = ROOT.Math.PtEtaPhiMVector(TauCand_pt, TauCand_eta, TauCand_phi, TauCand_mass)
+                  taucand_vec_1p1 = ROOT.Math.PtEtaPhiMVector(TauCand_pt*1.1, TauCand_eta, TauCand_phi, TauCand_mass)
+                  taucand_vec_1p2 = ROOT.Math.PtEtaPhiMVector(TauCand_pt*1.2, TauCand_eta, TauCand_phi, TauCand_mass)
+                  muon_vec = ROOT.Math.PtEtaPhiMVector(Muon_pt, Muon_eta, Muon_phi, Muon_mass)
+                  Zvis_vec = taucand_vec + muon_vec
+                  Zvis_vec_0p8 = taucand_vec_0p8 + muon_vec
+                  Zvis_vec_0p9 = taucand_vec_0p9 + muon_vec
+                  Zvis_vec_1p1 = taucand_vec_1p1 + muon_vec
+                  Zvis_vec_1p2 = taucand_vec_1p2 + muon_vec
+
+                  fill('Zvis_pt_TPWIN', Zvis_vec.Pt(), region, ver, weight)
+                  fill('Zvis_eta_TPWIN', Zvis_vec.Eta(), region, ver, weight)
+                  fill('Zvis_phi_TPWIN', Zvis_vec.Phi(), region, ver, weight)
+                  fill('Zvis_mass_TPWIN', Zvis_vec.M(), region, ver, weight)
+                  fill('Zvis_mass_0p8_TPWIN', Zvis_vec_0p8.M(), region, ver, weight)
+                  fill('Zvis_mass_0p9_TPWIN', Zvis_vec_0p9.M(), region, ver, weight)
+                  fill('Zvis_mass_1p1_TPWIN', Zvis_vec_1p1.M(), region, ver, weight)
+                  fill('Zvis_mass_1p2_TPWIN', Zvis_vec_1p2.M(), region, ver, weight)
+                  fill('Zvis_dR_TPWIN', Zvis_dR, region, ver, weight)
+
+                  fill('TauCand_pt_TPWIN', TauCand_pt, region, ver, weight)
+                  fill('TauCand_eta_TPWIN', TauCand_eta, region, ver, weight)
+                  fill('TauCand_phi_TPWIN', TauCand_phi, region, ver, weight)
+                  fill('TauCand_mass_TPWIN', TauCand_mass, region, ver, weight)
+                  fill('TauCand_massPi0_TPWIN', TauCand_massPi0, region, ver, weight)
+                  fill('TauCand_massEta_TPWIN', TauCand_massEta, region, ver, weight)
+
+                  fill('Muon_pt_TPWIN', Muon_pt, region, ver, weight)
+                  fill('Muon_eta_TPWIN', Muon_eta, region, ver, weight)
+                  fill('Muon_phi_TPWIN', Muon_phi, region, ver, weight)
+                  fill('Muon_mass_TPWIN', Muon_mass, region, ver, weight)
+
+                  fill('HT_TPWIN', HT, region, ver, weight)
+                  fill('nJets_TPWIN', njets, region, ver, weight)
+
+                  fill('DyDecayType_TPWIN', dyDecayType, region, ver, weight)
+
 
         # fill histograms not tied to ver
         self.histograms['NPV'].Fill(event.PV_npvs, weight)
