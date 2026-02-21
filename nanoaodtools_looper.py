@@ -36,6 +36,7 @@ parser.add_argument("--photonchoice", default="HPID", help='')
 parser.add_argument("--plotter", default="", help='')
 parser.add_argument("--year", default="UL18", choices=["UL17", "UL18", "UL16"], help='')
 parser.add_argument("--phislice", type=bool, default=False, help='')
+parser.add_argument("--m2pgen", type=str, default=None, help='')
 args = parser.parse_args()
 
 # import modules
@@ -134,7 +135,7 @@ if args.data:
   lookup_ngen = None
 
 modules = []
-if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice)]
+if args.plotter == 'sanity': modules += [SanityAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.cut, args.photonchoice, args.m2pgen)]
 if args.plotter == 'bkg': modules += [MyAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen, args.phislice)]
 if args.plotter == 'sigeff': modules += [SigAnalysis(datamc, float(args.lumi), lookup_xs, lookup_ngen)]
 if args.plotter == 'trig': modules += [TriggerAnalysis(float(args.lumi), lookup_xs, lookup_ngen)]

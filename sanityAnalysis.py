@@ -16,7 +16,7 @@ PHOTON_HoverE_CUT = 0.04596
 PHI_BINS = [500, 520, 541, 563, 586, 609, 633, 658, 684, 711, 739, 769, 800, 832, 865, 900, 936, 973, 1012, 1052, 1094, 1138, 1184, 1231, 1280, 1331, 1384, 1439, 1497, 1557, 1619, 1684, 1751, 1821, 1894, 1970, 2049, 2131, 2216, 2305, 2397, 2493, 2593, 2697, 2805, 2917, 3034, 3155, 3281, 3412, 3548, 3690, 3838, 3998]
 OMEGA_BINS = [0.40, 0.53, 0.58, 0.64, 0.70, 0.77, 0.85, 0.94, 1.03, 1.13, 1.24, 1.36, 1.50, 1.65, 1.81, 1.99, 2.19, 2.41, 2.65, 2.92, 3.21, 3.5, 3.85, 4.24, 4.66, 5.33]
 
-M2P_GEN = 3.0
+#M2P_GEN = 3.0
 
 def dR(eta1, eta2, phi1, phi2):
     pi = ROOT.TMath.Pi()
@@ -40,12 +40,13 @@ def clone_vec(vec):
   return ROOT.Math.PtEtaPhiMVector(vec.Pt(), vec.Eta(), vec.Phi(), vec.M())
 
 class SanityAnalysis(Module):
-    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, cut='None', photon='HPID'):
+    def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, cut='None', photon='HPID', m2pgen=None):
         self.writeHistFile = True
         self.lumi = lumi
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
         self.cut = cut
+        self.m2pgen = float(m2pgen)
 
         self.seed = 1337
         self.rand = ROOT.TRandom(self.seed)
@@ -565,7 +566,7 @@ class SanityAnalysis(Module):
           m2p = twoprongs[recophi.twoprongindex].massPi0
           m2peta = twoprongs[recophi.twoprongindex].massEta
           pt2p = twoprongs[recophi.twoprongindex].pt
-          m2p_gen = M2P_GEN
+          m2p_gen = self.m2pgen
           tp_vec = get_vec(twoprongs[recophi.twoprongindex])
 
           eff_central = 0.9
