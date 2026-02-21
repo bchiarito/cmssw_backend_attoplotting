@@ -16,6 +16,8 @@ PHOTON_HoverE_CUT = 0.04596
 PHI_BINS = [500, 520, 541, 563, 586, 609, 633, 658, 684, 711, 739, 769, 800, 832, 865, 900, 936, 973, 1012, 1052, 1094, 1138, 1184, 1231, 1280, 1331, 1384, 1439, 1497, 1557, 1619, 1684, 1751, 1821, 1894, 1970, 2049, 2131, 2216, 2305, 2397, 2493, 2593, 2697, 2805, 2917, 3034, 3155, 3281, 3412, 3548, 3690, 3838, 3998]
 OMEGA_BINS = [0.40, 0.53, 0.58, 0.64, 0.70, 0.77, 0.85, 0.94, 1.03, 1.13, 1.24, 1.36, 1.50, 1.65, 1.81, 1.99, 2.19, 2.41, 2.65, 2.92, 3.21, 3.5, 3.85, 4.24, 4.66, 5.33]
 
+M2P_GEN = 3.0
+
 def dR(eta1, eta2, phi1, phi2):
     pi = ROOT.TMath.Pi()
     dEta = abs(eta1 - eta2)
@@ -34,6 +36,9 @@ def dPhi(vec1, vec2):
 def get_vec(obj):
   return ROOT.Math.PtEtaPhiMVector(obj.pt, obj.eta, obj.phi, obj.mass)
 
+def clone_vec(vec):
+  return ROOT.Math.PtEtaPhiMVector(vec.Pt(), vec.Eta(), vec.Phi(), vec.M())
+
 class SanityAnalysis(Module):
     def __init__(self, datamc, lumi=1.0, dict_xs=None, dict_ngen=None, cut='None', photon='HPID'):
         self.writeHistFile = True
@@ -41,6 +46,9 @@ class SanityAnalysis(Module):
         self.dict_xs = dict_xs
         self.dict_ngen = dict_ngen
         self.cut = cut
+
+        self.seed = 1337
+        self.rand = ROOT.TRandom(self.seed)
 
         self.datamc = datamc
         self.year = "18" # default
@@ -159,12 +167,13 @@ class SanityAnalysis(Module):
         self.twoprong_eta_endcap = ROOT.TH1F('twoprong_eta_endcap', 'twoprong_eta_endcap', 100, -5, 5)
         self.addObject(self.twoprong_eta_endcap)
 
-        self.recomass = ROOT.TH2D('recomass', 'recomass', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
-        self.addObject(self.recomass)
-        self.recomass_barrel = ROOT.TH2D('recomass_barrel', 'recomass_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
-        self.addObject(self.recomass_barrel)
-        self.recomass_endcap = ROOT.TH2D('recomass_endcap', 'recomass_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
-        self.addObject(self.recomass_endcap)
+        self.recomass_bare = ROOT.TH2D('recomass_bare', 'recomass_bare', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_bare)
+        self.recomass_bare_barrel = ROOT.TH2D('recomass_bare_barrel', 'recomass_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_bare_barrel)
+        self.recomass_bare_endcap = ROOT.TH2D('recomass_bare_endcap', 'recomass_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_bare_endcap)
+
         self.recomass_sideband = ROOT.TH2D('recomass_sideband', 'recomass_sideband', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
         self.addObject(self.recomass_sideband)
         self.recomass_sideband_barrel = ROOT.TH2D('recomass_sideband_barrel', 'recomass_sideband_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
@@ -173,6 +182,165 @@ class SanityAnalysis(Module):
         self.addObject(self.recomass_sideband_endcap)
         self.recomass_uniformbinning = ROOT.TH2D('recomass_uniformbinning', 'recomass_uniformbinning', 300, 0, 15, 200, 0, 6000)
         self.addObject(self.recomass_uniformbinning)
+
+
+        self.recomassprime_bare = ROOT.TH2D('recomassprime_bare', 'recomassprime_bare', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_bare)
+        self.recomassprime_bare_barrel = ROOT.TH2D('recomassprime_bare_barrel', 'recomassprime_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_bare_barrel)
+        self.recomassprime_bare_endcap = ROOT.TH2D('recomassprime_bare_endcap', 'recomassprime_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_bare_endcap)
+
+        self.recomassprime_sideband = ROOT.TH2D('recomassprime_sideband', 'recomassprime_sideband', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_sideband)
+        self.recomassprime_sideband_barrel = ROOT.TH2D('recomassprime_sideband_barrel', 'recomassprime_sideband_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_sideband_barrel)
+        self.recomassprime_sideband_endcap = ROOT.TH2D('recomassprime_sideband_endcap', 'recomassprime_sideband_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_sideband_endcap)
+        self.recomassprime_uniformbinning = ROOT.TH2D('recomassprime_uniformbinning', 'recomassprime_uniformbinning', 300, 0, 15, 200, 0, 6000)
+        self.addObject(self.recomassprime_uniformbinning)
+
+
+        self.recomass = ROOT.TH2D('recomass', 'recomass', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass)
+
+        self.recomass_shiftUp = ROOT.TH2D('recomass_shiftUp', 'recomass_shiftUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_shiftUp)
+        self.recomass_shiftDown = ROOT.TH2D('recomass_shiftDown', 'recomass_shiftDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_shiftDown)
+
+        self.recomass_stretchUp = ROOT.TH2D('recomass_stretchUp', 'recomass_stretchUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_stretchUp)
+        self.recomass_stretchDown = ROOT.TH2D('recomass_stretchDown', 'recomass_stretchDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_stretchDown)
+
+        self.recomass_scaleUp = ROOT.TH2D('recomass_scaleUp', 'recomass_scaleUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_scaleUp)
+        self.recomass_scaleDown = ROOT.TH2D('recomass_scaleDown', 'recomass_scaleDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_scaleDown)
+
+        self.recomass_resUp = ROOT.TH2D('recomass_resUp', 'recomass_resUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_resUp)
+        self.recomass_resDown = ROOT.TH2D('recomass_resDown', 'recomass_resDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_resDown)
+
+        self.recomass_barrel = ROOT.TH2D('recomass_barrel', 'recomass_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel)
+
+        self.recomass_barrel_shiftUp = ROOT.TH2D('recomass_barrel_shiftUp', 'recomass_barrel_shiftUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_shiftUp)
+        self.recomass_barrel_shiftDown = ROOT.TH2D('recomass_barrel_shiftDown', 'recomass_barrel_shiftDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_shiftDown)
+
+        self.recomass_barrel_stretchUp = ROOT.TH2D('recomass_barrel_stretchUp', 'recomass_barrel_stretchUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_stretchUp)
+        self.recomass_barrel_stretchDown = ROOT.TH2D('recomass_barrel_stretchDown', 'recomass_barrel_stretchDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_stretchDown)
+
+        self.recomass_barrel_scaleUp = ROOT.TH2D('recomass_barrel_scaleUp', 'recomass_barrel_scaleUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_scaleUp)
+        self.recomass_barrel_scaleDown = ROOT.TH2D('recomass_barrel_scaleDown', 'recomass_barrel_scaleDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_scaleDown)
+
+        self.recomass_barrel_resUp = ROOT.TH2D('recomass_barrel_resUp', 'recomass_barrel_resUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_resUp)
+        self.recomass_barrel_resDown = ROOT.TH2D('recomass_barrel_resDown', 'recomass_barrel_resDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_barrel_resDown)
+
+        self.recomass_endcap = ROOT.TH2D('recomass_endcap', 'recomass_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap)
+
+        self.recomass_endcap_shiftUp = ROOT.TH2D('recomass_endcap_shiftUp', 'recomass_endcap_shiftUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_shiftUp)
+        self.recomass_endcap_shiftDown = ROOT.TH2D('recomass_endcap_shiftDown', 'recomass_endcap_shiftDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_shiftDown)
+
+        self.recomass_endcap_stretchUp = ROOT.TH2D('recomass_endcap_stretchUp', 'recomass_endcap_stretchUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_stretchUp)
+        self.recomass_endcap_stretchDown = ROOT.TH2D('recomass_endcap_stretchDown', 'recomass_endcap_stretchDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_stretchDown)
+
+        self.recomass_endcap_scaleUp = ROOT.TH2D('recomass_endcap_scaleUp', 'recomass_endcap_scaleUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_scaleUp)
+        self.recomass_endcap_scaleDown = ROOT.TH2D('recomass_endcap_scaleDown', 'recomass_endcap_scaleDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_scaleDown)
+
+        self.recomass_endcap_resUp = ROOT.TH2D('recomass_endcap_resUp', 'recomass_endcap_resUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_resUp)
+        self.recomass_endcap_resDown = ROOT.TH2D('recomass_endcap_resDown', 'recomass_endcap_resDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomass_endcap_resDown)
+
+
+
+        self.recomassprime = ROOT.TH2D('recomassprime', 'recomassprime', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime)
+
+        self.recomassprime_shiftUp = ROOT.TH2D('recomassprime_shiftUp', 'recomassprime_shiftUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_shiftUp)
+        self.recomassprime_shiftDown = ROOT.TH2D('recomassprime_shiftDown', 'recomassprime_shiftDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_shiftDown)
+
+        self.recomassprime_stretchUp = ROOT.TH2D('recomassprime_stretchUp', 'recomassprime_stretchUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_stretchUp)
+        self.recomassprime_stretchDown = ROOT.TH2D('recomassprime_stretchDown', 'recomassprime_stretchDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_stretchDown)
+
+        self.recomassprime_scaleUp = ROOT.TH2D('recomassprime_scaleUp', 'recomassprime_scaleUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_scaleUp)
+        self.recomassprime_scaleDown = ROOT.TH2D('recomassprime_scaleDown', 'recomassprime_scaleDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_scaleDown)
+
+        self.recomassprime_resUp = ROOT.TH2D('recomassprime_resUp', 'recomassprime_resUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_resUp)
+        self.recomassprime_resDown = ROOT.TH2D('recomassprime_resDown', 'recomassprime_resDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_resDown)
+
+        self.recomassprime_barrel = ROOT.TH2D('recomassprime_barrel', 'recomassprime_barrel', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel)
+
+        self.recomassprime_barrel_shiftUp = ROOT.TH2D('recomassprime_barrel_shiftUp', 'recomassprime_barrel_shiftUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_shiftUp)
+        self.recomassprime_barrel_shiftDown = ROOT.TH2D('recomassprime_barrel_shiftDown', 'recomassprime_barrel_shiftDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_shiftDown)
+
+        self.recomassprime_barrel_stretchUp = ROOT.TH2D('recomassprime_barrel_stretchUp', 'recomassprime_barrel_stretchUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_stretchUp)
+        self.recomassprime_barrel_stretchDown = ROOT.TH2D('recomassprime_barrel_stretchDown', 'recomassprime_barrel_stretchDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_stretchDown)
+
+        self.recomassprime_barrel_scaleUp = ROOT.TH2D('recomassprime_barrel_scaleUp', 'recomassprime_barrel_scaleUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_scaleUp)
+        self.recomassprime_barrel_scaleDown = ROOT.TH2D('recomassprime_barrel_scaleDown', 'recomassprime_barrel_scaleDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_scaleDown)
+
+        self.recomassprime_barrel_resUp = ROOT.TH2D('recomassprime_barrel_resUp', 'recomassprime_barrel_resUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_resUp)
+        self.recomassprime_barrel_resDown = ROOT.TH2D('recomassprime_barrel_resDown', 'recomassprime_barrel_resDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_barrel_resDown)
+
+        self.recomassprime_endcap = ROOT.TH2D('recomassprime_endcap', 'recomassprime_endcap', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap)
+
+        self.recomassprime_endcap_shiftUp = ROOT.TH2D('recomassprime_endcap_shiftUp', 'recomassprime_endcap_shiftUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_shiftUp)
+        self.recomassprime_endcap_shiftDown = ROOT.TH2D('recomassprime_endcap_shiftDown', 'recomassprime_endcap_shiftDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_shiftDown)
+
+        self.recomassprime_endcap_stretchUp = ROOT.TH2D('recomassprime_endcap_stretchUp', 'recomassprime_endcap_stretchUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_stretchUp)
+        self.recomassprime_endcap_stretchDown = ROOT.TH2D('recomassprime_endcap_stretchDown', 'recomassprime_endcap_stretchDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_stretchDown)
+
+        self.recomassprime_endcap_scaleUp = ROOT.TH2D('recomassprime_endcap_scaleUp', 'recomassprime_endcap_scaleUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_scaleUp)
+        self.recomassprime_endcap_scaleDown = ROOT.TH2D('recomassprime_endcap_scaleDown', 'recomassprime_endcap_scaleDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_scaleDown)
+
+        self.recomassprime_endcap_resUp = ROOT.TH2D('recomassprime_endcap_resUp', 'recomassprime_endcap_resUp', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_resUp)
+        self.recomassprime_endcap_resDown = ROOT.TH2D('recomassprime_endcap_resDown', 'recomassprime_endcap_resDown', len(OMEGA_BINS)-1, array('d', OMEGA_BINS), len(PHI_BINS)-1, array('d', PHI_BINS))
+        self.addObject(self.recomassprime_endcap_resDown)
+
 
         self.hthat_gjets = ROOT.TH1F('GJETS_hthat_lhe', 'hthat', 150, 0, 1500)
         self.addObject(self.hthat_gjets)
@@ -386,9 +554,144 @@ class SanityAnalysis(Module):
             if photons[recophi.photonindex].isScEtaEB: self.twoprong_eta_barrel.Fill(the_twoprong.Eta(), self.weight)
             if photons[recophi.photonindex].isScEtaEE: self.twoprong_eta_endcap.Fill(the_twoprong.Eta(), self.weight)
           self.recomass_uniformbinning.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
-          self.recomass.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
-          if twoprong_subdet == 'barrel': self.recomass_barrel.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
-          if twoprong_subdet == 'endcap': self.recomass_endcap.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+          self.recomass_bare.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+          if twoprong_subdet == 'barrel': self.recomass_bare_barrel.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+          if twoprong_subdet == 'endcap': self.recomass_bare_endcap.Fill(twoprongs[recophi.twoprongindex].massPi0, recophi.mass, self.weight)
+
+          self.recomassprime_bare.Fill(twoprongs[recophi.twoprongindex].massEta, recophi.mass, self.weight)
+          if twoprong_subdet == 'barrel': self.recomassprime_bare_barrel.Fill(twoprongs[recophi.twoprongindex].massEta, recophi.mass, self.weight)
+          if twoprong_subdet == 'endcap': self.recomassprime_bare_endcap.Fill(twoprongs[recophi.twoprongindex].massEta, recophi.mass, self.weight)
+
+          m2p = twoprongs[recophi.twoprongindex].massPi0
+          m2peta = twoprongs[recophi.twoprongindex].massEta
+          pt2p = twoprongs[recophi.twoprongindex].pt
+          m2p_gen = M2P_GEN
+          tp_vec = get_vec(twoprongs[recophi.twoprongindex])
+
+          eff_central = 0.9
+          eff_up = 0.9 + 0.22
+          eff_down = 0.9 - 0.22
+
+          shift_central = -0.01
+          shift_up = -0.01 + 0.03
+          shift_down = -0.01 - 0.03
+
+          stretch_central = 1.12
+          stretch_up = 1.12 + 0.04
+          stretch_down = 1.12 - 0.04
+
+          scale_central = 1.07
+          scale_up = 1.07 + 0.08
+          scale_down = 1.07 - 0.08
+
+          res_central = 1.07
+          res_up = 1.07 + 0.07
+          res_down = 1.07 - 0.07
+
+          m2p_central = (m2p - m2p_gen + shift_central) * stretch_central + m2p_gen
+          m2p_shift_up = (m2p - m2p_gen + shift_up) * stretch_central + m2p_gen
+          m2p_shift_down = (m2p - m2p_gen + shift_down) * stretch_central + m2p_gen
+          m2p_stretch_up = (m2p - m2p_gen + shift_central) * stretch_up + m2p_gen
+          m2p_stretch_down = (m2p - m2p_gen + shift_central) * stretch_down + m2p_gen
+
+          m2peta_central = (m2peta - m2p_gen + shift_central) * stretch_central + m2p_gen
+          m2peta_shift_up = (m2peta - m2p_gen + shift_up) * stretch_central + m2p_gen
+          m2peta_shift_down = (m2peta - m2p_gen + shift_down) * stretch_central + m2p_gen
+          m2peta_stretch_up = (m2peta - m2p_gen + shift_central) * stretch_up + m2p_gen
+          m2peta_stretch_down = (m2peta - m2p_gen + shift_central) * stretch_down + m2p_gen
+
+          self.recomass.Fill(m2p_central, recophi.mass, self.weight)
+          self.recomass_shiftUp.Fill(m2p_shift_up, recophi.mass, self.weight)
+          self.recomass_shiftDown.Fill(m2p_shift_down, recophi.mass, self.weight)
+          self.recomass_stretchUp.Fill(m2p_stretch_up, recophi.mass, self.weight)
+          self.recomass_stretchDown.Fill(m2p_stretch_down, recophi.mass, self.weight)
+
+          self.recomassprime.Fill(m2peta_central, recophi.mass, self.weight)
+          self.recomassprime_shiftUp.Fill(m2peta_shift_up, recophi.mass, self.weight)
+          self.recomassprime_shiftDown.Fill(m2peta_shift_down, recophi.mass, self.weight)
+          self.recomassprime_stretchUp.Fill(m2peta_stretch_up, recophi.mass, self.weight)
+          self.recomassprime_stretchDown.Fill(m2peta_stretch_down, recophi.mass, self.weight)
+
+          if twoprong_subdet == 'barrel': 
+              self.recomass_barrel.Fill(m2p_central, recophi.mass, self.weight)
+              self.recomass_barrel_shiftUp.Fill(m2p_shift_up, recophi.mass, self.weight)
+              self.recomass_barrel_shiftDown.Fill(m2p_shift_down, recophi.mass, self.weight)
+              self.recomass_barrel_stretchUp.Fill(m2p_stretch_up, recophi.mass, self.weight)
+              self.recomass_barrel_stretchDown.Fill(m2p_stretch_down, recophi.mass, self.weight)
+
+              self.recomassprime_barrel.Fill(m2peta_central, recophi.mass, self.weight)
+              self.recomassprime_barrel_shiftUp.Fill(m2peta_shift_up, recophi.mass, self.weight)
+              self.recomassprime_barrel_shiftDown.Fill(m2peta_shift_down, recophi.mass, self.weight)
+              self.recomassprime_barrel_stretchUp.Fill(m2peta_stretch_up, recophi.mass, self.weight)
+              self.recomassprime_barrel_stretchDown.Fill(m2peta_stretch_down, recophi.mass, self.weight)
+
+          if twoprong_subdet == 'endcap':
+              self.recomass_endcap.Fill(m2p_central, recophi.mass, self.weight)
+              self.recomass_endcap_shiftUp.Fill(m2p_shift_up, recophi.mass, self.weight)
+              self.recomass_endcap_shiftDown.Fill(m2p_shift_down, recophi.mass, self.weight)
+              self.recomass_endcap_stretchUp.Fill(m2p_stretch_up, recophi.mass, self.weight)
+              self.recomass_endcap_stretchDown.Fill(m2p_stretch_down, recophi.mass, self.weight)
+
+              self.recomassprime_endcap.Fill(m2peta_central, recophi.mass, self.weight)
+              self.recomassprime_endcap_shiftUp.Fill(m2peta_shift_up, recophi.mass, self.weight)
+              self.recomassprime_endcap_shiftDown.Fill(m2peta_shift_down, recophi.mass, self.weight)
+              self.recomassprime_endcap_stretchUp.Fill(m2peta_stretch_up, recophi.mass, self.weight)
+              self.recomassprime_endcap_stretchDown.Fill(m2peta_stretch_down, recophi.mass, self.weight)
+
+          N_central = self.rand.Gaus(0, res_central - 1)
+          N_up = self.rand.Gaus(0, res_up - 1)
+          N_down = self.rand.Gaus(0, res_down - 1)
+          pt2p_central = pt2p * scale_central + pt2p * N_central
+          pt2p_scale_up = pt2p * scale_up + pt2p * N_central
+          pt2p_scale_down = pt2p * scale_down + pt2p * N_central
+          pt2p_res_up = pt2p * scale_central + pt2p * N_up
+          pt2p_res_down = pt2p * scale_central + pt2p * N_down
+
+          tp_vec_res_up = clone_vec(tp_vec)
+          tp_vec_res_up.SetPt(pt2p_res_up)
+          tp_vec_res_down = clone_vec(tp_vec)
+          tp_vec_res_down.SetPt(pt2p_res_down)
+          tp_vec_scale_up = clone_vec(tp_vec)
+          tp_vec_scale_up.SetPt(pt2p_scale_up)
+          tp_vec_scale_down = clone_vec(tp_vec)
+          tp_vec_scale_down.SetPt(pt2p_scale_down)
+
+          recophi_vec_res_up = tp_vec_res_up + get_vec(photons[recophi.photonindex])
+          recophi_vec_res_down = tp_vec_res_down + get_vec(photons[recophi.photonindex])
+          recophi_vec_scale_up = tp_vec_scale_up + get_vec(photons[recophi.photonindex])
+          recophi_vec_scale_down = tp_vec_scale_down + get_vec(photons[recophi.photonindex])
+          
+          self.recomass_resUp.Fill(m2p, recophi_vec_res_up.M(), self.weight)
+          self.recomass_resDown.Fill(m2p, recophi_vec_res_down.M(), self.weight)
+          self.recomass_scaleUp.Fill(m2p, recophi_vec_scale_up.M(), self.weight)
+          self.recomass_scaleDown.Fill(m2p, recophi_vec_scale_down.M(), self.weight)
+
+          self.recomassprime_resUp.Fill(m2peta, recophi_vec_res_up.M(), self.weight)
+          self.recomassprime_resDown.Fill(m2peta, recophi_vec_res_down.M(), self.weight)
+          self.recomassprime_scaleUp.Fill(m2peta, recophi_vec_scale_up.M(), self.weight)
+          self.recomassprime_scaleDown.Fill(m2peta, recophi_vec_scale_down.M(), self.weight)
+
+          if twoprong_subdet == 'barrel': 
+              self.recomass_barrel_resUp.Fill(m2p, recophi_vec_res_up.M(), self.weight)
+              self.recomass_barrel_resDown.Fill(m2p, recophi_vec_res_down.M(), self.weight)
+              self.recomass_barrel_scaleUp.Fill(m2p, recophi_vec_scale_up.M(), self.weight)
+              self.recomass_barrel_scaleDown.Fill(m2p, recophi_vec_scale_down.M(), self.weight)
+
+              self.recomassprime_barrel_resUp.Fill(m2peta, recophi_vec_res_up.M(), self.weight)
+              self.recomassprime_barrel_resDown.Fill(m2peta, recophi_vec_res_down.M(), self.weight)
+              self.recomassprime_barrel_scaleUp.Fill(m2peta, recophi_vec_scale_up.M(), self.weight)
+              self.recomassprime_barrel_scaleDown.Fill(m2peta, recophi_vec_scale_down.M(), self.weight)
+
+          if twoprong_subdet == 'endcap': 
+              self.recomass_endcap_resUp.Fill(m2p, recophi_vec_res_up.M(), self.weight)
+              self.recomass_endcap_resDown.Fill(m2p, recophi_vec_res_down.M(), self.weight)
+              self.recomass_endcap_scaleUp.Fill(m2p, recophi_vec_scale_up.M(), self.weight)
+              self.recomass_endcap_scaleDown.Fill(m2p, recophi_vec_scale_down.M(), self.weight)
+
+              self.recomassprime_endcap_resUp.Fill(m2peta, recophi_vec_res_up.M(), self.weight)
+              self.recomassprime_endcap_resDown.Fill(m2peta, recophi_vec_res_down.M(), self.weight)
+              self.recomassprime_endcap_scaleUp.Fill(m2peta, recophi_vec_scale_up.M(), self.weight)
+              self.recomassprime_endcap_scaleDown.Fill(m2peta, recophi_vec_scale_down.M(), self.weight)
 
         tight_photons = []
         loose_photons = []
@@ -428,6 +731,11 @@ class SanityAnalysis(Module):
           self.recomass_sideband.Fill(sel_tp.massPi0, recophi.mass, self.weight)
           if twoprong_subdet == 'barrel': self.recomass_sideband_barrel.Fill(sel_tp.massPi0, recophi.mass, self.weight)
           if twoprong_subdet == 'endcap': self.recomass_sideband_endcap.Fill(sel_tp.massPi0, recophi.mass, self.weight)
+
+          self.recomassprime_sideband.Fill(sel_tp.massEta, recophi.mass, self.weight)
+          if twoprong_subdet == 'barrel': self.recomassprime_sideband_barrel.Fill(sel_tp.massEta, recophi.mass, self.weight)
+          if twoprong_subdet == 'endcap': self.recomassprime_sideband_endcap.Fill(sel_tp.massEta, recophi.mass, self.weight)
+
         if len(loose_photons) >= 1 and len(tight_photons) == 0 and pass_trigger and len(iso_asym_tp) != 0:  # loose photon and loose twoprong
           pass
 
